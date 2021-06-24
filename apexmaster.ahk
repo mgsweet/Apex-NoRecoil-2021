@@ -27,11 +27,11 @@ global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
 global FLATLINE_WEAPON_TYPE := 3
 global SPITFIRE_WEAPON_TYPE := 4
-global LSTART_WEAPON_TYPE := 5
+global LSTAR_WEAPON_TYPE := 5
 global DEVOTION_WEAPON_TYPE := 6
 ; current weapon type
 global current_weapon_type := DEFAULT_WEAPON_TYPE
-global current_weapon_num := -1
+global current_weapon_num := 1
 
 ; x, y for weapon1 and weapon
 global WEAPON_1_PIXELS = [1522, 1039]
@@ -49,8 +49,10 @@ global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global SPITFIRE_PIXELS := [1693, 972, true, 1652, 989, true, 1645, 962, true]
 ; energy weapon
-global LSTART_PIXELS := [1663, 968, true, 1576, 1001, true, 1641, 988, false]
+global LSTAR_PIXELS := [1663, 968, true, 1576, 1001, true, 1641, 988, false]
 global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
+
+
 
 ; tips setting
 if (script_version = "narrator")
@@ -80,6 +82,16 @@ global R301_RECOILS := [[-2, 12], [-2, 12], [-2, 12], [-2, 8], [0, 8]
                         , [4, 1], [4, 5], [2, 3], [-4, 3], [-2, 3]
                         , [-6, 1], [-6, 0], [-6, 0], [-6, 0], [-2, 0]
                         , [-2, 0], [-2, 0], [-2, 0], [-2, 0], [-2, 0]]
+
+global LSTAR_INTERVAL := 100
+global LSTAR_RECOILS := [[22, 12], [22, 12], [-16, 12], [-14, 12], [-14, 12]
+                        , [-6, 10], [0, 10], [0, 10], [0, 10], [0, 10]
+                        , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]
+                        , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]
+                        ; , [-4, 10], [-4, 10], [-4, 10], [-4, 10], [-4, 10]
+                        ; , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]
+                        ; , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]
+
 
 ; check whether the current weapon match the weapon pixels
 check_weapon(WEAPON_pixels)
@@ -120,8 +132,8 @@ detect_weapon(weapon_num)
             return SPITFIRE_WEAPON_TYPE
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
-        if (check_weapon(LSTART_PIXELS)) {
-            return LSTART_WEAPON_TYPE
+        if (check_weapon(LSTAR_PIXELS)) {
+            return LSTAR_WEAPON_TYPE
         } else if (check_weapon(DEVOTION_PIXELS)) {
             return DEVOTION_WEAPON_TYPE
         }
@@ -131,15 +143,29 @@ detect_weapon(weapon_num)
 
 ~1::
     sleep 50
+    current_weapon_num := 1
     current_weapon_type := detect_weapon(1)
     %hint_method%(WEAPON_NAME[current_weapon_type + 1])
 return
 
 ~2::
     sleep 50
+    current_weapon_num := 2
     current_weapon_type := detect_weapon(2)
     %hint_method%(WEAPON_NAME[current_weapon_type + 1])
 return
+
+
+~$*E::
+    Loop {
+        if (!GetKeyState("E")) {
+            DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
+            sleep 80
+            current_weapon_type := detect_weapon(current_weapon_num)
+            %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+            break
+        }
+    }
 
 ; isMouseShown()			; Suspends the script when mouse is visible ie: inventory, menu, map.
 ; {
@@ -176,6 +202,10 @@ return
         } else if (current_weapon_type == R301_WEAPON_TYPE) {
             interval := R301_INTERVAL
             recoils := R301_RECOILS
+        } else if (current_weapon_type == LSTAR_WEAPON_TYPE) {
+            interval := LSTAR_INTERVAL
+            tooltip(interval)
+            recoils := LSTAR_RECOILS
         } else {
             return
         }
