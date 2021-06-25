@@ -22,6 +22,7 @@ GoSub, IniRead
 
 ; weapon detect
 global current_weapon_type := DEFAULT_WEAPON_TYPE
+global has_turbocharger := false
 
 ; weapon type constant
 global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "PROWLER", "HAVOC"]
@@ -104,19 +105,22 @@ global DEVOTION_RECOILS := [[0, 20], [0, 20], [-1, 20], [-1, 20], [-2, 20]
                         , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
                         , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
                         , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
-global PROWLER_INTERVAL := 112
-global PROWLER_RECOILS := [[-2, 16], [-2, 16], [-2, 16], [-2, 16], [-2, 16]
-                        , [0, 12], [4, 10], [6, 10], [6, 8], [6, 6]
-                        , [-2, 0], [-2, 2], [-2, 2], [0, 2], [0, 2]
-                        , [2, 2], [2, 2], [2, 2], [2, 2], [2, 2]]
-                        ; , [0, 2]] ;, [0, 10], [0, 10], [0, 10], [0, 10]
-                        ; , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]
+global PROWLER_INTERVAL := 83
+global PROWLER_RECOILS := [[-2, 16], [-2, 16], [-2, 16], [-2, 16], [-2, 10]
+                        , [-2, 8], [-2, 6], [-4, 8], [4, 8], [6, 8]
+                        , [8, 0], [8, 0], [8, 2], [8, 2], [-4, 4]
+                        , [-4, 4], [-4, 4], [-4, 4], [4, 2], [4, 2]
+                        , [4, 2], [4, 2] ,[0, 2] , [0, 2] , [0, 2]
+                        ,[0, 2] , [0, 2] , [0, 2]]
 global HAVOC_INTERVAL := 89
-global HAVOC_RECOILS := [[2, 10], [2, 10], [4, 10], [4, 10], [4, 10]
-                        , [4, 10], [-10, 2], [-10, 2], [-10, 2], [0, 2]
-                        , [0, 2]] ;, [0, 10], [0, 10], [0, 10], [0, 10]
-                        ; , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]
-
+global HAVOC_RECOILS := [[-6, 10], [-6, 10], [-6, 12], [0, 12], [0, 12]
+                        , [4, 10], [4, 10], [4, 10], [4, 10], [-4, 4]
+                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-2, 4]
+                        , [4, 4], [4, 4], [4, 4], [4, 4], [4, 4]
+                        , [4, 4], [4, 4], [4, 6], [4, 6], [4, 6]
+                        , [4, 6], [4, 6], [4, 6], [4, 6], [4, 6]
+                        , [0, 6], [0, 6], [0, 6], [0, 6], [0, 6]
+                        , [0, 6], [0, 6]]
 ; heavy weapon interval and recoils
 global SPITFIRE_INTERVAL := 112
 global SPITFIRE_RECOILS := [[2, 10], [2, 10], [4, 10], [4, 10], [4, 10]
@@ -140,14 +144,13 @@ global FLATLINE_RECOILS := [[8, 12], [6, 12], [4, 10], [2, 8], [2, 8]
 
 
 ; check whether the current weapon match the weapon pixels
-check_weapon(WEAPON_pixels)
-{
+check_weapon(weapon_pixels) {
     target_color := 0xFFFFFF
     i := 1
     loop, 3 {
-        PixelGetColor, check_point_color, WEAPON_pixels[i], WEAPON_pixels[i + 1]
-        if (WEAPON_pixels[i + 2] != (check_point_color == target_color)) {
-            ; MsgBox % WEAPON_pixels[i] " and " WEAPON_pixels[i + 1] " : " check_point_color " equal to " target_color "is not " WEAPON_pixels[i + 2]
+        PixelGetColor, check_point_color, weapon_pixels[i], weapon_pixels[i + 1]
+        if (weapon_pixels[i + 2] != (check_point_color == target_color)) {
+            ; MsgBox % weapon_pixels[i] " and " weapon_pixels[i + 1] " : " check_point_color " equal to " target_color "is not " weapon_pixels[i + 2]
             return False
         }
         i := i + 3
@@ -155,8 +158,16 @@ check_weapon(WEAPON_pixels)
     return True
 }
 
-detect_weapon()
-{
+check_turbocharger(turbocharger_pixels) {
+    target_color := 0xFFFFFF
+    PixelGetColor, check_point_color, turbocharger_pixels[1], turbocharger_pixels[2]
+    if (check_point_color == target_color) {
+        return true
+    }
+    return false
+}
+
+detect_weapon() {
     ; first check which weapon is activate
     check_point_color := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
@@ -199,8 +210,16 @@ detect_weapon()
 detectAndSetWeapon() {
     sleep 50
     current_weapon_type := detect_weapon()
+    ; set turbocharger
+    if (current_weapon_type == DEVOTION_WEAPON_TYPE)
+        has_turbocharger := check_turbocharger(DEVOTION_TURBOCHARGER_PIXELS)
+    else if (current_weapon_type == HAVOC_WEAPON_TYPE)
+        has_turbocharger := check_turbocharger(HAVOC_TURBOCHARGER_PIXELS)
+    else 
+        has_turbocharger := false
     global hint_method
-    %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+    ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+    tooltip(has_turbocharger)
 }
 
 ~E Up::
@@ -214,29 +233,6 @@ return
 ~2::
     detectAndSetWeapon()
 return
-
-; isMouseShown()			; Suspends the script when mouse is visible ie: inventory, menu, map.
-; {
-;     StructSize := A_PtrSize + 16
-;     VarSetCapacity(InfoStruct, StructSize)
-;     NumPut(StructSize, InfoStruct)
-;     DllCall("GetCursorInfo", UInt, &InfoStruct)
-;     Result := NumGet(InfoStruct, 8)
-    
-;     if Result > 1
-;         Return 1
-;     else
-;         Return 0
-; }
-
-; Loop {
-;     if (isMouseShown() == 1) {
-;         Suspend On
-;     }else {
-;         Suspend Off
-;     }
-;     Sleep 1
-; }
 
 ~$*LButton::
     if (GetKeyState("RButton")) {
@@ -265,6 +261,8 @@ return
         } else if (current_weapon_type == HAVOC_WEAPON_TYPE) {
             interval := HAVOC_INTERVAL
             recoils := HAVOC_RECOILS
+            if (!has_turbocharger) 
+                sleep 300
         } else if (current_weapon_type == DEVOTION_WEAPON_TYPE) {
             interval := DEVOTION_INTERVAL
             recoils := DEVOTION_RECOILS
@@ -273,35 +271,16 @@ return
         }
         Loop
         {
-            ; GetKeyState, LButton, LButton, P
-            ; if LButton = U 
-            ;     Break
             if (!GetKeyState("LButton") || i > recoils.Length()) {
                 DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
                 break
             }
-            tooltip(recoils[i][1])
             sleep interval
             DllCall("mouse_event", uint, 0x01, uint, recoils[i][1] * modifier, uint, recoils[i][2] * modifier)
             i += 1
         }
     }
     return
-
-; loop {
-;     sleep, 10
-;     if GetKeyState(key_1) {
-;         current_weapon_num := 1
-;         current_weapon_type = detect_weapon()
-;         MsgBox % current_weapon_num
-;     }
-; }
-
-; T::
-; is_r99 := check_weapon(R99_PIXELS)
-; is_r301 := check_weapon(R301_PIXELS)
-; MsgBox %is_r99% and %is_r301%
-; return
 
 IniRead:
     IfNotExist, settings.ini
@@ -327,8 +306,7 @@ IniRead:
     }
 return
 
-activeMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef  Height)
-{
+activeMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef  Height) {
     CoordMode, Mouse, Screen
     MouseGetPos, mouseX, mouseY
     SysGet, monCount, MonitorCount
@@ -344,16 +322,14 @@ activeMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef  Height)
     }
 }
 
-Say(text)
-{
+Say(text) {
     global SAPI
     SAPI.Speak(text, 1)
     sleep 150
     return
 }
 
-Tooltip(Text)
-{
+Tooltip(Text) {
     activeMonitorInfo(X, Y, Width, Height)
     xPos := Width / 2 - 50
     yPos := Height / 2 + (Height / 10)
@@ -365,3 +341,26 @@ Tooltip(Text)
         Tooltip
     return
 }
+
+; isMouseShown()			; Suspends the script when mouse is visible ie: inventory, menu, map.
+; {
+;     StructSize := A_PtrSize + 16
+;     VarSetCapacity(InfoStruct, StructSize)
+;     NumPut(StructSize, InfoStruct)
+;     DllCall("GetCursorInfo", UInt, &InfoStruct)
+;     Result := NumGet(InfoStruct, 8)
+    
+;     if Result > 1
+;         Return 1
+;     else
+;         Return 0
+; }
+
+; Loop {
+;     if (isMouseShown() == 1) {
+;         Suspend On
+;     }else {
+;         Suspend Off
+;     }
+;     Sleep 1
+; }
