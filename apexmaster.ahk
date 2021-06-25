@@ -177,7 +177,6 @@ detect_weapon() {
     } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR) {
         check_point_color := check_weapon2_color
     } else {
-        ToolTip(check_point_color " " check_weapon1_color " " check_weapon2_color)
         return DEFAULT_WEAPON_TYPE
     }
     ; then check the weapon type
@@ -219,7 +218,7 @@ detectAndSetWeapon() {
         has_turbocharger := false
     global hint_method
     ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
-    tooltip(has_turbocharger)
+    ; tooltip(has_turbocharger)
 }
 
 ~E Up::
@@ -292,7 +291,8 @@ IniRead:
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "narrator", settings.ini, script configs, script_version
         IniRead, script_name, settings.ini, script configs, script_name
-        IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
+        ; IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
+        IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
         IniWrite, "", settings.ini, window position, gui_position
         IniRead, script_name, settings.ini, script configs, script_name
         Run, %script_name%
@@ -342,25 +342,24 @@ Tooltip(Text) {
     return
 }
 
-; isMouseShown()			; Suspends the script when mouse is visible ie: inventory, menu, map.
-; {
-;     StructSize := A_PtrSize + 16
-;     VarSetCapacity(InfoStruct, StructSize)
-;     NumPut(StructSize, InfoStruct)
-;     DllCall("GetCursorInfo", UInt, &InfoStruct)
-;     Result := NumGet(InfoStruct, 8)
-    
-;     if Result > 1
-;         Return 1
-;     else
-;         Return 0
-; }
+isMouseShown()			; Suspends the script when mouse is visible ie: inventory, menu, map.
+{
+    StructSize := A_PtrSize + 16
+    VarSetCapacity(InfoStruct, StructSize)
+    NumPut(StructSize, InfoStruct)
+    DllCall("GetCursorInfo", UInt, &InfoStruct)
+    Result := NumGet(InfoStruct, 8)
+    if Result > 1
+        Return 1
+    else
+        Return 0
+}
 
-; Loop {
-;     if (isMouseShown() == 1) {
-;         Suspend On
-;     }else {
-;         Suspend Off
-;     }
-;     Sleep 1
-; }
+Loop {
+    if (isMouseShown() == 1) {
+        Suspend On
+    }else {
+        Suspend Off
+    }
+    Sleep 1
+}
