@@ -20,8 +20,11 @@ if not A_IsAdmin {
 ; read settings.ini
 GoSub, IniRead
 
+; weapon detect
+global current_weapon_type := DEFAULT_WEAPON_TYPE
+
 ; weapon type constant
-global WEAPON_NAME = ["NONE", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "PROWLER", "HAVOC"]
+global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "PROWLER", "HAVOC"]
 global DEFAULT_WEAPON_TYPE := 0
 global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
@@ -30,13 +33,11 @@ global SPITFIRE_WEAPON_TYPE := 4
 global LSTAR_WEAPON_TYPE := 5
 global DEVOTION_WEAPON_TYPE := 6
 global PROWLER_WEAPON_TYPE := 7
-; current weapon type
-global current_weapon_type := DEFAULT_WEAPON_TYPE
-global current_weapon_num := 1
+global HAVOC_WEAPON_TYPE := 8
 
 ; x, y for weapon1 and weapon
-global WEAPON_1_PIXELS = [1522, 1039]
-global WEAPON_2_PIXELS = [1668, 1039]
+global WEAPON_1_PIXELS = [1521, 1038]
+global WEAPON_2_PIXELS = [1824, 1036]
 ; weapon coloar
 global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
@@ -104,9 +105,11 @@ global DEVOTION_RECOILS := [[0, 20], [0, 20], [-1, 20], [-1, 20], [-2, 20]
                         , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
                         , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
 global PROWLER_INTERVAL := 112
-global PROWLER_RECOILS := [[2, 10], [2, 10], [4, 10], [4, 10], [4, 10]
-                        , [4, 10], [-10, 2], [-10, 2], [-10, 2], [0, 2]
-                        , [0, 2]] ;, [0, 10], [0, 10], [0, 10], [0, 10]
+global PROWLER_RECOILS := [[-2, 16], [-2, 16], [-2, 16], [-2, 16], [-2, 16]
+                        , [0, 12], [4, 10], [6, 10], [6, 8], [6, 6]
+                        , [-2, 0], [-2, 2], [-2, 2], [0, 2], [0, 2]
+                        , [2, 2], [2, 2], [2, 2], [2, 2], [2, 2]]
+                        ; , [0, 2]] ;, [0, 10], [0, 10], [0, 10], [0, 10]
                         ; , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]
 global HAVOC_INTERVAL := 89
 global HAVOC_RECOILS := [[2, 10], [2, 10], [4, 10], [4, 10], [4, 10]
@@ -152,16 +155,21 @@ check_weapon(WEAPON_pixels)
     return True
 }
 
-detect_weapon(weapon_num)
+detect_weapon()
 {
+    ; first check which weapon is activate
     check_point_color := 0
-    if (weapon_num == 1) {
-        PixelGetColor, check_point_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
-    } else if (weapon_num == 2) {
-        PixelGetColor, check_point_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
+    PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
+    PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
+    if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR || check_weapon1_color == ENERGY_WEAPON_COLOR) {
+        check_point_color := check_weapon1_color
+    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR) {
+        check_point_color := check_weapon2_color
     } else {
+        ToolTip(check_point_color " " check_weapon1_color " " check_weapon2_color)
         return DEFAULT_WEAPON_TYPE
     }
+    ; then check the weapon type
     if (check_point_color == LIGHT_WEAPON_COLOR) {
         if (check_weapon(R301_PIXELS)) {
             return R301_WEAPON_TYPE
@@ -181,36 +189,31 @@ detect_weapon(weapon_num)
             return DEVOTION_WEAPON_TYPE
         } else if (check_weapon(PROWLER_PIXELS)) {
             return PROWLER_WEAPON_TYPE
+        } else if (check_weapon(HAVOC_PIXELS)) {
+            return HAVOC_WEAPON_TYPE
         }
     }
     return DEFAULT_WEAPON_TYPE
 }
 
-~1::
+detectAndSetWeapon() {
     sleep 50
-    current_weapon_num := 1
-    current_weapon_type := detect_weapon(1)
+    current_weapon_type := detect_weapon()
+    global hint_method
     %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+}
+
+~E Up::
+    detectAndSetWeapon()
+return
+
+~1::
+    detectAndSetWeapon()
 return
 
 ~2::
-    sleep 50
-    current_weapon_num := 2
-    current_weapon_type := detect_weapon(2)
-    %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+    detectAndSetWeapon()
 return
-
-
-~$*E::
-    Loop {
-        if (!GetKeyState("E")) {
-            DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
-            sleep 80
-            current_weapon_type := detect_weapon(current_weapon_num)
-            %hint_method%(WEAPON_NAME[current_weapon_type + 1])
-            break
-        }
-    }
 
 ; isMouseShown()			; Suspends the script when mouse is visible ie: inventory, menu, map.
 ; {
@@ -247,15 +250,24 @@ return
         } else if (current_weapon_type == R301_WEAPON_TYPE) {
             interval := R301_INTERVAL
             recoils := R301_RECOILS
+        } else if (current_weapon_type == SPITFIRE_WEAPON_TYPE) {
+            interval := SPITFIRE_INTERVAL
+            recoils := SPITFIRE_RECOILS
+        } else if (current_weapon_type == FLATLINE_WEAPON_TYPE) {
+            interval := FLATLINE_INTERVAL
+            recoils := FLATLINE_RECOILS
         } else if (current_weapon_type == LSTAR_WEAPON_TYPE) {
             interval := LSTAR_INTERVAL
             recoils := LSTAR_RECOILS
         } else if (current_weapon_type == PROWLER_WEAPON_TYPE) {
             interval := PROWLER_INTERVAL
             recoils := PROWLER_RECOILS
-        } else if (current_weapon_type == SPITFIRE_WEAPON_TYPE) {
-            interval := SPITFIRE_INTERVAL
-            recoils := SPITFIRE_RECOILS
+        } else if (current_weapon_type == HAVOC_WEAPON_TYPE) {
+            interval := HAVOC_INTERVAL
+            recoils := HAVOC_RECOILS
+        } else if (current_weapon_type == DEVOTION_WEAPON_TYPE) {
+            interval := DEVOTION_INTERVAL
+            recoils := DEVOTION_RECOILS
         } else {
             return
         }
