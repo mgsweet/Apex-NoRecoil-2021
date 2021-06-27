@@ -10,9 +10,9 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 ## Usage
 The default mouse sensitivity is `5.0`. Change the sens in `settings.ini` to yours.
 
-You need to have AutoHotKey pre-installed on your computer if you want to run the apexmaster.ahk file directly.
+You need to have AutoHotKey pre-installed on your computer if you want to run the `apexmaster.ahk` file directly.
 
-Otherwise, you can just use the apexmaster.exe file in the /bin.
+Otherwise, you can just use the `apexmaster.exe` file in the `/bin`.
 
 After running the script, every time you press `1`, `2` or `E`, the script will detect your current weapon and provide compensation while you click `L Button` while holding your `R Button`. It cannot detect the weapon when you get one by "licking a dead player's box"(I haven't done this yet). But once you click any of the three buttons mention above, the detection should work :)
 
