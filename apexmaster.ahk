@@ -36,10 +36,10 @@ global DEVOTION_WEAPON_TYPE := 6
 global PROWLER_WEAPON_TYPE := 7
 global HAVOC_WEAPON_TYPE := 8
 
-; x, y for weapon1 and weapon
+; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
 global WEAPON_2_PIXELS = [1824, 1036]
-; weapon coloar
+; weapon color
 global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
 global ENERGY_WEAPON_COLOR = 0x286E5A
@@ -66,8 +66,8 @@ if (script_version = "narrator")
 else if (script_version = "tooltip")
     hint_method:="Tooltip"
 
-
 modifier:=2.50/sens
+
 ; voice setting
 SAPI.voice := SAPI.GetVoices().Item(1) 	; uncomment this line to get female voice.
 SAPI:=ComObjCreate("SAPI.SpVoice")
@@ -79,7 +79,7 @@ global R99_INTERVAL := 55
 global R99_RECOILS := [[-9, 11], [4, 11], [4, 11], [0, 14], [-9, 12]
                         , [-7, 15], [-10, 12], [4, 4], [10, 10], [4, 12]
                         , [6, 4], [3, 4], [-8, 6], [-4, 6], [-4, -2]
-                        , [4, -5], [4, -5], [6, 0], [-2, 4], [-4, 4],
+                        , [4, -5], [4, -5], [6, 0], [-2, 4], [-4, 4]
                         , [-6, 4], [-6, 4], [-6, 4], [-6, 4]]
 global R301_INTERVAL := 72
 global R301_RECOILS := [[-2, 12], [-2, 12], [-2, 12], [-2, 8], [0, 8]
