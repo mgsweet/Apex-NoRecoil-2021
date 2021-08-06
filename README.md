@@ -3,9 +3,9 @@ An AutoHotKey script to minimize recoil with auto weapon detection for Apex Lege
 Apex Legends AHK 压枪宏，带武器自动检测. 
 
 ## Description
-This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection. Current support weapon: R99, R301, Flatline, Spitfire, Havoc, Prowler, Devotion and L-Star.
+This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection. Current support weapon: R99, R301, Flatline, Spitfire, Havoc, Volt, Devotion and L-Star.
 
-该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，不会封号（这就类似于那些淘宝卖好几百的主播专用压枪宏）。目前支持枪械包括 R99, R301, Flatline, Spitfire, Havoc, Prowler, Devotion 和 L-Star.
+该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，不会封号（这就类似于那些淘宝卖好几百的主播专用压枪宏）。目前支持枪械包括 R99, R301, Flatline, Spitfire, Havoc, Volt, Devotion 和 L-Star.
 
 ## Usage
 The default mouse sensitivity is `5.0`. Change the sens in `settings.ini` to yours.

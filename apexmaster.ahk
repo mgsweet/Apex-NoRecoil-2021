@@ -25,7 +25,7 @@ global current_weapon_type := DEFAULT_WEAPON_TYPE
 global has_turbocharger := false
 
 ; weapon type constant
-global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "PROWLER", "HAVOC"]
+global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC"]
 global DEFAULT_WEAPON_TYPE := 0
 global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
@@ -33,7 +33,7 @@ global FLATLINE_WEAPON_TYPE := 3
 global SPITFIRE_WEAPON_TYPE := 4
 global LSTAR_WEAPON_TYPE := 5
 global DEVOTION_WEAPON_TYPE := 6
-global PROWLER_WEAPON_TYPE := 7
+global VOLT_WEAPON_TYPE := 7
 global HAVOC_WEAPON_TYPE := 8
 
 ; x, y for weapon1 and weapon
@@ -43,6 +43,7 @@ global WEAPON_2_PIXELS = [1824, 1036]
 global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
 global ENERGY_WEAPON_COLOR = 0x286E5A
+global SUPPY_DROP_COLOR = 0x3701B2
 
 ; three x, y check point, true means 0xFFFFFFFF
 ; light weapon
@@ -52,9 +53,9 @@ global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global SPITFIRE_PIXELS := [1693, 972, true, 1652, 989, true, 1645, 962, true]
 ; energy weapon
-global LSTAR_PIXELS := [1663, 968, true, 1576, 1001, true, 1641, 988, false]
+global LSTAR_PIXELS := [1587, 973, true, 1641, 989, false, 1667, 969, true]
 global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
-global PROWLER_PIXELS := [1644, 981, false, 1585, 976, true, 1680, 971, true]
+global VOLT_PIXELS := [1644, 981, false, 1585, 976, true, 1680, 971, true]
 global HAVOC_PIXELS := [1656, 996, true, 1658, 985, false, 1637, 962, true]
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := [1621, 1006]
@@ -79,7 +80,7 @@ global R99_INTERVAL := 55
 global R99_RECOILS := [[-9, 11], [4, 11], [4, 11], [0, 14], [-9, 12]
                         , [-7, 15], [-10, 12], [4, 4], [10, 10], [4, 12]
                         , [6, 4], [3, 4], [-8, 6], [-4, 6], [-4, -2]
-                        , [4, -5], [4, -5], [6, 0], [-2, 4], [-4, 4],
+                        , [4, -5], [4, -5], [6, 0], [-2, 4], [-4, 4]
                         , [-6, 4], [-6, 4], [-6, 4], [-6, 4]]
 global R301_INTERVAL := 72
 global R301_RECOILS := [[-2, 12], [-2, 12], [-2, 12], [-2, 8], [0, 8]
@@ -105,8 +106,8 @@ global DEVOTION_RECOILS := [[0, 20], [0, 20], [-1, 20], [-1, 20], [-2, 20]
                         , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
                         , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
                         , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
-global PROWLER_INTERVAL := 83
-global PROWLER_RECOILS := [[-2, 16], [-2, 16], [-2, 16], [-2, 16], [-2, 10]
+global VOLT_INTERVAL := 83
+global VOLT_RECOILS := [[-2, 16], [-2, 16], [-2, 16], [-2, 16], [-2, 10]
                         , [-2, 8], [-2, 6], [-4, 8], [4, 8], [6, 8]
                         , [8, 0], [8, 0], [8, 2], [8, 2], [-4, 4]
                         , [-4, 4], [-4, 4], [-4, 4], [4, 2], [4, 2]
@@ -172,9 +173,9 @@ detect_weapon() {
     check_point_color := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
-    if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR || check_weapon1_color == ENERGY_WEAPON_COLOR) {
+    if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR) {
         check_point_color := check_weapon1_color
-    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR) {
+    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR  || check_weapon2_color == SUPPY_DROP_COLOR) {
         check_point_color := check_weapon2_color
     } else {
         return DEFAULT_WEAPON_TYPE
@@ -189,18 +190,20 @@ detect_weapon() {
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (check_weapon(FLATLINE_PIXELS)) {
             return FLATLINE_WEAPON_TYPE
-        } else if (check_weapon(SPITFIRE_PIXELS)) {
-            return SPITFIRE_WEAPON_TYPE
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (check_weapon(LSTAR_PIXELS)) {
             return LSTAR_WEAPON_TYPE
         } else if (check_weapon(DEVOTION_PIXELS)) {
             return DEVOTION_WEAPON_TYPE
-        } else if (check_weapon(PROWLER_PIXELS)) {
-            return PROWLER_WEAPON_TYPE
+        } else if (check_weapon(VOLT_PIXELS)) {
+            return VOLT_WEAPON_TYPE
         } else if (check_weapon(HAVOC_PIXELS)) {
             return HAVOC_WEAPON_TYPE
+        }
+    } else if (check_point_color == SUPPY_DROP_COLOR) {
+        if (check_weapon(SPITFIRE_PIXELS)) {
+            return SPITFIRE_WEAPON_TYPE
         }
     }
     return DEFAULT_WEAPON_TYPE
@@ -254,9 +257,9 @@ return
         } else if (current_weapon_type == LSTAR_WEAPON_TYPE) {
             interval := LSTAR_INTERVAL
             recoils := LSTAR_RECOILS
-        } else if (current_weapon_type == PROWLER_WEAPON_TYPE) {
-            interval := PROWLER_INTERVAL
-            recoils := PROWLER_RECOILS
+        } else if (current_weapon_type == VOLT_WEAPON_TYPE) {
+            interval := VOLT_INTERVAL
+            recoils := VOLT_RECOILS
         } else if (current_weapon_type == HAVOC_WEAPON_TYPE) {
             interval := HAVOC_INTERVAL
             recoils := HAVOC_RECOILS
