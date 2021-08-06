@@ -87,12 +87,14 @@ SAPI.rate:=rate
 SAPI.volume:=volume
 
 ; light weapon interval and recoils
-global R99_INTERVAL := 55
-global R99_RECOILS := [[-9, 11], [4, 11], [4, 11], [0, 14], [-9, 12]
-                        , [-7, 15], [-10, 12], [4, 4], [10, 10], [4, 12]
-                        , [6, 4], [3, 4], [-8, 6], [-4, 6], [-4, -2]
-                        , [4, -5], [4, -5], [6, 0], [-2, 4], [-4, 4]
-                        , [-6, 4], [-6, 4], [-6, 4], [-6, 4]]
+global R99_INTERVAL := 52
+global R99_RECOILS := [[-1.6, 7], [0.5, 6.2], [2.3, 4.9], [-1.8, 10], [-2.8, 12.5]
+                        , [-3.3, 9], [-7, 8], [-2, 7], [0, 9], [4, 8]
+                        , [4.5, 7], [1, 7], [1, 6], [-1.1, 5.5], [-4, -1]
+                        , [-4, 2.55], [-3, 1], [3, 1], [4, 2.5], [6, 1]
+                        , [5, 2], [4, 3], [-6, 1], [-3, 1], [-4, 0]
+                        , [-2, 0], [4, 3], [-6, 1], [-3, 1], [-4, 0]
+                        , [-2, 0]]
 global R301_INTERVAL := 72
 global R301_RECOILS := [[-2, 12], [-2, 12], [-2, 12], [-2, 8], [0, 8]
                         , [-2, 5], [-2, 5], [-2, 3], [2, 3], [-4, 3]
@@ -168,7 +170,6 @@ check_weapon(weapon_pixels) {
     loop, 3 {
         PixelGetColor, check_point_color, weapon_pixels[i], weapon_pixels[i + 1]
         if (weapon_pixels[i + 2] != (check_point_color == target_color)) {
-            ; MsgBox % weapon_pixels[i] " and " weapon_pixels[i + 1] " : " check_point_color " equal to " target_color "is not " weapon_pixels[i + 2]
             return False
         }
         i := i + 3
@@ -250,7 +251,6 @@ detectAndSetWeapon() {
         has_turbocharger := check_turbocharger(HAVOC_TURBOCHARGER_PIXELS)
     else 
         has_turbocharger := false
-    ; %hint_method%(single_file_mode)
     ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
 }
 
@@ -396,26 +396,4 @@ Tooltip(Text) {
         SetTimer, RemoveTooltip, Off
         Tooltip
     return
-}
-
-isMouseShown()			; Suspends the script when mouse is visible ie: inventory, menu, map.
-{
-    StructSize := A_PtrSize + 16
-    VarSetCapacity(InfoStruct, StructSize)
-    NumPut(StructSize, InfoStruct)
-    DllCall("GetCursorInfo", UInt, &InfoStruct)
-    Result := NumGet(InfoStruct, 8)
-    if Result > 1
-        Return 1
-    else
-        Return 0
-}
-
-Loop {
-    if (isMouseShown() == 1) {
-        Suspend On
-    }else {
-        Suspend Off
-    }
-    Sleep 1
 }
