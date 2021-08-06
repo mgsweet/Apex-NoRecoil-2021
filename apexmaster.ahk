@@ -25,7 +25,7 @@ global current_weapon_type := DEFAULT_WEAPON_TYPE
 global has_turbocharger := false
 
 ; weapon type constant
-global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC"]
+global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HAMLOK"]
 global DEFAULT_WEAPON_TYPE := 0
 global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
@@ -35,6 +35,8 @@ global LSTAR_WEAPON_TYPE := 5
 global DEVOTION_WEAPON_TYPE := 6
 global VOLT_WEAPON_TYPE := 7
 global HAVOC_WEAPON_TYPE := 8
+global PROWLER_WEAPON_TYPE := 9
+global HAMLOK_WEAPON_TYPE := 10
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
@@ -51,17 +53,26 @@ global R99_PIXELS := [1606, 986, true, 1671, 974, false, 1641, 1004, true]
 global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
 ; heavy weapon
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
-global SPITFIRE_PIXELS := [1693, 972, true, 1652, 989, true, 1645, 962, true]
+global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
+global HAMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
 ; energy weapon
 global LSTAR_PIXELS := [1587, 973, true, 1641, 989, false, 1667, 969, true]
 global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
 global VOLT_PIXELS := [1644, 981, false, 1585, 976, true, 1680, 971, true]
 global HAVOC_PIXELS := [1656, 996, true, 1658, 985, false, 1637, 962, true]
+; supply drop weapon
+global SPITFIRE_PIXELS := [1693, 972, true, 1652, 989, true, 1645, 962, true]
+
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := [1621, 1006]
 global DEVOTION_TURBOCHARGER_PIXELS := [1650, 1007]
 
+; hamlok single shot
+global single_file_mode := false
+global SINGLESHOT_PIXELS := [1712, 1000]
+
 ; tips setting
+global hint_method
 if (script_version = "narrator")
     hint_method:="Say"
 else if (script_version = "tooltip")
@@ -123,6 +134,19 @@ global HAVOC_RECOILS := [[-6, 10], [-6, 10], [-6, 12], [0, 12], [0, 12]
                         , [0, 6], [0, 6], [0, 6], [0, 6], [0, 6]
                         , [0, 6], [0, 6]]
 ; heavy weapon interval and recoils
+global FLATLINE_INTERVAL := 100
+global FLATLINE_RECOILS := [[8, 12], [6, 12], [4, 10], [2, 8], [2, 8]
+                        , [2, 8], [-3, 0], [-8, 0], [-8, 0], [-8, 2]
+                        , [4, 4], [4, 4], [6, 2], [8, 6], [8, 6]
+                        , [8, 6], [8, 6], [8, 2], [4, 2], [4, 2]
+                        , [4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
+                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
+global PROWLER_INTERVAL := 40                        
+global PROWLER_RECOILS := [[0, 10], [0, 10], [0, 8], [0, 8]]
+global HAMLOK_INTERVAL := 90
+global HAMLOK_RECOILS := [[0, 15], [0, 15]]
+global HAMLOK_SINGLESHOT_RECOILS := [[0, 5]]
+; supply drop weapon interval and recoils
 global SPITFIRE_INTERVAL := 112
 global SPITFIRE_RECOILS := [[2, 10], [2, 10], [4, 10], [4, 10], [4, 10]
                         , [4, 2], [-10, 2], [-10, 2], [-10, 2], [5, 2]
@@ -135,13 +159,6 @@ global SPITFIRE_RECOILS := [[2, 10], [2, 10], [4, 10], [4, 10], [4, 10]
                         , [4, 2], [4, 2], [2, 2], [2, 2], [2, 4]
                         , [2, 4], [-6, 4], [-6, 4], [-6, 4], [-6, 4]
                         , [0, 2], [0, 2], [0, 0], [0, 2], [0, 2]]
-global FLATLINE_INTERVAL := 100
-global FLATLINE_RECOILS := [[8, 12], [6, 12], [4, 10], [2, 8], [2, 8]
-                        , [2, 8], [-3, 0], [-8, 0], [-8, 0], [-8, 2]
-                        , [4, 4], [4, 4], [6, 2], [8, 6], [8, 6]
-                        , [8, 6], [8, 6], [8, 2], [4, 2], [4, 2]
-                        , [4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
-                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
 
 
 ; check whether the current weapon match the weapon pixels
@@ -157,6 +174,15 @@ check_weapon(weapon_pixels) {
         i := i + 3
     }
     return True
+}
+
+check_single_file_mode() {
+    target_color := 0xFFFFFF
+    PixelGetColor, check_point_color, SINGLESHOT_PIXELS[1], SINGLESHOT_PIXELS[2]
+    if (check_point_color == target_color) {
+        return true
+    }
+    return false
 }
 
 check_turbocharger(turbocharger_pixels) {
@@ -190,7 +216,11 @@ detect_weapon() {
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (check_weapon(FLATLINE_PIXELS)) {
             return FLATLINE_WEAPON_TYPE
-        }
+        } else if (check_weapon(PROWLER_PIXELS)) {
+            return PROWLER_WEAPON_TYPE
+        } else if (check_weapon(HAMLOK_PIXELS)) {
+            return HAMLOK_WEAPON_TYPE
+        }        
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (check_weapon(LSTAR_PIXELS)) {
             return LSTAR_WEAPON_TYPE
@@ -210,8 +240,9 @@ detect_weapon() {
 }
 
 detectAndSetWeapon() {
-    sleep 50
+    sleep 500
     current_weapon_type := detect_weapon()
+    single_file_mode := check_single_file_mode()
     ; set turbocharger
     if (current_weapon_type == DEVOTION_WEAPON_TYPE)
         has_turbocharger := check_turbocharger(DEVOTION_TURBOCHARGER_PIXELS)
@@ -219,9 +250,8 @@ detectAndSetWeapon() {
         has_turbocharger := check_turbocharger(HAVOC_TURBOCHARGER_PIXELS)
     else 
         has_turbocharger := false
-    global hint_method
+    ; %hint_method%(single_file_mode)
     ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
-    ; tooltip(has_turbocharger)
 }
 
 ~E Up::
@@ -236,11 +266,12 @@ return
     detectAndSetWeapon()
 return
 
+~B::
+    detectAndSetWeapon()
+return
+
 ~$*LButton::
     if (GetKeyState("RButton")) {
-        ; interval := R99_INTERVAL
-        ; i := 1
-        ; recoils := R99_RECOILS
         i := 1
         if (current_weapon_type == R99_WEAPON_TYPE) {
             interval := R99_INTERVAL
@@ -268,18 +299,40 @@ return
         } else if (current_weapon_type == DEVOTION_WEAPON_TYPE) {
             interval := DEVOTION_INTERVAL
             recoils := DEVOTION_RECOILS
+        } else if (current_weapon_type == PROWLER_WEAPON_TYPE) {
+            interval := PROWLER_INTERVAL
+            recoils := PROWLER_RECOILS
+        } else if (current_weapon_type == HAMLOK_WEAPON_TYPE) {
+            interval := HAMLOK_INTERVAL
+            recoils := HAMLOK_RECOILS
+            if (single_file_mode) 
+                recoils := HAMLOK_SINGLESHOT_RECOILS
         } else {
             return
         }
         Loop
         {
-            if (!GetKeyState("LButton") || i > recoils.Length()) {
-                DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
-                break
+            if (single_file_mode) {
+                if (current_weapon_type == HAMLOK_WEAPON_TYPE) {
+                    GetKeyState, LButton, LButton, P
+                    if LButton = U 
+                        Break
+                    Random, rand, 1, 10
+                    sleep interval + rand
+                    MouseClick, Left,,, 1
+                    DllCall("mouse_event", uint, 0x01, uint, recoils[i][1] * modifier, uint, recoils[i][2] * modifier)
+                } else {
+                    return
+                }
+            } else {
+                if (!GetKeyState("LButton") || i > recoils.Length()) {
+                    DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
+                    break
+                }
+                sleep interval
+                DllCall("mouse_event", uint, 0x01, uint, recoils[i][1] * modifier, uint, recoils[i][2] * modifier)
+                i += 1
             }
-            sleep interval
-            DllCall("mouse_event", uint, 0x01, uint, recoils[i][1] * modifier, uint, recoils[i][2] * modifier)
-            i += 1
         }
     }
     return
