@@ -1,6 +1,7 @@
 # Apex-NoRecoil-2021
 An AutoHotKey script to minimize recoil with auto weapon detection for Apex Legends. (Only works on 1080p). 
-Apex Legends AHK 压枪宏，带武器自动检测. 
+
+Apex Legends AHK 压枪宏，带武器自动检测. (只支持 1080p)
 
 ## Description
 This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection. Current support weapon: R99, R301, Flatline, Spitfire, Havoc, Volt, Devotion and L-Star, Hamlok, Prowler.
