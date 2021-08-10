@@ -28,7 +28,7 @@ global current_weapon_type := DEFAULT_WEAPON_TYPE
 global has_turbocharger := false
 
 ; weapon type constant
-global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK"]
+global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR"]
 global DEFAULT_WEAPON_TYPE := 0
 global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
@@ -40,6 +40,8 @@ global VOLT_WEAPON_TYPE := 7
 global HAVOC_WEAPON_TYPE := 8
 global PROWLER_WEAPON_TYPE := 9
 global HEMLOK_WEAPON_TYPE := 10
+global RE45_WEAPON_TYPE := 11
+global ALTERNATOR_WEAPON_TYPE := 12
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
@@ -54,6 +56,7 @@ global SUPPY_DROP_COLOR = 0x3701B2
 ; light weapon
 global R99_PIXELS := [1606, 986, true, 1671, 974, false, 1641, 1004, true]
 global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
+global RE45_PIXELS := [1605, 975, true, 1638, 980, false, 1662, 1004, true]
 ; heavy weapon
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
@@ -65,6 +68,7 @@ global VOLT_PIXELS := [1644, 981, false, 1585, 976, true, 1680, 971, true]
 global HAVOC_PIXELS := [1656, 996, true, 1658, 985, false, 1637, 962, true]
 ; supply drop weapon
 global SPITFIRE_PIXELS := [1693, 972, true, 1652, 989, true, 1645, 962, true]
+global ALTERNATOR_PIXELS := [1615, 979, true, 1642, 980, true, 1646, 978, false]
 
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := [1621, 1006]
@@ -153,15 +157,15 @@ global FLATLINE_PATTERN := [[3.0, 15.2, 110], [1.5, 5.3, 110], [9.6, 10.1, 110],
 , [4.2, 2.1, 110], [1.8, 8.3, 110], [3.3, 8.1, 110], [6.9, 4.9, 110], [9.0, 2.3, 110]
 , [3.9, 0.6, 113], [-1.2, 5, 113], [-7.9, 2.5, 113], [-5.5, 2, 113], [-8.8, 2.2, 113]
 , [-9.1, 1.5, 113], [-8.8, 1, 113]]
-global PROWLER_PATTERN := [[0.0, 0.0, 10], [-15, 12.8, 84], [-5, 12.9, 84], [0, 11.4, 84], [3, 9.8, 84]
-, [4, 9.0, 84], [4, 9.1, 84], [2, 12.1, 84], [-0.9, 12.1, 84], [0, 12.1, 84]
-, [0, 10.3, 84], [-2, 6.4, 84], [-3.5, 5.1, 84], [-4.0, 3.1, 84], [-5.0, 2.1, 84]
-, [-5.4, 2, 83], [-5.4, 1.5, 83], [-4.0, 5.4, 83], [-1.9, 5, 83], [0, 5, 84]
-, [0, 5, 84], [2.8, 5.8, 84], [2.0, 5.8, 84], [0.9, 2.8, 84], [-0.9, 5.5, 84]
-, [-2.0, 5.5, 84], [0.0, 6, 84], [0.0, 6.5, 84], [0.0, 7, 84], [0.0, 7, 84]
-, [0.0, 7, 84], [0.0, 7, 84], [0.0, 7, 100]]
-global HEMLOK_PATTERN := [[0, 0, 40], [0, 8, 40], [0, 8, 40], [0, 1, 50], [0, 1, 50]
-, [0, 1, 50]]
+global PROWLER_PATTERN := [[2, 15.2, 10], [2, 12.7, 84], [2, 12.9, 84], [2, 11.4, 84], [3, 9.8, 84]]
+global HEMLOK_PATTERN := [[2, 8, 40], [0, 8, 40], [0, 8, 40]]
+; global HEMLOK_SINGLESHOT_PATTERN := [[0, 5, 60]]
+global HEMLOK_SINGLESHOT_PATTERN := [[-2.5, 6, 60], [0, 6, 60], [2, 6, 60], [-2.5, 6, 60], [0, 6, 60]
+, [2, 6, 60], [-2.5, 6, 60], [0, 6, 60], [2, 6, 60], [-2.5, 6, 60]
+, [0, 6, 60], [2, 6, 60], [-2.5, 6, 60], [0, 6, 60], [2, 6, 60]
+, [-2.5, 6, 60], [0, 6, 60], [2, 6, 60], [-2.5, 6, 60], [0, 6, 60]
+, [2, 6, 60], [-2.5, 6, 60], [0, 6, 60], [2, 6, 60], [-2.5, 6, 60]
+, [0, 6, 60], [2, 6, 60], [-2.5, 6, 60], [0, 6, 60], [2, 6, 60]]
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := [[3.0, 18.2, 110], [1.5, 4.8, 110], [9.6, 9.6, 110], [6.3, 7.0, 110], [3.3, 6.2, 110]
 , [-0.3, 9.2, 110], [-4.5, 2.6, 110], [-9.6, -2.0, 110], [-2.7, -1.6, 110], [-3.9, 3.2, 110]
@@ -233,6 +237,8 @@ detect_weapon() {
             return R301_WEAPON_TYPE
         } else if (check_weapon(R99_PIXELS)) {
             return R99_WEAPON_TYPE
+        } else if (check_weapon(RE45_PIXELS)) {
+            return RE45_WEAPON_TYPE
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (check_weapon(FLATLINE_PIXELS)) {
@@ -255,6 +261,8 @@ detect_weapon() {
     } else if (check_point_color == SUPPY_DROP_COLOR) {
         if (check_weapon(SPITFIRE_PIXELS)) {
             return SPITFIRE_WEAPON_TYPE
+        } else if (check_weapon(ALTERNATOR_PIXELS)) {
+            return ALTERNATOR_WEAPON_TYPE
         }
     }
     return DEFAULT_WEAPON_TYPE
@@ -271,7 +279,7 @@ detectAndSetWeapon() {
         has_turbocharger := check_turbocharger(HAVOC_TURBOCHARGER_PIXELS)
     else 
         has_turbocharger := false
-    ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+    %hint_method%(WEAPON_NAME[current_weapon_type + 1])
 }
 
 ~E Up::
@@ -297,6 +305,10 @@ return
             pattern := R99_PATTERN
         } else if (current_weapon_type == R301_WEAPON_TYPE) {
             pattern := R301_PATTERN
+        } else if (current_weapon_type == RE45_WEAPON_TYPE) {
+            pattern := RE45_PATTERN
+        } else if (current_weapon_type == ALTERNATOR_WEAPON_TYPE) {
+            pattern := ALTERNATOR_PATTERN
         } else if (current_weapon_type == SPITFIRE_WEAPON_TYPE) {
             pattern := SPITFIRE_PATTERN
         } else if (current_weapon_type == FLATLINE_WEAPON_TYPE) {
@@ -318,8 +330,8 @@ return
             pattern := PROWLER_PATTERN
         } else if (current_weapon_type == HEMLOK_WEAPON_TYPE) {
             pattern := HEMLOK_PATTERN
-            ; if (single_file_mode)
-            ;     pattern := HEMLOK_SINGLESHOT_PATTERN
+            if (single_file_mode)
+                pattern := HEMLOK_SINGLESHOT_PATTERN
         } else {
             return
         }
@@ -333,10 +345,10 @@ return
                     GetKeyState, LButton, LButton, P
                     if LButton = U 
                         Break
+                    DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
                     Random, rand, 1, 10
                     sleep interval + rand
                     MouseClick, Left,,, 1
-                    DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
                 } else {
                     return
                 }
@@ -347,8 +359,8 @@ return
                 }
                 DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
                 sleep interval
-                i += 1
             }
+            i += 1
         }
     }
 return
