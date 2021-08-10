@@ -9,10 +9,10 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，不会封号（这就类似于那些淘宝卖好几百的主播专用压枪宏）。目前支持枪械包括 R99, R301, RE45, Alternator, Flatline, Spitfire, Havoc, Volt, Devotion, L-Star, Hamlok 和 Prowler.
 
 ## Season 10 Update
-- Support more weapon: Alternator, RE45, Hamlok and Prowler
-- Hamlok's origial single fire mode is now autofire
-- Add fire mode detection, the script will do nothing in single fire mode for all weapon except Hamlok
-- change the recoil pattern struct to support changing interval between each shot.
+- Support more weapon: Alternator, RE45, Hamlok and Prowler. 支持更多武器
+- Hamlok's origial single fire mode is now autofire. 汉姆洛克的单点模式现在是全自动
+- Add fire mode detection, the script will do nothing in single fire mode for all weapon except Hamlok. 现在半自动模式除了汉姆洛克不再提供补偿
+- change the recoil pattern struct to support changing interval between each shot. 现在支持每枪的补偿间隔设置
 
 ## Usage
 The default mouse sensitivity is `5.0`. Change the sens in `settings.ini` to yours.
