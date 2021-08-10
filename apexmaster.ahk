@@ -273,7 +273,7 @@ detectAndSetWeapon() {
         has_turbocharger := check_turbocharger(HAVOC_TURBOCHARGER_PIXELS)
     else 
         has_turbocharger := false
-    %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+    ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
 }
 
 ~E Up::
