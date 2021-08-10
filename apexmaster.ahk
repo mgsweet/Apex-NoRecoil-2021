@@ -25,7 +25,7 @@ global current_weapon_type := DEFAULT_WEAPON_TYPE
 global has_turbocharger := false
 
 ; weapon type constant
-global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HAMLOK"]
+global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK"]
 global DEFAULT_WEAPON_TYPE := 0
 global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
@@ -36,7 +36,7 @@ global DEVOTION_WEAPON_TYPE := 6
 global VOLT_WEAPON_TYPE := 7
 global HAVOC_WEAPON_TYPE := 8
 global PROWLER_WEAPON_TYPE := 9
-global HAMLOK_WEAPON_TYPE := 10
+global HEMLOK_WEAPON_TYPE := 10
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
@@ -54,7 +54,7 @@ global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
 ; heavy weapon
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
-global HAMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
+global HEMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
 ; energy weapon
 global LSTAR_PIXELS := [1587, 973, true, 1641, 989, false, 1667, 969, true]
 global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
@@ -67,7 +67,7 @@ global SPITFIRE_PIXELS := [1693, 972, true, 1652, 989, true, 1645, 962, true]
 global HAVOC_TURBOCHARGER_PIXELS := [1621, 1006]
 global DEVOTION_TURBOCHARGER_PIXELS := [1650, 1007]
 
-; hamlok single shot
+; hemlok single shot
 global single_file_mode := false
 global SINGLESHOT_PIXELS := [1712, 1000]
 
@@ -89,81 +89,80 @@ SAPI.volume:=volume
 ; light weapon interval and recoils
 global R99_INTERVAL := 52
 global R99_RECOILS := [[-1.6, 7], [0.5, 6.2], [2.3, 4.9], [-1.8, 10], [-2.8, 12.5]
-                        , [-3.3, 9], [-7, 8], [-2, 7], [0, 9], [4, 8]
-                        , [4.5, 7], [1, 7], [1, 6], [-1.1, 5.5], [-4, -1]
-                        , [-4, 2.55], [-3, 1], [3, 1], [4, 2.5], [6, 1]
-                        , [5, 2], [4, 3], [-6, 1], [-3, 1], [-4, 0]
-                        , [-2, 0], [4, 3], [-6, 1], [-3, 1], [-4, 0]
-                        , [-2, 0]]
+, [-3.3, 9], [-7, 8], [-2, 7], [0, 9], [4, 8]
+, [4.5, 7], [1, 7], [1, 6], [-1.1, 5.5], [-4, -1]
+, [-4, 2.55], [-3, 1], [3, 1], [4, 2.5], [6, 1]
+, [5, 2], [4, 3], [-6, 1], [-3, 1], [-4, 0]
+, [-2, 0], [4, 3], [-6, 1], [-3, 1], [-4, 0]
+, [-2, 0]]
 global R301_INTERVAL := 72
 global R301_RECOILS := [[-2, 12], [-2, 12], [-2, 12], [-2, 8], [0, 8]
-                        , [-2, 5], [-2, 5], [-2, 3], [2, 3], [-4, 3]
-                        , [4, 3], [4, 3], [4, 3], [4, 3], [4, 3]
-                        , [4, 1], [4, 5], [2, 3], [-4, 3], [-2, 3]
-                        , [-6, 1], [-6, 0], [-6, 0], [-6, 0], [-2, 0]
-                        , [-2, 0], [-2, 0], [-2, 0], [-2, 0], [-2, 0]]
+, [-2, 5], [-2, 5], [-2, 3], [2, 3], [-4, 3]
+, [4, 3], [4, 3], [4, 3], [4, 3], [4, 3]
+, [4, 1], [4, 5], [2, 3], [-4, 3], [-2, 3]
+, [-6, 1], [-6, 0], [-6, 0], [-6, 0], [-2, 0]
+, [-2, 0], [-2, 0], [-2, 0], [-2, 0], [-2, 0]]
 ; energy weapon interval and recoils
 global LSTAR_INTERVAL := 100
 global LSTAR_RECOILS := [[22, 12], [22, 12], [-16, 12], [-14, 12], [-14, 12]
-                        , [-6, 10], [0, 10], [0, 10], [0, 10], [0, 10]
-                        , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]
-                        , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]
-                        , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]
-                        , [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]
+, [-6, 10], [0, 10], [0, 10], [0, 10], [0, 10]
+, [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]
+, [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]
+, [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]
+, [0, 10], [0, 10], [0, 10], [0, 10], [0, 10]]
 global DEVOTION_INTERVAL := 100
 global DEVOTION_RECOILS := [[0, 20], [0, 20], [-1, 20], [-1, 20], [-2, 20]
-                        , [4, 20], [10, 6], [5, 6], [5, 6], [5, 6]
-                        , [8, 6], [5, 6], [8, 4], [5, 4], [8, 4]
-                        , [-10, 4], [-10, 4], [-10, 4], [-10, 4], [-10, 4]
-                        , [0, 4], [0, 4], [0, 4], [-4, 4], [-4, 2]
-                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
-                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
-                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
-                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
-                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
+, [4, 20], [10, 6], [5, 6], [5, 6], [5, 6]
+, [8, 6], [5, 6], [8, 4], [5, 4], [8, 4]
+, [-10, 4], [-10, 4], [-10, 4], [-10, 4], [-10, 4]
+, [0, 4], [0, 4], [0, 4], [-4, 4], [-4, 2]
+, [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
+, [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
+, [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
+, [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
+, [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
 global VOLT_INTERVAL := 83
 global VOLT_RECOILS := [[-2, 16], [-2, 16], [-2, 16], [-2, 16], [-2, 10]
-                        , [-2, 8], [-2, 6], [-4, 8], [4, 8], [6, 8]
-                        , [8, 0], [8, 0], [8, 2], [8, 2], [-4, 4]
-                        , [-4, 4], [-4, 4], [-4, 4], [4, 2], [4, 2]
-                        , [4, 2], [4, 2] ,[0, 2] , [0, 2] , [0, 2]
-                        ,[0, 2] , [0, 2] , [0, 2]]
+, [-2, 8], [-2, 6], [-4, 8], [4, 8], [6, 8]
+, [8, 0], [8, 0], [8, 2], [8, 2], [-4, 4]
+, [-4, 4], [-4, 4], [-4, 4], [4, 2], [4, 2]
+, [4, 2], [4, 2] ,[0, 2] , [0, 2] , [0, 2]
+,[0, 2] , [0, 2] , [0, 2]]
 global HAVOC_INTERVAL := 89
 global HAVOC_RECOILS := [[-6, 10], [-6, 10], [-6, 12], [0, 12], [0, 12]
-                        , [4, 10], [4, 10], [4, 10], [4, 10], [-4, 4]
-                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-2, 4]
-                        , [4, 4], [4, 4], [4, 4], [4, 4], [4, 4]
-                        , [4, 4], [4, 4], [4, 6], [4, 6], [4, 6]
-                        , [4, 6], [4, 6], [4, 6], [4, 6], [4, 6]
-                        , [0, 6], [0, 6], [0, 6], [0, 6], [0, 6]
-                        , [0, 6], [0, 6]]
+, [4, 10], [4, 10], [4, 10], [4, 10], [-4, 4]
+, [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-2, 4]
+, [4, 4], [4, 4], [4, 4], [4, 4], [4, 4]
+, [4, 4], [4, 4], [4, 6], [4, 6], [4, 6]
+, [4, 6], [4, 6], [4, 6], [4, 6], [4, 6]
+, [0, 6], [0, 6], [0, 6], [0, 6], [0, 6]
+, [0, 6], [0, 6]]
 ; heavy weapon interval and recoils
 global FLATLINE_INTERVAL := 100
 global FLATLINE_RECOILS := [[8, 12], [6, 12], [4, 10], [2, 8], [2, 8]
-                        , [2, 8], [-3, 0], [-8, 0], [-8, 0], [-8, 2]
-                        , [4, 4], [4, 4], [6, 2], [8, 6], [8, 6]
-                        , [8, 6], [8, 6], [8, 2], [4, 2], [4, 2]
-                        , [4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
-                        , [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
-global PROWLER_INTERVAL := 40                        
+, [2, 8], [-3, 0], [-8, 0], [-8, 0], [-8, 2]
+, [4, 4], [4, 4], [6, 2], [8, 6], [8, 6]
+, [8, 6], [8, 6], [8, 2], [4, 2], [4, 2]
+, [4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]
+, [-4, 2], [-4, 2], [-4, 2], [-4, 2], [-4, 2]]
+global PROWLER_INTERVAL := 40 
 global PROWLER_RECOILS := [[0, 10], [0, 10], [0, 8], [0, 8]]
-global HAMLOK_INTERVAL := 90
-global HAMLOK_RECOILS := [[0, 15], [0, 15]]
-global HAMLOK_SINGLESHOT_RECOILS := [[0, 5]]
+global HEMLOK_INTERVAL := 90
+global HEMLOK_RECOILS := [[0, 15], [0, 15]]
+global HEMLOK_SINGLESHOT_RECOILS := [[0, 5]]
 ; supply drop weapon interval and recoils
 global SPITFIRE_INTERVAL := 112
 global SPITFIRE_RECOILS := [[2, 10], [2, 10], [4, 10], [4, 10], [4, 10]
-                        , [4, 2], [-10, 2], [-10, 2], [-10, 2], [5, 2]
-                        , [5, 2], [0, 2], [5, 2], [5, 2], [5, 2]
-                        , [5, 2], [8, 4], [8, 4], [8, 4], [8, 4]
-                        , [2, 4], [-4, 2], [-6, 2], [-6, 2], [-6, 2]
-                        , [-6, 0], [-6, 2], [-6, 0], [-6, 0], [-6, 2]
-                        , [0, 2], [0, 2], [0, 0], [0, 2], [0, 2]
-                        , [4, 2], [4, 2], [4, 2], [4, 2], [4, 2]
-                        , [4, 2], [4, 2], [2, 2], [2, 2], [2, 4]
-                        , [2, 4], [-6, 4], [-6, 4], [-6, 4], [-6, 4]
-                        , [0, 2], [0, 2], [0, 0], [0, 2], [0, 2]]
-
+, [4, 2], [-10, 2], [-10, 2], [-10, 2], [5, 2]
+, [5, 2], [0, 2], [5, 2], [5, 2], [5, 2]
+, [5, 2], [8, 4], [8, 4], [8, 4], [8, 4]
+, [2, 4], [-4, 2], [-6, 2], [-6, 2], [-6, 2]
+, [-6, 0], [-6, 2], [-6, 0], [-6, 0], [-6, 2]
+, [0, 2], [0, 2], [0, 0], [0, 2], [0, 2]
+, [4, 2], [4, 2], [4, 2], [4, 2], [4, 2]
+, [4, 2], [4, 2], [2, 2], [2, 2], [2, 4]
+, [2, 4], [-6, 4], [-6, 4], [-6, 4], [-6, 4]
+, [0, 2], [0, 2], [0, 0], [0, 2], [0, 2]]
 
 ; check whether the current weapon match the weapon pixels
 check_weapon(weapon_pixels) {
@@ -204,7 +203,7 @@ detect_weapon() {
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
     if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR) {
         check_point_color := check_weapon1_color
-    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR  || check_weapon2_color == SUPPY_DROP_COLOR) {
+    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR || check_weapon2_color == SUPPY_DROP_COLOR) {
         check_point_color := check_weapon2_color
     } else {
         return DEFAULT_WEAPON_TYPE
@@ -221,9 +220,9 @@ detect_weapon() {
             return FLATLINE_WEAPON_TYPE
         } else if (check_weapon(PROWLER_PIXELS)) {
             return PROWLER_WEAPON_TYPE
-        } else if (check_weapon(HAMLOK_PIXELS)) {
-            return HAMLOK_WEAPON_TYPE
-        }        
+        } else if (check_weapon(HEMLOK_PIXELS)) {
+            return HEMLOK_WEAPON_TYPE
+        } 
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (check_weapon(LSTAR_PIXELS)) {
             return LSTAR_WEAPON_TYPE
@@ -304,18 +303,18 @@ return
         } else if (current_weapon_type == PROWLER_WEAPON_TYPE) {
             interval := PROWLER_INTERVAL
             recoils := PROWLER_RECOILS
-        } else if (current_weapon_type == HAMLOK_WEAPON_TYPE) {
-            interval := HAMLOK_INTERVAL
-            recoils := HAMLOK_RECOILS
+        } else if (current_weapon_type == HEMLOK_WEAPON_TYPE) {
+            interval := HEMLOK_INTERVAL
+            recoils := HEMLOK_RECOILS
             if (single_file_mode) 
-                recoils := HAMLOK_SINGLESHOT_RECOILS
+                recoils := HEMLOK_SINGLESHOT_RECOILS
         } else {
             return
         }
         Loop
         {
             if (single_file_mode) {
-                if (current_weapon_type == HAMLOK_WEAPON_TYPE) {
+                if (current_weapon_type == HEMLOK_WEAPON_TYPE) {
                     GetKeyState, LButton, LButton, P
                     if LButton = U 
                         Break
@@ -337,13 +336,13 @@ return
             }
         }
     }
-    return
+return
 
 IniRead:
     IfNotExist, settings.ini
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
-        IniWrite, "5.0", settings.ini, mouse settings, sens
+            IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0"`n, settings.ini, mouse settings, zoom_sens
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
@@ -364,17 +363,17 @@ IniRead:
     }
 return
 
-activeMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef  Height) {
+activeMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height) {
     CoordMode, Mouse, Screen
     MouseGetPos, mouseX, mouseY
     SysGet, monCount, MonitorCount
-    Loop %monCount%  {
+    Loop %monCount% {
         SysGet, curMon, Monitor, %a_index%
         if ( mouseX >= curMonLeft and mouseX <= curMonRight and mouseY >= curMonTop and mouseY <= curMonBottom ) {
-            X      := curMonTop
-            y      := curMonLeft
+            X := curMonTop
+            y := curMonLeft
             Height := curMonBottom - curMonTop
-            Width  := curMonRight  - curMonLeft
+            Width := curMonRight - curMonLeft
             return
         }
     }
@@ -384,7 +383,7 @@ Say(text) {
     global SAPI
     SAPI.Speak(text, 1)
     sleep 150
-    return
+return
 }
 
 Tooltip(Text) {
@@ -393,9 +392,9 @@ Tooltip(Text) {
     yPos := Height / 2 + (Height / 10)
     Tooltip, %Text%, xPos, yPos
     SetTimer, RemoveTooltip, 500
-    return
-    RemoveTooltip:
-        SetTimer, RemoveTooltip, Off
-        Tooltip
-    return
+return
+RemoveTooltip:
+    SetTimer, RemoveTooltip, Off
+    Tooltip
+return
 }
