@@ -26,7 +26,7 @@ After running the script, every time you press `1`, `2`, `B` or `E`, the script 
 默认鼠标灵敏度为 `5.0` ，可以通过改动 `settings.ini` 下的 `sen` 更改。想要直接运行 `apexmaster.ahk` 的话你需要另外安装AutoHotKey。如果不想安装 AutoHotKey，理论上直接跑 `/bin` 目录下的 `apexmaster.exe` 也是没问题的。武器检测会在你按 `1`, `2`, `B` 或 `E` 时进行，舔包时通过鼠标点击获得的武器在一开始不会被检测，但在你按下上面所述四个按钮中任意一个后武器压枪补偿就会更新。
 
 ## How to guide
-If you want to compile the script, you need to uncomment [line 373(https://github.com/mgsweet/Apex-NoRecoil-2021/blob/65b3f2e9e623652597be86cff00af7ab862b10f7/apexmaster.ahk#L373) and comment [line 372](https://github.com/mgsweet/Apex-NoRecoil-2021/blob/65b3f2e9e623652597be86cff00af7ab862b10f7/apexmaster.ahk#L372).
+If you want to compile the script, you need to uncomment [line 373](https://github.com/mgsweet/Apex-NoRecoil-2021/blob/65b3f2e9e623652597be86cff00af7ab862b10f7/apexmaster.ahk#L373) and comment [line 372](https://github.com/mgsweet/Apex-NoRecoil-2021/blob/65b3f2e9e623652597be86cff00af7ab862b10f7/apexmaster.ahk#L372).
 
 ## Contributing
 It would be good if you can help me setup some more accurate recoil value or make the script support more weapons. Check the code and send me a pull request if you do so. I really appreciate that. 
