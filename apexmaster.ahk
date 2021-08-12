@@ -28,7 +28,7 @@ global current_weapon_type := DEFAULT_WEAPON_TYPE
 global has_turbocharger := false
 
 ; weapon type constant
-global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR"]
+global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR", "P2020"]
 global DEFAULT_WEAPON_TYPE := 0
 global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
@@ -42,6 +42,7 @@ global PROWLER_WEAPON_TYPE := 9
 global HEMLOK_WEAPON_TYPE := 10
 global RE45_WEAPON_TYPE := 11
 global ALTERNATOR_WEAPON_TYPE := 12
+global P2020_WEAPON_TYPE := 13
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
@@ -57,6 +58,7 @@ global SUPPY_DROP_COLOR = 0x3701B2
 global R99_PIXELS := [1606, 986, true, 1671, 974, false, 1641, 1004, true]
 global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
 global RE45_PIXELS := [1605, 975, true, 1638, 980, false, 1662, 1004, true]
+global P2020_PIXELS := [1609, 970, true, 1633, 981, false, 1650, 1004, true]
 ; heavy weapon
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
@@ -109,6 +111,7 @@ global RE45_PATTERN := [[-0.7, 12.6, 112], [-1.4, 10.9, 112], [-6.1, 11.2, 112],
 , [-4.7, 5.1, 112], [1.0, 6.4, 112], [-5.7, 5.7, 112], [-3.4, 5.1, 112], [-2.4, 6.4, 112]
 , [2.4, 5.7, 112], [-3.1, 4.7, 142], [0, 1.3, 142], [0, 3.4, 147], [0, 4.1, 147]
 , [0, 2.4, 147], [0, 4.1, 147], [0, 0.0, 147]]
+global P2020_PATTERN := [[0, 10, 130]]
 ; energy weapon pattern
 global LSTAR_PATTERN := [[5, 5, 37], [5, 5, 37], [5, 5, 37], [5, 5, 37], [5, 5, 37]
 , [5, 5, 37], [2, 5, 37], [2, 5, 37], [2, 5, 37], [1, 2, 37]
@@ -159,7 +162,7 @@ global FLATLINE_PATTERN := [[3.0, 15.2, 110], [1.5, 5.3, 110], [9.6, 10.1, 110],
 , [-9.1, 1.5, 113], [-8.8, 1, 113]]
 global PROWLER_PATTERN := [[2, 15.2, 10], [2, 12.7, 84], [2, 12.9, 84], [2, 11.4, 84], [3, 9.8, 84]]
 global HEMLOK_PATTERN := [[2, 8, 40], [0, 8, 40], [0, 8, 40]]
-global HEMLOK_SINGLESHOT_PATTERN := [[0, 5, 60]]
+global HEMLOK_SINGLESHOT_PATTERN := [[0, 5, 160]]
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := [[3.0, 18.2, 110], [1.5, 4.8, 110], [9.6, 9.6, 110], [6.3, 7.0, 110], [3.3, 6.2, 110]
 , [-0.3, 9.2, 110], [-4.5, 2.6, 110], [-9.6, -2.0, 110], [-2.7, -1.6, 110], [-3.9, 3.2, 110]
@@ -233,6 +236,8 @@ detect_weapon() {
             return R99_WEAPON_TYPE
         } else if (check_weapon(RE45_PIXELS)) {
             return RE45_WEAPON_TYPE
+        } else if (check_weapon(P2020_PIXELS)) {
+            return P2020_WEAPON_TYPE
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (check_weapon(FLATLINE_PIXELS)) {
@@ -293,7 +298,7 @@ return
 return
 
 ~$*LButton::
-    if (GetKeyState("RButton")) {
+    if (GetKeyState("RButton") || current_weapon_type == P2020_WEAPON_TYPE) {
         i := 1
         if (current_weapon_type == R99_WEAPON_TYPE) {
             pattern := R99_PATTERN
@@ -301,6 +306,8 @@ return
             pattern := R301_PATTERN
         } else if (current_weapon_type == RE45_WEAPON_TYPE) {
             pattern := RE45_PATTERN
+        } else if (current_weapon_type == P2020_WEAPON_TYPE) {
+            pattern := P2020_PATTERN
         } else if (current_weapon_type == ALTERNATOR_WEAPON_TYPE) {
             pattern := ALTERNATOR_PATTERN
         } else if (current_weapon_type == SPITFIRE_WEAPON_TYPE) {
@@ -334,15 +341,15 @@ return
             x := pattern[i][1]
             y := pattern[i][2]
             interval := pattern[i][3]
-            if (single_file_mode) {
-                if (current_weapon_type == HEMLOK_WEAPON_TYPE) {
+            if (single_file_mode || current_weapon_type == P2020_WEAPON_TYPE) {
+                if (current_weapon_type == HEMLOK_WEAPON_TYPE || current_weapon_type == P2020_WEAPON_TYPE) {
                     GetKeyState, LButton, LButton, P
                     if LButton = U 
                         Break
                     DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
                     Random, rand, 1, 10
-                    sleep interval + rand
                     MouseClick, Left,,, 1
+                    sleep interval + rand
                 } else {
                     return
                 }
@@ -371,7 +378,7 @@ IniRead:
         IniRead, script_name, settings.ini, script configs, script_name
         IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
         ; IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
-        IniWrite, "", settings.ini, window position, gui_position
+        IniWrite, "", settings.ini, window position, gui_positionb
         IniRead, script_name, settings.ini, script configs, script_name
         Run, %script_name%
     }
