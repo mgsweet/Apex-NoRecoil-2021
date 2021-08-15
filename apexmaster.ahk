@@ -4,7 +4,7 @@ SetWorkingDir %A_ScriptDir%
 #MaxThreadsBuffer on
 SetTitleMatchMode, 2
 ;#IfWinActive r5apex.exe
-SetBatchLines -1	
+SetBatchLines -1
 #MaxHotkeysPerInterval 99000000
 #HotkeyInterval 99000000
 #KeyHistory 0
@@ -19,13 +19,6 @@ if not A_IsAdmin {
 }
 ; read settings.ini
 GoSub, IniRead
-
-; mouse sensitivity setting
-modifier:=2.50/sens
-
-; weapon detect
-global current_weapon_type := DEFAULT_WEAPON_TYPE
-global has_turbocharger := false
 
 ; weapon type constant
 global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR", "P2020"]
@@ -77,21 +70,7 @@ global HAVOC_TURBOCHARGER_PIXELS := [1621, 1006]
 global DEVOTION_TURBOCHARGER_PIXELS := [1650, 1007]
 
 ; hemlok single shot
-global single_file_mode := false
 global SINGLESHOT_PIXELS := [1712, 1000]
-
-; tips setting
-global hint_method
-if (script_version = "narrator")
-    hint_method:="Say"
-else if (script_version = "tooltip")
-    hint_method:="Tooltip"
-
-; voice setting
-SAPI.voice := SAPI.GetVoices().Item(1) 	; uncomment this line to get female voice.
-SAPI:=ComObjCreate("SAPI.SpVoice")
-SAPI.rate:=rate 
-SAPI.volume:=volume
 
 ; light weapon pattern
 global R301_PATTERN := [[-3.5, 10.4, 80], [4.4, 10.6, 80], [-6.4, 9.5, 80], [-1.2, 10.0, 80], [-5.3, 7.6, 80]
@@ -121,6 +100,9 @@ global LSTAR_PATTERN := [[5, 5, 37], [5, 5, 37], [5, 5, 37], [5, 5, 37], [5, 5, 
 , [-1, 5, 55], [-1, 5, 55], [-1, 5, 60], [-1, 5, 60], [-1, 5, 60]
 , [-1, 5, 60], [-1, 5, 60], [-1, 5, 60], [1, 5, 65], [1, 5, 65]
 , [1, 5, 65], [1, 5, 65], [1, 5, 65], [1, 5, 65], [0, 5, 65]
+, [0, 5, 65], [0, 5, 65], [0, 5, 65], [0, 5, 65], [0, 5, 65]
+, [0, 5, 65], [0, 5, 65], [0, 5, 65], [0, 5, 65], [0, 5, 65]
+, [0, 5, 65], [0, 5, 65], [0, 5, 65], [0, 5, 65], [0, 5, 65]
 , [0, 5, 65], [0, 5, 65], [0, 5, 65], [0, 5, 65], [0, 5, 65]]
 global DEVOTION_PATTERN := [[0.0, 0.0, 40], [0.8, 24.5, 180], [0.3, 20.0, 170], [0.3, 23.5, 140], [2.0, 23.2, 120]
 , [3.1, 19.5, 100], [2.8, 12.6, 85], [2.8, 10.6, 85], [6.2, 4.8, 85], [2.8, 6.4, 85]
@@ -146,13 +128,14 @@ global VOLT_PATTERN := [[0.0, 12.9, 81], [0.0, 9.5, 81], [-1.5, 11.3, 81], [-1.7
 , [5.0, 3.3, 81], [0.0, 1.2, 81], [-2.0, 1.8, 81], [-2.0, 1.7, 81], [-2.0, 5.3, 81]
 , [3.0, 0, 81], [1, 0.0, 81], [1, 7.0, 81], [1, 0.0, 81], [1, 0.0, 81]
 , [1, 0.0, 81], [1, 0.0, 81]]
-global HAVOC_PATTERN := [[0.0, 0.0, 460], [-15, 14.8, 84], [-5, 14.9, 84], [5, 13.4, 84], [5, 11.8, 84]
-, [5, 11.0, 84], [2, 11, 84], [2, 14.1, 84], [2, 10.1, 65], [-2, 5.5, 65]
-, [-2.4, 5.2, 65], [-2.2, 5, 65], [-2, 1.5, 65], [-1, 1.2, 65], [-1, 1, 65]
-, [-1., 1, 65], [-1.5, 0.8, 65], [1.5, 0.5, 65], [1.6, 0.0, 65], [1.8, 0.0, 65]
-, [1.8, 0.0, 65], [1.8, 0.0, 65], [1.8, 0.0, 65], [1.8, 0.0, 65], [1, 5, 65]
-, [1.5, 5.5, 65], [1.8, 6, 65], [1.8, 7, 65], [2.5, 8, 65], [2.5, 10, 65]
-, [2.5, 11, 65], [2.5, 16, 65], [2.5, 16, 65]]
+global HAVOC_PATTERN := [[-6, 10, 89], [-6, 10, 89], [-6, 12, 89], [0, 12, 89], [0, 12, 89]
+, [4, 10, 89], [4, 10, 89], [4, 10, 89], [4, 10, 89], [-4, 4, 89]
+, [-4, 2, 89], [-4, 2, 89], [-4, 2, 89], [-4, 2, 89], [-2, 4, 89]
+, [4, 4, 89], [4, 4, 89], [4, 4, 89], [4, 4, 89], [4, 4, 89]
+, [4, 4, 89], [4, 4, 89], [4, 6, 89], [4, 6, 89], [4, 6, 89]
+, [4, 6, 89], [4, 6, 89], [4, 6, 89], [4, 6, 89], [4, 6, 89]
+, [0, 6, 89], [0, 6, 89], [0, 6, 89], [0, 6, 89], [0, 6, 89]
+, [0, 6, 89], [0, 6, 89]]
 ; heavy weapon pattern
 global FLATLINE_PATTERN := [[3.0, 15.2, 110], [1.5, 5.3, 110], [9.6, 10.1, 110], [6.3, 7.5, 110], [3.3, 9.7, 110]
 , [-1.3, 9.7, 110], [-4.5, 2.6, 110], [-10.6, -2.0, 110], [-2.7, -1.3, 110], [-3.9, 3.5, 110]
@@ -184,8 +167,31 @@ global ALTERNATOR_PATTERN := [[0.0, 14.4, 109], [0.0, 13.0, 109], [0.0, 15.8, 10
 , [5.0, -0.2, 109], [5.0, 7.1, 109], [5.0, 1.7, 109], [5.0, 7.6, 109], [5.0, -0.7, 109]
 , [5.0, 6.8, 109], [5.0, 0.0, 109]]
 
+; tips setting
+global hint_method
+if (script_version = "narrator")
+    hint_method:="Say"
+else if (script_version = "tooltip")
+    hint_method:="Tooltip"
+
+; voice setting
+SAPI.voice := SAPI.GetVoices().Item(1) 	; uncomment this line to get female voice.
+SAPI:=ComObjCreate("SAPI.SpVoice")
+SAPI.rate:=rate 
+SAPI.volume:=volume
+
+; weapon detection
+global current_pattern := [[0, 0, 0]]
+global current_weapon_type := DEFAULT_WEAPON_TYPE
+global has_turbocharger := false
+global single_file_mode := false
+
+; mouse sensitivity setting
+global modifier := 2.50/sens
+
 ; check whether the current weapon match the weapon pixels
-check_weapon(weapon_pixels) {
+CheckWeapon(weapon_pixels)
+{
     target_color := 0xFFFFFF
     i := 1
     loop, 3 {
@@ -198,7 +204,8 @@ check_weapon(weapon_pixels) {
     return True
 }
 
-check_single_file_mode() {
+IsSingleFireMode()
+{
     target_color := 0xFFFFFF
     PixelGetColor, check_point_color, SINGLESHOT_PIXELS[1], SINGLESHOT_PIXELS[2]
     if (check_point_color == target_color) {
@@ -207,7 +214,8 @@ check_single_file_mode() {
     return false
 }
 
-check_turbocharger(turbocharger_pixels) {
+CheckTurbocharger(turbocharger_pixels)
+{
     target_color := 0xFFFFFF
     PixelGetColor, check_point_color, turbocharger_pixels[1], turbocharger_pixels[2]
     if (check_point_color == target_color) {
@@ -216,7 +224,13 @@ check_turbocharger(turbocharger_pixels) {
     return false
 }
 
-detect_weapon() {
+DetectAndSetWeapon()
+{
+    sleep 500
+    ; init
+    has_turbocharger := false
+    current_weapon_type := DEFAULT_WEAPON_TYPE
+    single_file_mode := IsSingleFireMode()
     ; first check which weapon is activate
     check_point_color := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
@@ -226,142 +240,120 @@ detect_weapon() {
     } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR || check_weapon2_color == SUPPY_DROP_COLOR) {
         check_point_color := check_weapon2_color
     } else {
-        return DEFAULT_WEAPON_TYPE
+        return
     }
     ; then check the weapon type
     if (check_point_color == LIGHT_WEAPON_COLOR) {
-        if (check_weapon(R301_PIXELS)) {
-            return R301_WEAPON_TYPE
-        } else if (check_weapon(R99_PIXELS)) {
-            return R99_WEAPON_TYPE
-        } else if (check_weapon(RE45_PIXELS)) {
-            return RE45_WEAPON_TYPE
-        } else if (check_weapon(P2020_PIXELS)) {
-            return P2020_WEAPON_TYPE
+        if (CheckWeapon(R301_PIXELS)) {
+            current_weapon_type := R301_WEAPON_TYPE
+            current_pattern := R301_PATTERN
+        } else if (CheckWeapon(R99_PIXELS)) {
+            current_weapon_type := R99_WEAPON_TYPE
+            current_pattern := R99_PATTERN
+        } else if (CheckWeapon(RE45_PIXELS)) {
+            current_weapon_type := RE45_WEAPON_TYPE
+            current_pattern := RE45_PATTERN
+        } else if (CheckWeapon(P2020_PIXELS)) {
+            current_weapon_type := P2020_WEAPON_TYPE
+            current_pattern := P2020_PATTERN
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
-        if (check_weapon(FLATLINE_PIXELS)) {
-            return FLATLINE_WEAPON_TYPE
-        } else if (check_weapon(PROWLER_PIXELS)) {
-            return PROWLER_WEAPON_TYPE
-        } else if (check_weapon(HEMLOK_PIXELS)) {
-            return HEMLOK_WEAPON_TYPE
-        } 
+        if (CheckWeapon(FLATLINE_PIXELS)) {
+            current_weapon_type := FLATLINE_WEAPON_TYPE
+            current_pattern := FLATLINE_PATTERN
+        } else if (CheckWeapon(PROWLER_PIXELS)) {
+            current_weapon_type := PROWLER_WEAPON_TYPE
+            current_pattern := PROWLER_PATTERN
+        } else if (CheckWeapon(HEMLOK_PIXELS)) {
+            current_weapon_type := HEMLOK_WEAPON_TYPE
+            current_pattern := HEMLOK_PATTERN
+            if (single_file_mode)
+                current_pattern := HEMLOK_SINGLESHOT_PATTERN
+        }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
-        if (check_weapon(LSTAR_PIXELS)) {
-            return LSTAR_WEAPON_TYPE
-        } else if (check_weapon(DEVOTION_PIXELS)) {
-            return DEVOTION_WEAPON_TYPE
-        } else if (check_weapon(VOLT_PIXELS)) {
-            return VOLT_WEAPON_TYPE
-        } else if (check_weapon(HAVOC_PIXELS)) {
-            return HAVOC_WEAPON_TYPE
+        if (CheckWeapon(LSTAR_PIXELS)) {
+            current_weapon_type := LSTAR_WEAPON_TYPE
+            current_pattern := LSTAR_PATTERN
+        } else if (CheckWeapon(DEVOTION_PIXELS)) {
+            current_weapon_type := DEVOTION_WEAPON_TYPE
+            current_pattern := DEVOTION_PATTERN
+            has_turbocharger := CheckTurbocharger(DEVOTION_TURBOCHARGER_PIXELS)
+            if (has_turbocharger) {
+                current_pattern := TURBODEVOTION_PATTERN
+            }
+        } else if (CheckWeapon(VOLT_PIXELS)) {
+            current_weapon_type := VOLT_WEAPON_TYPE
+            current_pattern := VOLT_PATTERN
+        } else if (CheckWeapon(HAVOC_PIXELS)) {
+            current_weapon_type := HAVOC_WEAPON_TYPE
+            current_pattern := HAVOC_PATTERN
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
-        if (check_weapon(SPITFIRE_PIXELS)) {
-            return SPITFIRE_WEAPON_TYPE
-        } else if (check_weapon(ALTERNATOR_PIXELS)) {
-            return ALTERNATOR_WEAPON_TYPE
+        if (CheckWeapon(SPITFIRE_PIXELS)) {
+            current_weapon_type := SPITFIRE_WEAPON_TYPE
+            current_pattern := SPITFIRE_PATTERN
+        } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
+            current_weapon_type := ALTERNATOR_WEAPON_TYPE
+            current_pattern := ALTERNATOR_PATTERN
         }
     }
-    return DEFAULT_WEAPON_TYPE
-}
-
-detectAndSetWeapon() {
-    sleep 500
-    current_weapon_type := detect_weapon()
-    single_file_mode := check_single_file_mode()
-    ; set turbocharger
-    if (current_weapon_type == DEVOTION_WEAPON_TYPE)
-        has_turbocharger := check_turbocharger(DEVOTION_TURBOCHARGER_PIXELS)
-    else if (current_weapon_type == HAVOC_WEAPON_TYPE)
-        has_turbocharger := check_turbocharger(HAVOC_TURBOCHARGER_PIXELS)
-    else 
-        has_turbocharger := false
     ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+    ; %hint_method%(single_file_mode)
 }
 
 ~E Up::
-    detectAndSetWeapon()
+    DetectAndSetWeapon()
 return
 
 ~1::
-    detectAndSetWeapon()
+    DetectAndSetWeapon()
 return
 
 ~2::
-    detectAndSetWeapon()
+    DetectAndSetWeapon()
 return
 
 ~B::
-    detectAndSetWeapon()
+    DetectAndSetWeapon()
 return
 
 ~$*LButton::
-    if (GetKeyState("RButton") || current_weapon_type == P2020_WEAPON_TYPE) {
-        i := 1
-        if (current_weapon_type == R99_WEAPON_TYPE) {
-            pattern := R99_PATTERN
-        } else if (current_weapon_type == R301_WEAPON_TYPE) {
-            pattern := R301_PATTERN
-        } else if (current_weapon_type == RE45_WEAPON_TYPE) {
-            pattern := RE45_PATTERN
-        } else if (current_weapon_type == P2020_WEAPON_TYPE) {
-            pattern := P2020_PATTERN
-        } else if (current_weapon_type == ALTERNATOR_WEAPON_TYPE) {
-            pattern := ALTERNATOR_PATTERN
-        } else if (current_weapon_type == SPITFIRE_WEAPON_TYPE) {
-            pattern := SPITFIRE_PATTERN
-        } else if (current_weapon_type == FLATLINE_WEAPON_TYPE) {
-            pattern := FLATLINE_PATTERN
-        } else if (current_weapon_type == LSTAR_WEAPON_TYPE) {
-            pattern := LSTAR_PATTERN
-        } else if (current_weapon_type == VOLT_WEAPON_TYPE) {
-            pattern := VOLT_PATTERN
-        } else if (current_weapon_type == HAVOC_WEAPON_TYPE) {
-            pattern := HAVOC_PATTERN
-            if (!has_turbocharger) 
-                sleep 300
-        } else if (current_weapon_type == DEVOTION_WEAPON_TYPE) {
-            pattern := DEVOTION_PATTERN
-            if (has_turbocharger) {
-                pattern := TURBODEVOTION_PATTERN
-            }
-        } else if (current_weapon_type == PROWLER_WEAPON_TYPE) {
-            pattern := PROWLER_PATTERN
-        } else if (current_weapon_type == HEMLOK_WEAPON_TYPE) {
-            pattern := HEMLOK_PATTERN
-            if (single_file_mode)
-                pattern := HEMLOK_SINGLESHOT_PATTERN
-        } else {
-            return
-        }
-        Loop
-        {
-            x := pattern[i][1]
-            y := pattern[i][2]
-            interval := pattern[i][3]
-            if (single_file_mode || current_weapon_type == P2020_WEAPON_TYPE) {
-                if (current_weapon_type == HEMLOK_WEAPON_TYPE || current_weapon_type == P2020_WEAPON_TYPE) {
-                    GetKeyState, LButton, LButton, P
-                    if LButton = U 
-                        Break
-                    DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
-                    Random, rand, 1, 10
-                    MouseClick, Left,,, 1
-                    sleep interval + rand
-                } else {
-                    return
-                }
-            } else {
-                if (!GetKeyState("LButton") || i > pattern.Length()) {
-                    DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
-                    break
-                }
+    if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE)
+        return
+
+    if (!GetKeyState("RButton") && current_weapon_type != P2020_WEAPON_TYPE)
+        return
+
+    if (current_weapon_type == HAVOC_WEAPON_TYPE) {
+        if (!has_turbocharger)
+            sleep 300
+    }
+
+    i := 1
+    Loop {
+        x := current_pattern[i][1]
+        y := current_pattern[i][2]
+        interval := current_pattern[i][3]
+        if (single_file_mode || current_weapon_type == P2020_WEAPON_TYPE) {
+            if (current_weapon_type == HEMLOK_WEAPON_TYPE || current_weapon_type == P2020_WEAPON_TYPE) {
+                GetKeyState, LButton, LButton, P
+                if LButton = U
+                    Break
                 DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
-                sleep interval
-                i += 1
+                    Random, rand, 1, 10
+                MouseClick, Left, , , 1
+                sleep interval + rand
+            } else {
+                return
             }
+        } else {
+            if (!GetKeyState("LButton") || i > current_pattern.Length()) {
+                DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
+                break
+            }
+            DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
+                sleep interval
+            i += 1
         }
     }
 return
@@ -370,7 +362,7 @@ IniRead:
     IfNotExist, settings.ini
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
-            IniWrite, "5.0", settings.ini, mouse settings, sens
+        IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0"`n, settings.ini, mouse settings, zoom_sens
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
@@ -391,7 +383,23 @@ IniRead:
     }
 return
 
-activeMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height) {
+; Suspends the script when mouse is visible ie: inventory, menu, map.
+IsMouseShown()
+{
+    StructSize := A_PtrSize + 16
+    VarSetCapacity(InfoStruct, StructSize)
+    NumPut(StructSize, InfoStruct)
+    DllCall("GetCursorInfo", UInt, &InfoStruct)
+    Result := NumGet(InfoStruct, 8)
+    
+    if Result > 1
+        return true
+    else
+        Return false
+}
+
+ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
+{
     CoordMode, Mouse, Screen
     MouseGetPos, mouseX, mouseY
     SysGet, monCount, MonitorCount
@@ -407,22 +415,25 @@ activeMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height) {
     }
 }
 
-Say(text) {
+
+Say(text)
+{
     global SAPI
     SAPI.Speak(text, 1)
     sleep 150
-return
+    return
 }
 
-Tooltip(Text) {
-    activeMonitorInfo(X, Y, Width, Height)
+Tooltip(Text)
+{
+    ActiveMonitorInfo(X, Y, Width, Height)
     xPos := Width / 2 - 50
     yPos := Height / 2 + (Height / 10)
     Tooltip, %Text%, xPos, yPos
     SetTimer, RemoveTooltip, 500
-return
-RemoveTooltip:
-    SetTimer, RemoveTooltip, Off
-    Tooltip
-return
+    return
+    RemoveTooltip:
+        SetTimer, RemoveTooltip, Off
+        Tooltip
+    return
 }
