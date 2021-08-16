@@ -5,4 +5,7 @@
 Include
 Lib
 Scripts
+images
+__pycache__
 *.cfg
+*.jpg
