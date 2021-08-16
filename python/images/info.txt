@@ -1,0 +1,19 @@
+Weapon 1 - Box
+--------------
+height = 1055 - 1030 | 25px
+width = 1665 - 1555 | 110px
+
+Weapon 2 - Box
+--------------
+height = 1055 - 1030 | 25px
+width = 1825 - 1715 | 110px
+
+Weapon 1 - Position
+-------------------
+left - 1555px
+top - 1030px
+
+Weapon 2 - Position
+-------------------
+left - 1715px
+top - 1030px
