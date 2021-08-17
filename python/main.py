@@ -94,7 +94,6 @@ def left_click_state():
 
 active_state = False
 last_toggle_state = False
-modifier = 2.5
 active_weapon_slot = 1
 active_weapon = ""
 
