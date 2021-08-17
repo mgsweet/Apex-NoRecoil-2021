@@ -54,8 +54,16 @@ All available options listed below:
 
 toggle_button = "delete"
 
-def print_banner():
-    pass
+def print_banner(ban_type, *banner):
+    if ban_type == "single":
+        os.system("cls")
+        print(banners[banner[0]])
+    elif ban_type == "double":
+        os.system("cls")
+        print(banners[banner[0]])
+        print(banners[banner[1]])
+    elif ban_type == "no-clear":
+        print(banners[banner[0]])
 
 def weapon_screenshot(select_weapon):
     if select_weapon == "one":
