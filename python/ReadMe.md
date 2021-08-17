@@ -1,4 +1,4 @@
-<p  align="center"><img src="https://res.cloudinary.com/wemakeart/image/upload/v1629200112/apex-no-recoil/apex-no-recoil_pdavbo.jpg" width=5000px height="100px" /></p>
+<p  align="center"><img src="https://res.cloudinary.com/wemakeart/image/upload/v1629200112/apex-no-recoil/apex-no-recoil_pdavbo.jpg" width=500px height="100px" /></p>
 
 ## APEX NO-RECOIL
 A CLI based tool written in Python that helps to control recoil as much as possible with the use of recoil patterns. This is still a WIP so feedback and possible help especially with fine-tuning the recoil patterns would be appreciated.
