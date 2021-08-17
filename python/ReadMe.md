@@ -7,7 +7,7 @@ A CLI based tool written in Python that helps to control recoil as much as possi
 
 | Weapon  | Status |
 | ------------- | ------------- |
-| Sentinel  | ✅  |
+| Sentinel  | ❌  |
 | P2020  | ✅  |
 | Charge Rifle  | ❌  |
 | Longbow  | ❌  |
