@@ -137,9 +137,9 @@ global HAVOC_PATTERN := [[-6, 10, 89], [-6, 10, 89], [-6, 12, 89], [0, 12, 89], 
 , [0, 6, 89], [0, 6, 89], [0, 6, 89], [0, 6, 89], [0, 6, 89]
 , [0, 6, 89], [0, 6, 89]]
 ; heavy weapon pattern
-global FLATLINE_PATTERN := [[3.0, 15.2, 110], [1.5, 5.3, 110], [9.6, 10.1, 110], [6.3, 7.5, 110], [3.3, 9.7, 110]
-, [-1.3, 9.7, 110], [-4.5, 2.6, 110], [-10.6, -2.0, 110], [-2.7, -1.3, 110], [-3.9, 3.5, 110]
-, [-1.7, 6.6, 110], [4.5, 2.0, 110], [9.9, 4.4, 110], [5.1, 1.9, 110], [9.6, -1.6, 110]
+global FLATLINE_PATTERN := [[4.0, 17.2, 110], [3.5, 8.3, 110], [9.6, 10.1, 110], [6.3, 7.5, 110], [3.3, 11.0, 110]
+, [-1.3, 11.7, 110], [-4.5, 2.6, 110], [-10.6, -2.0, 110], [-2.7, 4.2, 110], [-3.9, 4.5, 110]
+, [-1.7, 6.6, 110], [4.5, 5.0, 110], [9.9, 6.4, 110], [5.1, 7.9, 110], [9.6, -1.6, 110]
 , [4.2, 2.1, 110], [1.8, 8.3, 110], [3.3, 8.1, 110], [6.9, 4.9, 110], [9.0, 2.3, 110]
 , [3.9, 0.6, 113], [-1.2, 5, 113], [-7.9, 2.5, 113], [-5.5, 2, 113], [-8.8, 2.2, 113]
 , [-9.1, 1.5, 113], [-8.8, 1, 113]]
@@ -368,8 +368,8 @@ IniRead:
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "narrator", settings.ini, script configs, script_version
         IniRead, script_name, settings.ini, script configs, script_name
-        IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
-        ; IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
+        ; IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
+        IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
         IniWrite, "", settings.ini, window position, gui_positionb
         IniRead, script_name, settings.ini, script configs, script_name
         Run, %script_name%
