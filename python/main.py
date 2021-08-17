@@ -1,3 +1,4 @@
+from modules.recoil_patterns import recoil_patterns
 import numpy as np
 import pytesseract
 import cv2 as cv
@@ -6,6 +7,7 @@ import keyboard
 import win32api
 import time
 import sys
+import os
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
