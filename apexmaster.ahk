@@ -195,7 +195,7 @@ global has_turbocharger := false
 global single_file_mode := false
 
 ; mouse sensitivity setting
-global modifier := 2.50/sens
+global modifier := 3.40/sens
 
 ; check whether the current weapon match the weapon pixels
 CheckWeapon(weapon_pixels)
