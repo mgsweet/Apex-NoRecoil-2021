@@ -1,4 +1,4 @@
-﻿#NoEnv
+#NoEnv
 SetWorkingDir %A_ScriptDir%
 #SingleInstance force
 #MaxThreadsBuffer on
@@ -21,7 +21,7 @@ if not A_IsAdmin {
 GoSub, IniRead
 
 ; weapon type constant
-global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR", "P2020"]
+global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR", "P2020", "RAMPAGE"]
 global DEFAULT_WEAPON_TYPE := 0
 global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
@@ -36,6 +36,7 @@ global HEMLOK_WEAPON_TYPE := 10
 global RE45_WEAPON_TYPE := 11
 global ALTERNATOR_WEAPON_TYPE := 12
 global P2020_WEAPON_TYPE := 13
+global RAMPAGE_WEAPON_TYPE := 14
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
@@ -56,6 +57,7 @@ global P2020_PIXELS := [1609, 970, true, 1633, 981, false, 1650, 1004, true]
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
 global HEMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
+global RAMPAGE_PIXELS := [1470, 967, false, 1500, 955, true, 1619, 1006, true]
 ; energy weapon
 global LSTAR_PIXELS := [1587, 973, true, 1641, 989, false, 1667, 969, true]
 global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
@@ -137,12 +139,18 @@ global HAVOC_PATTERN := [[-6, 10, 89], [-6, 10, 89], [-6, 12, 89], [0, 12, 89], 
 , [0, 6, 89], [0, 6, 89], [0, 6, 89], [0, 6, 89], [0, 6, 89]
 , [0, 6, 89], [0, 6, 89]]
 ; heavy weapon pattern
-global FLATLINE_PATTERN := [[3.0, 15.2, 110], [1.5, 5.3, 110], [9.6, 10.1, 110], [6.3, 7.5, 110], [3.3, 9.7, 110]
-, [-1.3, 9.7, 110], [-4.5, 2.6, 110], [-10.6, -2.0, 110], [-2.7, -1.3, 110], [-3.9, 3.5, 110]
-, [-1.7, 6.6, 110], [4.5, 2.0, 110], [9.9, 4.4, 110], [5.1, 1.9, 110], [9.6, -1.6, 110]
-, [4.2, 2.1, 110], [1.8, 8.3, 110], [3.3, 8.1, 110], [6.9, 4.9, 110], [9.0, 2.3, 110]
+global FLATLINE_PATTERN := [[4.0, 17.2, 110], [3.5, 8.3, 110], [9.6, 10.1, 110], [6.3, 7.5, 110], [3.3, 11.0, 110]
+, [-1.3, 11.7, 110], [-4.5, 2.6, 110], [-10.6, -2.0, 110], [-2.7, 4.2, 110], [-3.9, 4.5, 110]
+, [-1.7, 6.6, 110], [4.5, 5.0, 110], [9.9, 6.4, 110], [5.1, 7.9, 110], [9.6, -1.6, 110]
+, [4.2, 2.1, 110], [5.8, 8.3, 110], [7.3, 8.1, 110], [8.9, 4.9, 110], [10.0, 2.3, 110]
 , [3.9, 0.6, 113], [-1.2, 5, 113], [-7.9, 2.5, 113], [-5.5, 2, 113], [-8.8, 2.2, 113]
 , [-9.1, 1.5, 113], [-8.8, 1, 113]]
+global RAMPAGE_PATTERN := [[8.0, 12.7, 200], [2.8, 17.2, 200], [-5.7, 8.6, 200], [-5.7, 17.8, 200], [-7.5, 10.3, 200]
+, [-6.3, 7.5, 200], [-10.3, 8.0, 200], [-5.7, 5.1, 200], [-5.1, 7.7, 200], [7.5, 3.4, 200]
+, [6.3, 3.7, 200], [5.7, 4.7, 200], [5.1, -0.0, 200], [6.3, 2.1, 200], [4.0, 2.1, 200]
+, [2.2, 2.3, 200], [-2.2, 4.0, 200], [2.8, 2.0, 200], [-1.7, 4.0, 200], [4.5, 4.7, 200]
+, [4.0, 3.5, 200], [-2.2, 3.5, 200], [4.0, 3.1, 200], [6.9, 4.1, 200], [-2.8, 5.0, 200]
+, [7.5, 8.6, 200]]
 global PROWLER_PATTERN := [[2, 15.2, 10], [2, 12.7, 84], [2, 12.9, 84], [2, 11.4, 84], [3, 9.8, 84]]
 global HEMLOK_PATTERN := [[2, 8, 40], [0, 8, 40], [0, 8, 40]]
 global HEMLOK_SINGLESHOT_PATTERN := [[0, 5, 160]]
@@ -184,7 +192,7 @@ SAPI.volume:=volume
 global current_pattern := [[0, 0, 0]]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
 global has_turbocharger := false
-global single_fire_mode := false
+global single_file_mode := false
 
 ; mouse sensitivity setting
 global modifier := 2.50/sens
@@ -230,7 +238,7 @@ DetectAndSetWeapon()
     ; init
     has_turbocharger := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
-    single_fire_mode := IsSingleFireMode()
+    single_file_mode := IsSingleFireMode()
     ; first check which weapon is activate
     check_point_color := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
@@ -264,10 +272,13 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
+		} else if (CheckWeapon(RAMPAGE_PIXELS)) {
+			current_weapon_type := RAMPAGE_WEAPON_TYPE
+			current_pattern := RAMPAGE_PATTERN
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
-            if (single_fire_mode)
+            if (single_file_mode)
                 current_pattern := HEMLOK_SINGLESHOT_PATTERN
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
@@ -298,7 +309,7 @@ DetectAndSetWeapon()
         }
     }
     ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
-    ; %hint_method%(single_fire_mode)
+    ; %hint_method%(single_file_mode)
 }
 
 ~E Up::
@@ -334,7 +345,7 @@ return
         x := current_pattern[i][1]
         y := current_pattern[i][2]
         interval := current_pattern[i][3]
-        if (single_fire_mode || current_weapon_type == P2020_WEAPON_TYPE) {
+        if (single_file_mode || current_weapon_type == P2020_WEAPON_TYPE) {
             if (current_weapon_type == HEMLOK_WEAPON_TYPE || current_weapon_type == P2020_WEAPON_TYPE) {
                 GetKeyState, LButton, LButton, P
                 if LButton = U
