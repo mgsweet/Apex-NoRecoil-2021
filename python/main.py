@@ -98,6 +98,8 @@ modifier = 2.5
 active_weapon_slot = 1
 active_weapon = ""
 
+print_banner("double", "header-start", "user-options")
+
 while True:
     key_state = keyboard.is_pressed(toggle_button)
     
