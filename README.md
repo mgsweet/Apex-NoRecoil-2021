@@ -16,7 +16,6 @@ The repository also contains a Python version of the AHK script. It uses the Goo
 ### 2021/08/15
 - fix p2020 menu problem and reformat code
 - fix lstar recoil pattern problem
-- 
 
 ### Season 10 Update
 - Support more weapon: Alternator, RE45, Hamlok, Prowler and P2020
