@@ -99,9 +99,11 @@ active_weapon = ""
 
 print_banner("double", "header-start", "user-options")
 
+# LISTENER: Keyboard & Mouse Input
 while True:
     key_state = keyboard.is_pressed(toggle_button)
     
+    # TOGGLE: Enable/Disable Recoil-Control
     if key_state != last_toggle_state:
         last_toggle_state = key_state
         if last_toggle_state:
@@ -111,6 +113,7 @@ while True:
             else:
                 print("RECOIL-CONTROL: DISABLED", end="\r")
 
+    # OPTION: Read Weapon-Slot & Apply Recoil-Pattern
     if keyboard.is_pressed("1"):
         active_weapon_slot = 1
         try:
@@ -120,6 +123,7 @@ while True:
             print("ERROR: Could not recognize weapon, slot not applied", end="\r")
             continue
 
+    # OPTION: Read Weapon-Slot & Apply Recoil-Pattern
     if keyboard.is_pressed("2"):
         active_weapon_slot = 2
         try:
@@ -129,6 +133,7 @@ while True:
             print("ERROR: Could not recognize weapon, slot not applied", end="\r")
             continue
 
+    # ACTION: Apply Recoil-Control w/ Left-Click
     if left_click_state() and active_state:
         try:
             for i in range(len(recoil_patterns[active_weapon])):
@@ -138,10 +143,11 @@ while True:
             print("ERROR: Un-supported weapon, no recoil pattern applied", end="\r")
             continue
     
+    # OPTION: Kill Program
     if keyboard.is_pressed("/"):
         print_banner("single", "header-stop")
         print_banner("no-clear", "action-close-program")
         sys.exit(0)
 
-    # While loop delay
+    # DELAY: While-Loop | Otherwise stuttering issues in-game
     time.sleep(0.001)
