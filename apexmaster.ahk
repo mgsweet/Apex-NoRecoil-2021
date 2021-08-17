@@ -184,7 +184,7 @@ SAPI.volume:=volume
 global current_pattern := [[0, 0, 0]]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
 global has_turbocharger := false
-global single_file_mode := false
+global single_fire_mode := false
 
 ; mouse sensitivity setting
 global modifier := 2.50/sens
@@ -230,7 +230,7 @@ DetectAndSetWeapon()
     ; init
     has_turbocharger := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
-    single_file_mode := IsSingleFireMode()
+    single_fire_mode := IsSingleFireMode()
     ; first check which weapon is activate
     check_point_color := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
@@ -267,7 +267,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
-            if (single_file_mode)
+            if (single_fire_mode)
                 current_pattern := HEMLOK_SINGLESHOT_PATTERN
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
@@ -298,7 +298,7 @@ DetectAndSetWeapon()
         }
     }
     ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
-    ; %hint_method%(single_file_mode)
+    ; %hint_method%(single_fire_mode)
 }
 
 ~E Up::
@@ -334,7 +334,7 @@ return
         x := current_pattern[i][1]
         y := current_pattern[i][2]
         interval := current_pattern[i][3]
-        if (single_file_mode || current_weapon_type == P2020_WEAPON_TYPE) {
+        if (single_fire_mode || current_weapon_type == P2020_WEAPON_TYPE) {
             if (current_weapon_type == HEMLOK_WEAPON_TYPE || current_weapon_type == P2020_WEAPON_TYPE) {
                 GetKeyState, LButton, LButton, P
                 if LButton = U
