@@ -107,9 +107,9 @@ while True:
         if last_toggle_state:
             active_state = not active_state
             if active_state:
-                print("RECOIL-CONTROL: ENABLED")
+                print("RECOIL-CONTROL: ENABLED", end="\r")
             else:
-                print("RECOIL-CONTROL: DISABLED")
+                print("RECOIL-CONTROL: DISABLED", end="\r")
 
     if keyboard.is_pressed("1"):
         active_weapon_slot = 1
@@ -117,7 +117,7 @@ while True:
             active_weapon = read_weapon(weapon_screenshot("one"))
             print(f"Weapon Slot: {active_weapon_slot}\nWeapon Name: {active_weapon}")
         except IndexError:
-            print("ERROR: Could not recognize weapon, slot not applied")
+            print("ERROR: Could not recognize weapon, slot not applied", end="\r")
             continue
 
     if keyboard.is_pressed("2"):
@@ -126,7 +126,7 @@ while True:
             active_weapon = read_weapon(weapon_screenshot("two"))
             print(f"Weapon Slot: {active_weapon_slot}\nWeapon Name: {active_weapon}")
         except IndexError:
-            print("ERROR: Could not recognize weapon, slot not applied")
+            print("ERROR: Could not recognize weapon, slot not applied", end="\r")
             continue
 
     if left_click_state() and active_state:
@@ -135,7 +135,7 @@ while True:
                 win32api.mouse_event(0x0001, int(recoil_patterns[active_weapon][i][0]), int(recoil_patterns[active_weapon][i][1]))
                 time.sleep(recoil_patterns[active_weapon][i][2])
         except KeyError:
-            print("ERROR: Un-supported weapon, no recoil pattern applied")
+            print("ERROR: Un-supported weapon, no recoil pattern applied", end="\r")
             continue
     
     if keyboard.is_pressed("/"):
