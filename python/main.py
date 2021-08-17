@@ -110,13 +110,21 @@ while True:
 
     if keyboard.is_pressed("1"):
         active_weapon_slot = 1
+        try:
         active_weapon = read_weapon(weapon_screenshot("one"))
         print(f"Weapon Slot: {active_weapon_slot}\nWeapon Name: {active_weapon}")
+        except IndexError:
+            print("ERROR: Could not recognize weapon, slot not applied")
+            continue
 
     if keyboard.is_pressed("2"):
         active_weapon_slot = 2
+        try:
         active_weapon = read_weapon(weapon_screenshot("two"))
         print(f"Weapon Slot: {active_weapon_slot}\nWeapon Name: {active_weapon}")
+        except IndexError:
+            print("ERROR: Could not recognize weapon, slot not applied")
+            continue
 
     if left_click_state() and active_state:
         for i in range(len(recoil_patterns[active_weapon])):
