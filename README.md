@@ -1,5 +1,5 @@
 # Apex-NoRecoil-2021
-An AutoHotKey script to minimize recoil with auto weapon detection for Apex Legends. (Only works on 1080p). 
+An AutoHotKey script and Python CLI to minimize recoil with auto weapon detection for Apex Legends. (Only works on 1080p). 
 
 Apex Legends AHK 压枪宏，带武器自动检测. (只支持 1080p)
 
