@@ -127,9 +127,18 @@ while True:
             continue
 
     if left_click_state() and active_state:
+        try:
         for i in range(len(recoil_patterns[active_weapon])):
             win32api.mouse_event(0x0001, int(recoil_patterns[active_weapon][i][0]), int(recoil_patterns[active_weapon][i][1]))
             time.sleep(recoil_patterns[active_weapon][i][2])
+        except KeyError:
+            print("ERROR: Un-supported weapon, no recoil pattern applied")
+            continue
+    
+    if keyboard.is_pressed("/"):
+        print_banner("single", "header-stop")
+        print_banner("no-clear", "action-close-program")
+        sys.exit(0)
 
     # While loop delay
     time.sleep(0.001)
