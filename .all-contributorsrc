@@ -6,12 +6,12 @@
   "commit": false,
   "contributors": [
     {
-      "login": "filen1",
-      "name": "filen1",
-      "avatar_url": "https://avatars.githubusercontent.com/u/88589472?v=4",
-      "profile": "https://github.com/filen1",
+      "login": "mgsweet",
+      "name": "Aaron Yau",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15327389?v=4",
+      "profile": "http://mgsweet.com",
       "contributions": [
-        "data"
+        "code"
       ]
     },
     {
@@ -24,12 +24,12 @@
       ]
     },
     {
-      "login": "mgsweet",
-      "name": "Aaron Yau",
-      "avatar_url": "https://avatars.githubusercontent.com/u/15327389?v=4",
-      "profile": "http://mgsweet.com",
+      "login": "filen1",
+      "name": "filen1",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88589472?v=4",
+      "profile": "https://github.com/filen1",
       "contributions": [
-        "code"
+        "data"
       ]
     }
   ],
