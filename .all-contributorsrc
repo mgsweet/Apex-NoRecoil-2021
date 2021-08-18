@@ -22,6 +22,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mgsweet",
+      "name": "Aaron Yau",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15327389?v=4",
+      "profile": "http://mgsweet.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
