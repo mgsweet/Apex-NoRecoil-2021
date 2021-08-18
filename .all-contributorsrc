@@ -6,6 +6,24 @@
   "commit": false,
   "contributors": [
     {
+      "login": "mgsweet",
+      "name": "Aaron Yau",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15327389?v=4",
+      "profile": "http://mgsweet.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "krampus-nuggets",
+      "name": "Brandon Williams",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21266436?v=4",
+      "profile": "https://www.wemakeart.co.za",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
       "login": "filen1",
       "name": "filen1",
       "avatar_url": "https://avatars.githubusercontent.com/u/88589472?v=4",
