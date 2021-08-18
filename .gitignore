@@ -1,2 +1,9 @@
 */test_account.txt
 *.png
+
+# Python
+Include
+Lib
+Scripts
+__pycache__
+*.cfg

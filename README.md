@@ -1,12 +1,15 @@
 # Apex-NoRecoil-2021
-An AutoHotKey script to minimize recoil with auto weapon detection for Apex Legends. (Only works on 1080p). 
+An AutoHotKey script and Python CLI to minimize recoil with auto weapon detection for Apex Legends. (Only works on 1080p). 
 
 Apex Legends AHK 压枪宏，带武器自动检测. (只支持 1080p)
 
-## Description
+## AHK Script - Description
 This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection. Current support weapon: R99, R301, RE45, Flatline, Spitfire, Havoc, Volt, Devotion, L-Star, Hamlok, Prowler, Alternator and P2020.
 
 该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，不会封号（这就类似于那些淘宝卖好几百的主播专用压枪宏）。目前支持枪械包括 R99, R301, RE45, Alternator, Flatline, Spitfire, Havoc, Volt, Devotion, L-Star, Hamlok, Prowler and P2020.
+
+## Python CLI - Description
+The repository also contains a Python version of the AHK script. It uses the Google Tesseract OCR and OpenCV to detect the weapon being used via key listener. The recoil-patterns are applied via win32api mouse_event. The program was built to be consumed as a CLI. It can be found in the **python** directory or by following this link - [python-build](https://github.com/mgsweet/Apex-NoRecoil-2021/tree/main/python)
 
 ## Update
 
@@ -47,3 +50,11 @@ It would be good if you can help me setup some more accurate recoil value or mak
 
 ## Credit
 I learn a lot from [thyaguster/NoRecoilApex](https://github.com/thyaguster/NoRecoilApex). But his code is pretty bad. There are thousands of lines of duplicated code in that repo. And some of the logic is wrong. (e.g. sleep twice to get the accuracy. Why not double the sleep value). So I make my own. Their code is about three thousand lines, but mine is only about 350, which comes with auto-weapon-detection. I didn't write the GUI to help to change the mouse sensitivity yet. You can send me a pull request if you do so.
+
+## Contributors
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/mgsweet"><img src="https://avatars.githubusercontent.com/u/15327389?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Aaron Yau</b></sub></a><br /><sub>AHK Creator</sub></td>
+    <td align="center"><a href="https://github.com/krampus-nuggets"><img src="https://avatars.githubusercontent.com/u/21266436?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Brandon Williams</b></sub></a><br /><sub>Python CLI Creator</sub></td>
+  </tr>
+</table>
