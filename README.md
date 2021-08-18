@@ -62,7 +62,9 @@ I learn a lot from [thyaguster/NoRecoilApex](https://github.com/thyaguster/NoRec
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/filen1"><img src="https://avatars.githubusercontent.com/u/88589472?v=4?s=100" width="100px;" alt=""/><br /><sub><b>filen1</b></sub></a><br /><a href="#data-filen1" title="Data">🔣</a></td>
+    <td align="center"><a href="https://github.com/mgsweet"><img src="https://avatars.githubusercontent.com/u/15327389?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Aaron Yau</b></sub></a><br /><sub>AHK Creator</sub></td>
+    <td align="center"><a href="https://github.com/krampus-nuggets"><img src="https://avatars.githubusercontent.com/u/21266436?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Brandon Williams</b></sub></a><br /><sub>Python CLI Creator</sub></td>
+    <td align="center"><a href="https://github.com/filen1"><img src="https://avatars.githubusercontent.com/u/88589472?v=4?s=100" width="100px;" alt=""/><br /><sub><b>filen1</b></sub></a><br /><sub>Pattern Contributor</sub></td>
   </tr>
 </table>
 
@@ -70,7 +72,4 @@ I learn a lot from [thyaguster/NoRecoilApex](https://github.com/thyaguster/NoRec
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-    <td align="center"><a href="https://github.com/mgsweet"><img src="https://avatars.githubusercontent.com/u/15327389?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Aaron Yau</b></sub></a><br /><sub>AHK Creator</sub></td>
-    <td align="center"><a href="https://github.com/krampus-nuggets"><img src="https://avatars.githubusercontent.com/u/21266436?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Brandon Williams</b></sub></a><br /><sub>Python CLI Creator</sub></td>
-  </tr>
 </table>
