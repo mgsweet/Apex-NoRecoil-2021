@@ -1,4 +1,7 @@
 # Apex-NoRecoil-2021
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 An AutoHotKey script and Python CLI to minimize recoil with auto weapon detection for Apex Legends. (Only works on 1080p). 
 
 Apex Legends 压枪宏，带武器自动检测，包含了一个ahk的版本和一个python的版本. (只支持 1080p)
@@ -54,7 +57,19 @@ I learn a lot from [thyaguster/NoRecoilApex](https://github.com/thyaguster/NoRec
 ## Contributors
 <table>
   <tr>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
     <td align="center"><a href="https://github.com/mgsweet"><img src="https://avatars.githubusercontent.com/u/15327389?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Aaron Yau</b></sub></a><br /><sub>AHK Creator</sub></td>
     <td align="center"><a href="https://github.com/krampus-nuggets"><img src="https://avatars.githubusercontent.com/u/21266436?v=3?s=100" width="100px;" alt=""/><br /><sub><b>Brandon Williams</b></sub></a><br /><sub>Python CLI Creator</sub></td>
+    <td align="center"><a href="https://github.com/filen1"><img src="https://avatars.githubusercontent.com/u/88589472?v=4?s=100" width="100px;" alt=""/><br /><sub><b>filen1</b></sub></a><br /><sub>Pattern Contributor</sub></td>
   </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 </table>
