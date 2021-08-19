@@ -67,6 +67,8 @@ active_state = False
 last_toggle_state = False
 active_weapon_slot = 1
 active_weapon = "None"
+supported_weapon = False
+recognized_weapon = False
 
 print_banner("double", "header-start", "user-options")
 
