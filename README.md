@@ -11,6 +11,8 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 ## Python CLI - Description
 The repository also contains a Python version of the AHK script. It uses the Google Tesseract OCR and OpenCV to detect the weapon being used via key listener. The recoil-patterns are applied via win32api mouse_event. The program was built to be consumed as a CLI. It can be found in the **python** directory or by following this link - [python-build](https://github.com/mgsweet/Apex-NoRecoil-2021/tree/main/python)
 
+The Python dir also contains a recoil-pattern creation tool which can be found in the modules dir. For more info please read the README in the python dir.
+
 ## Update
 
 ### 2021/08/15
