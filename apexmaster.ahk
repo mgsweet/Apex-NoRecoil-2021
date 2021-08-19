@@ -21,7 +21,8 @@ if not A_IsAdmin {
 GoSub, IniRead
 
 ; weapon type constant
-global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION", "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR", "P2020"]
+global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION"
+, "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR", "P2020", "RAMPAGE"]
 global DEFAULT_WEAPON_TYPE := 0
 global R99_WEAPON_TYPE := 1
 global R301_WEAPON_TYPE := 2
@@ -36,6 +37,7 @@ global HEMLOK_WEAPON_TYPE := 10
 global RE45_WEAPON_TYPE := 11
 global ALTERNATOR_WEAPON_TYPE := 12
 global P2020_WEAPON_TYPE := 13
+global RAMPAGE_WEAPON_TYPE := 14
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
@@ -56,6 +58,7 @@ global P2020_PIXELS := [1609, 970, true, 1633, 981, false, 1650, 1004, true]
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
 global HEMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
+global RAMPAGE_PIXELS := [1560, 975, true, 1645, 985, false, 1695, 983, true]
 ; energy weapon
 global LSTAR_PIXELS := [1587, 973, true, 1641, 989, false, 1667, 969, true]
 global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
@@ -143,6 +146,14 @@ global FLATLINE_PATTERN := [[4.0, 17.2, 110], [3.5, 8.3, 110], [9.6, 10.1, 110],
 , [4.2, 2.1, 110], [1.8, 8.3, 110], [3.3, 8.1, 110], [6.9, 4.9, 110], [9.0, 2.3, 110]
 , [3.9, 0.6, 113], [-1.2, 5, 113], [-7.9, 2.5, 113], [-5.5, 2, 113], [-8.8, 2.2, 113]
 , [-9.1, 1.5, 113], [-8.8, 1, 113]]
+global RAMPAGE_PATTERN := [[5.07, 6.7, 200], [2.8, 5.2, 200], [-2.7,6.6, 200], [-2.7, 10.8, 200], [-2.5, 8.3, 200]
+, [-2.3, 6.5, 200], [-3.3, 6.0, 200], [-2.7, 5.1, 200], [-2.1,7.0, 200], [-2.5, 3.4, 200]
+, [2.3, 3.7, 200], [0.7, 3.7, 200], [6.1, 2.0, 200], [6.3, 3.1, 200], [2.0, 3.1, 200]
+, [2.2, 2.3, 200], [-2.2, 3.0, 200], [2.8, 3.0, 200], [1.7, 4.5, 200], [4.5, 4.7, 200]
+, [-1.0, 3.5, 200], [-2.2, 4.5, 200], [0.0, 5.1, 200], [0.9, 4.1, 200], [1.0, 5.07, 200]
+, [0.0, 8.6, 200], [1, w2.0, 200], [1, 1.0,200], [0, 0, 200], [0, 0, 200]
+, [0, 0, 200], [0, 0, 200], [0, 0, 200], [0, 0, 200], [0, 0, 200]
+, [0, 0, 200], [0, 0, 200], [0, 0, 200], [0, 0, 200], [0, 0, 200]]
 global PROWLER_PATTERN := [[2, 15.2, 10], [2, 12.7, 84], [2, 12.9, 84], [2, 11.4, 84], [3, 9.8, 84]]
 global HEMLOK_PATTERN := [[2, 8, 40], [0, 8, 40], [0, 8, 40]]
 global HEMLOK_SINGLESHOT_PATTERN := [[0, 5, 160]]
@@ -269,6 +280,9 @@ DetectAndSetWeapon()
             current_pattern := HEMLOK_PATTERN
             if (single_fire_mode)
                 current_pattern := HEMLOK_SINGLESHOT_PATTERN
+        } else if (CheckWeapon(RAMPAGE_PIXELS)) {
+			current_weapon_type := RAMPAGE_WEAPON_TYPE
+			current_pattern := RAMPAGE_PATTERN
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
