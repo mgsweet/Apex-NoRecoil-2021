@@ -57,7 +57,7 @@ global P2020_PIXELS := [1609, 970, true, 1633, 981, false, 1650, 1004, true]
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
 global HEMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
-global RAMPAGE_PIXELS := [1608, 978, false, 1649, 985, true, 1619, 1044, true]
+global RAMPAGE_PIXELS := [1709, 988, true, 1650, 992, false, 1630, 982, true]
 ; energy weapon
 global LSTAR_PIXELS := [1587, 973, true, 1641, 989, false, 1667, 969, true]
 global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
