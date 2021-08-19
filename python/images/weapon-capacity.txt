@@ -1,0 +1,35 @@
+R-99
+----
+
+Stock - 20
+Common Extended - 22
+Blue Extended - 24
+Purple Extended - -27
+Gold Extended - 27
+
+R-301
+-----
+
+Stock - 18
+Common Extended - 20
+Blue Extended - 25
+Purple Extended - 28
+Gold Extended - 28
+
+RE-45
+-----
+
+Stock - 16
+Common Extended - 19
+Blue Extended - 22
+Purple Extended - 25
+Gold Extended - 25
+
+VOLT
+----
+
+Stock - 19
+Common Extended - 21
+Blue Extended - 23
+Purple Extended - 26
+Gold Extended - 26
