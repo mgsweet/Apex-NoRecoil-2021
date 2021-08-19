@@ -48,4 +48,4 @@ Future planned updates:
 
 * Support for single-shot weapons
 * Repeat-Fire for single-shot weapons
-* Recoil-Pattern tool to help ease the process of updating recoil patterns
+* Recoil-Pattern tool to help ease the process of updating recoil patterns ✅
