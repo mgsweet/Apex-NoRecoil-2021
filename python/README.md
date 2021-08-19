@@ -1,4 +1,3 @@
-
 <p  align="center"><img  src="https://res.cloudinary.com/wemakeart/image/upload/v1629200112/apex-no-recoil/apex-no-recoil_pdavbo.jpg"  width=500px  height="100px" /></p>
 
 ## APEX NO-RECOIL
@@ -11,6 +10,23 @@ A CLI based tool written in Python that helps to control recoil as much as possi
 2. Download  and install the Tesseract program here - [link](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.0-alpha.20210811.exe)
 3. Update **line 12** in **main.py** with the dir to where you installed the **tesseract.exe**
 4. You should now be able to run the program in your venv using command - `py main.py`
+
+## PATTERN-TRACKER TOOL
+
+**Note** - The tool can be found in the *modules* dir as *pattern_tracker.py*
+1. In the Apex Firing Range, choose your weapon of choice and find a flat wall.
+2. Stand as far away from the wall as possible while still being able to see the bullet impacts.
+3. ADS and empty the clip into the wall.
+4. Come out of ADS and screenshot the wall.
+5. Open the screenshot in MS Paint.
+6. Run the tool - `py pattern_tracker.py`
+7. Enable the tool and click on the bullet impacts starting from the bottom working upwards.
+8. Once completed, save your recoil-pattern and the `*.txt` file should be in the dir where the tool was run.
+9. The pattern in the `*.txt` file can then be imported in the *recoil_patterns.py* file.
+
+**IMPORTANT**
+* When creating a recoil-pattern for the AHK script the fire-rate delay must be an integer | Ex. - 200
+* When creating a recoil-pattern for the Python program the fire-rate delay must be a float | Ex. - 0.0200 
 
 ## SUPPORTED WEAPONS
 
