@@ -76,24 +76,22 @@ print_banner("double", "header-start", "user-options")
 while True:
     key_state = keyboard.is_pressed(toggle_button)
     
+    print(f"RECOIL-CONTROL: {active_state} | ACTIVE-WEAPON: {active_weapon} | RECOGNIZED: {recognized_weapon} | SUPPORTED: {supported_weapon}", end=" \r")
+
     # TOGGLE: Enable/Disable Recoil-Control
     if key_state != last_toggle_state:
         last_toggle_state = key_state
         if last_toggle_state:
             active_state = not active_state
-            if active_state:
-                print("RECOIL-CONTROL: ENABLED", end="\r")
-            else:
-                print("RECOIL-CONTROL: DISABLED", end="\r")
 
     # OPTION: Read Weapon-Slot & Apply Recoil-Pattern
     if keyboard.is_pressed("1"):
         active_weapon_slot = 1
         try:
             active_weapon = read_weapon(weapon_screenshot("one"))
-            print(f"Weapon Slot: {active_weapon_slot}\nWeapon Name: {active_weapon}")
+            recognized_weapon = True
         except IndexError:
-            print("ERROR: Could not recognize weapon, slot not applied", end="\r")
+            recognized_weapon = False
             continue
 
     # OPTION: Read Weapon-Slot & Apply Recoil-Pattern
@@ -101,9 +99,9 @@ while True:
         active_weapon_slot = 2
         try:
             active_weapon = read_weapon(weapon_screenshot("two"))
-            print(f"Weapon Slot: {active_weapon_slot}\nWeapon Name: {active_weapon}")
+            recognized_weapon = True
         except IndexError:
-            print("ERROR: Could not recognize weapon, slot not applied", end="\r")
+            recognized_weapon = False
             continue
 
     # ACTION: Apply Recoil-Control w/ Left-Click
@@ -112,8 +110,9 @@ while True:
             for i in range(len(recoil_patterns[active_weapon])):
                 win32api.mouse_event(0x0001, int(recoil_patterns[active_weapon][i][0]), int(recoil_patterns[active_weapon][i][1]))
                 time.sleep(recoil_patterns[active_weapon][i][2])
+            supported_weapon = True
         except KeyError:
-            print("ERROR: Un-supported weapon, no recoil pattern applied", end="\r")
+            supported_weapon = False
             continue
     
     # OPTION: Kill Program
