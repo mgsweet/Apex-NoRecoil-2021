@@ -1,4 +1,5 @@
 from modules.recoil_patterns import recoil_patterns
+from modules.banners import banners
 import numpy as np
 import pytesseract
 import cv2 as cv
