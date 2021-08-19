@@ -382,8 +382,8 @@ IniRead:
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "narrator", settings.ini, script configs, script_version
         IniRead, script_name, settings.ini, script configs, script_name
-        IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
-        ; IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
+        ; IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
+        IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
         IniWrite, "", settings.ini, window position, gui_positionb
         IniRead, script_name, settings.ini, script configs, script_name
         Run, %script_name%
