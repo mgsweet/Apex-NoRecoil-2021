@@ -66,7 +66,7 @@ def left_click_state():
 active_state = False
 last_toggle_state = False
 active_weapon_slot = 1
-active_weapon = ""
+active_weapon = "None"
 
 print_banner("double", "header-start", "user-options")
 
