@@ -13,8 +13,6 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 
 ### [AHK Script - Detail and Usage 详细使用指南](https://github.com/mgsweet/Apex-NoRecoil-2021/tree/main/AHK)
 
-## Update
-=======
 - Pros
   - simple 简单
   - out of the box 开箱即用
