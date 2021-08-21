@@ -28,17 +28,6 @@ weapon_two_coordinates = {
 
 toggle_button = "delete"
 
-def print_banner(ban_type, *banner):
-    if ban_type == "single":
-        os.system("cls")
-        print(banners[banner[0]])
-    elif ban_type == "double":
-        os.system("cls")
-        print(banners[banner[0]])
-        print(banners[banner[1]])
-    elif ban_type == "no-clear":
-        print(banners[banner[0]])
-
 def weapon_screenshot(select_weapon):
     if select_weapon == "one":
         image = pyautogui.screenshot(region=(weapon_one_coordinates["left"], weapon_one_coordinates["top"], weapon_one_coordinates["width"], weapon_one_coordinates["height"]))
