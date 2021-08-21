@@ -2,6 +2,7 @@ from modules.banners import print_banner
 import yaml
 import os
 
+yaml_config = f"{os.path.dirname(os.path.abspath(__file__))}\\config.yaml"
 
 def config_generator():
     print_banner("double", "header-start", "helpers-intro")
