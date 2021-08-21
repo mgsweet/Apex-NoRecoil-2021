@@ -1,3 +1,5 @@
+from os import system
+
 banners = {
     "header-start": """
  █████╗ ██████╗ ███████╗██╗  ██╗     ███╗   ██╗ ██████╗ ██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
@@ -33,3 +35,14 @@ STATUS: Config file not found!
 A config file will now be generated, please follow the steps outlined below.
     """
 }
+
+def print_banner(ban_type, *banner):
+    if ban_type == "single":
+        system("cls")
+        print(banners[banner[0]])
+    elif ban_type == "double":
+        system("cls")
+        print(banners[banner[0]])
+        print(banners[banner[1]])
+    elif ban_type == "no-clear":
+        print(banners[banner[0]])
