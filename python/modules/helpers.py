@@ -1,6 +1,7 @@
 from modules.banners import print_banner
 import yaml
-import sys
+import os
+
 
 def config_generator():
     print_banner("double", "header-start", "helpers-intro")
