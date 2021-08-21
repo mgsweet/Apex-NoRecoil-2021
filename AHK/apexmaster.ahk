@@ -52,12 +52,10 @@ global SUPPY_DROP_COLOR = 0x3701B2
 ; light weapon
 global R99_PIXELS := [1606, 986, true, 1671, 974, false, 1641, 1004, true]
 global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
-global R301ACOG_PIXELS := [1595, 1010, true, 1583, 1016, true, 1590, 1013, false]
 global RE45_PIXELS := [1605, 975, true, 1638, 980, false, 1662, 1004, true]
 global P2020_PIXELS := [1609, 970, true, 1633, 981, false, 1650, 1004, true]
 ; heavy weapon
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
-global FLATLINEACOG_PIXELS := [1565, 1009, true, 1560, 1010, false, 1555, 1017, true]
 global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
 global HEMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
 global RAMPAGE_PIXELS := [1560, 975, true, 1645, 985, false, 1695, 983, true]
