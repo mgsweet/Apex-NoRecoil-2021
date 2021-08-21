@@ -8,7 +8,6 @@ import keyboard
 import win32api
 import time
 import sys
-import os
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
