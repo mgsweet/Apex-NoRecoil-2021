@@ -62,6 +62,7 @@ recognized_weapon = False
 print_banner("double", "header-start", "user-options")
 
 # LISTENER: Keyboard & Mouse Input
+try:
 while True:
     key_state = keyboard.is_pressed(toggle_button)
     
@@ -112,3 +113,7 @@ while True:
 
     # DELAY: While-Loop | Otherwise stuttering issues in-game
     time.sleep(0.001)
+except KeyboardInterrupt:
+    print_banner("single", "header-stop")
+    print_banner("no-clear", "action-close-program")
+    sys.exit(0)
