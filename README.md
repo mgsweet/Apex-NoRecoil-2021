@@ -11,7 +11,7 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 
 该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，不会封号（这就类似于那些淘宝卖好几百的主播专用压枪宏）。目前支持枪械包括 R99, R301, RE45, Alternator, Flatline, Spitfire, Havoc, Volt, Devotion, L-Star, Hamlok, Prowler, P2020 and Rampage.
 
-### [AHK Script - Detail and Usage 详细使用指南](https://github.com/mgsweet/Apex-NoRecoil-2021/tree/main/AHK)
+### [AHK Script - Details and Usage 详细使用指南](https://github.com/mgsweet/Apex-NoRecoil-2021/tree/main/AHK)
 
 - Pros
   - simple 简单
@@ -27,7 +27,7 @@ The repository also contains a Python version of the AHK script. It uses the Goo
 
 该库也包含了一个有着相似功能的 Python 脚本。这个脚本使用到了 Google Tesseract OCR 和 OpenCV 技术并通过监测键盘输入去进行武器检测。这个脚本主要通过命令行交互界面进行操作。
 
-### [Python CLI - Detail and Usage 详细使用指南](https://github.com/mgsweet/Apex-NoRecoil-2021/tree/main/python)
+### [Python CLI - Details and Usage 详细使用指南](https://github.com/mgsweet/Apex-NoRecoil-2021/tree/main/python)
 
 - Pros
   - DIY friendly 客制化容易
