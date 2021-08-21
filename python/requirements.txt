@@ -17,4 +17,5 @@ pytesseract==0.3.8
 python-dateutil==2.8.2
 PyTweening==1.0.3
 pywin32==301
+PyYAML==5.4.1
 six==1.16.0

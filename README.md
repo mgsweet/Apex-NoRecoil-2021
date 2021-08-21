@@ -23,7 +23,7 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
   - not many people know how to code with AHK, not DIY friendly 脚本编程语言小众
 
 ## Python CLI - Description 介绍
-The repository also contains a Python version of the AHK script. It uses the Google Tesseract OCR and OpenCV to detect the weapon being used via key listener. The recoil-patterns are applied via win32api mouse_event. The program was built to be consumed as a CLI. 
+The repository also contains a Python version of the AHK script. It uses the Google Tesseract OCR and OpenCV to detect the weapon being used via key listener. The recoil-patterns are applied via win32api mouse_event. The program was built to be consumed as a CLI. The Python dir also contains a recoil-pattern creation tool which can be found in the modules dir. For more info please read the README in the python dir.
 
 该库也包含了一个有着相似功能的 Python 脚本。这个脚本使用到了 Google Tesseract OCR 和 OpenCV 技术并通过监测键盘输入去进行武器检测。这个脚本主要通过命令行交互界面进行操作。
 
