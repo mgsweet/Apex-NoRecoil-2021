@@ -24,6 +24,15 @@ A CLI based tool written in Python that helps to control recoil as much as possi
 8. Once completed, save your recoil-pattern and the `*.txt` file should be in the dir where the tool was run.
 9. The pattern in the `*.txt` file can then be imported in the *recoil_patterns.py* file.
 
+## CONFIG FILE
+
+The following values are now more easily editable by the user from within the **config.yaml** file:
+
+* Weapon slot scan position and dimensions
+* Recoil-Pattern sensitivity modifier
+
+The weapon slot scan position sets where the program scans for the names of the weapons you are using. The recoil-pattern sensitivity modifier adjusts the "strength" of the anti-recoil behavior, meaning a higher value applies less anti-recoil.
+
 **IMPORTANT**
 * When creating a recoil-pattern for the AHK script the fire-rate delay must be an integer | Ex. - 200
 * When creating a recoil-pattern for the Python program the fire-rate delay must be a float | Ex. - 0.0200 
@@ -65,3 +74,5 @@ Future planned updates:
 * Support for single-shot weapons
 * Repeat-Fire for single-shot weapons
 * Recoil-Pattern tool to help ease the process of updating recoil patterns ✅
+* Adaptive sensitivity for different environments ✅
+* Customizable weapon slot scan locations ✅
