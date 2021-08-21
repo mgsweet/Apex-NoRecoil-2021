@@ -24,5 +24,12 @@ All available options listed below:
 3. Load secondary pattern | Press 2
 4. Kill program | Press /
     """,
-    "action-close-program": "ACTION: Program Closed"
+    "action-close-program": "ACTION: Program Closed",
+    "helpers-scan-one": "Please input the values for the first scan box below: [Ex. - left,top,width,height]",
+    "helpers-scan-two": "Please input the values for the second scan box below: [Ex. - left,top,width,height]",
+    "helpers-modifier": "Please input the recoil-pattern sensitivity modifier value below: [Ex. 2.5]",
+    "helpers-intro": """
+STATUS: Config file not found!
+A config file will now be generated, please follow the steps outlined below.
+    """
 }
