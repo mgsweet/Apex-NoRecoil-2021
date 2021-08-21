@@ -36,11 +36,11 @@ def config_generator():
         modifier_value = recoil_pattern_modifer
     )
 
-    with open(f"{sys.path[0]}\\config.yaml", "w") as outfile:
+    with open(yaml_config, "w") as outfile:
         yaml.dump(data, outfile, default_flow_style=False)
         outfile.close()
 
 def read_config():
-    config_file = f"{sys.path[0]}\\config.yaml"
+    config_file = yaml_config
     stream = open(config_file, "r")
     return yaml.load(stream, Loader=yaml.SafeLoader)
