@@ -7,3 +7,8 @@ Lib
 Scripts
 __pycache__
 *.cfg
+*.ico
+python/export.json
+python/pythoncom39.dll
+python/pywintypes39.dll
+python/output
