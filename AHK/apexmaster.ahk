@@ -180,7 +180,7 @@ global RAMPAGE_PATTERN := [[0,0,180], [-2,8,180], [6.6,7.8,180]
 , [-3,4.5,180]]
 global PROWLER_PATTERN := [[2, 15.2, 10], [2, 12.7, 84], [2, 12.9, 84], [2, 11.4, 84], [3, 9.8, 84]]
 global HEMLOK_PATTERN := [[2, 8, 40], [0, 8, 40], [0, 8, 40]]
-global HEMLOK_SINGLESHOT_PATTERN := [[0, 6.3, 160]]
+global HEMLOK_SINGLESHOT_PATTERN := [[0, 6.3, 120]]
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := [[3.0, 18.2, 110], [1.5, 4.8, 110], [9.6, 9.6, 110], [6.3, 7.0, 110], [3.3, 6.2, 110]
 , [-0.3, 9.2, 110], [-4.5, 2.6, 110], [-9.6, -2.0, 110], [-2.7, -1.6, 110], [-3.9, 3.2, 110]
@@ -379,7 +379,7 @@ return
                 if LButton = U
                     Break
                 DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
-                    Random, rand, 10, 45
+                    Random, rand, 1, 15
                 MouseClick, Left, , , 1
                 sleep interval + rand
             } else {
