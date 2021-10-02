@@ -13,32 +13,29 @@ SetKeyDelay, -1, -1
 SetMouseDelay, -1
 SetDefaultMouseSpeed, 0
 SetWinDelay, -1
-; if not A_IsAdmin {
-;     Run *RunAs "%A_ScriptFullPath%"
-;     ExitApp
-; }
+if not A_IsAdmin {
+    Run *RunAs "%A_ScriptFullPath%"
+    ExitApp
+}
 ; read settings.ini
 GoSub, IniRead
 
 ; weapon type constant, mainly for debuging
-global WEAPON_NAME = ["DEFAULT", "R99", "R301", "FLATLINE", "SPITFIRE", "LSTAR", "DEVOTION"
-, "VOLT", "HAVOC", "PROWLER", "HEMLOK", "RE45", "ALTERNATOR", "P2020", "RAMPAGE"]
-global DEFAULT_WEAPON_TYPE := 0
-global R99_WEAPON_TYPE := 1
-global R301_WEAPON_TYPE := 2
-global FLATLINE_WEAPON_TYPE := 3
-global SPITFIRE_WEAPON_TYPE := 4
-global LSTAR_WEAPON_TYPE := 5
-global DEVOTION_WEAPON_TYPE := 6
-global VOLT_WEAPON_TYPE := 7
-
-global HAVOC_WEAPON_TYPE := 8
-global PROWLER_WEAPON_TYPE := 9
-global HEMLOK_WEAPON_TYPE := 10
-global RE45_WEAPON_TYPE := 11
-global ALTERNATOR_WEAPON_TYPE := 12
-global P2020_WEAPON_TYPE := 13
-global RAMPAGE_WEAPON_TYPE := 14
+global DEFAULT_WEAPON_TYPE := "DEFAULT"
+global R99_WEAPON_TYPE := "R99"
+global R301_WEAPON_TYPE := "R301"
+global FLATLINE_WEAPON_TYPE := "FLATLINE"
+global SPITFIRE_WEAPON_TYPE := "SPITFIRE"
+global LSTAR_WEAPON_TYPE := "LSTAR"
+global DEVOTION_WEAPON_TYPE := "DEVOTION"
+global VOLT_WEAPON_TYPE := "VOLT"
+global HAVOC_WEAPON_TYPE := "HAVOC"
+global PROWLER_WEAPON_TYPE := "PROWLER"
+global HEMLOK_WEAPON_TYPE := "HEMLOK"
+global RE45_WEAPON_TYPE := "RE45"
+global ALTERNATOR_WEAPON_TYPE := "ALTERNATOR"
+global P2020_WEAPON_TYPE := "P2020"
+global RAMPAGE_WEAPON_TYPE := "RAMPAGE"
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
@@ -104,7 +101,6 @@ global RAMPAGE_PATTERN := LoadPattern("Rampage.txt")
 global RAMPAGEAMP_PATTERN := LoadPattern("RampageAmp.txt")
 global PROWLER_PATTERN := LoadPattern("Prowler.txt")
 global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
-global HEMLOK_SINGLESHOT_PATTERN := LoadPattern("RE45.txt")
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
@@ -124,10 +120,11 @@ SAPI.rate:=rate
 SAPI.volume:=volume
 
 ; weapon detection
-global current_pattern := [[0, 0, 0]]
+global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
 global has_turbocharger := false
-global single_fire_mode := false
+global is_single_fire_weapon := false
+global grenade_selected := false
 
 ; mouse sensitivity setting
 global modifier := 3.40/sens
@@ -172,8 +169,9 @@ DetectAndSetWeapon()
     sleep 500
     ; init
     has_turbocharger := false
+    is_single_fire_weapon := false
+    grenade_selected := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
-    single_fire_mode := IsSingleFireMode()
     ; first check which weapon is activate
     check_point_color := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
@@ -199,6 +197,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(P2020_PIXELS)) {
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
+            is_single_fire_weapon := true
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (CheckWeapon(FLATLINE_PIXELS)) {
@@ -210,8 +209,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
-            if (single_fire_mode)
-                current_pattern := HEMLOK_SINGLESHOT_PATTERN
+            is_single_fire_weapon := true
         } else if (CheckWeapon(RAMPAGE_PIXELS)) {
 			current_weapon_type := RAMPAGE_WEAPON_TYPE
 			current_pattern := RAMPAGE_PATTERN
@@ -233,7 +231,9 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(HAVOC_PIXELS)) {
             current_weapon_type := HAVOC_WEAPON_TYPE
             current_pattern := HAVOC_PATTERN
-            has_turbocharger := CheckTurbocharger(HAVOC_TURBOCHARGER_PIXELS)
+            if (CheckTurbocharger(HAVOC_TURBOCHARGER_PIXELS)) {
+                current_pattern := TURBOHAVOC_PATTERN
+            }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
         if (CheckWeapon(SPITFIRE_PIXELS)) {
@@ -244,7 +244,7 @@ DetectAndSetWeapon()
             current_pattern := ALTERNATOR_PATTERN
         }
     }
-    ; %hint_method%(WEAPON_NAME[current_weapon_type + 1])
+    ; %hint_method%(current_weapon_type)
     ; %hint_method%(single_fire_mode)
 }
 
@@ -264,34 +264,28 @@ return
     DetectAndSetWeapon()
 return
 
+~G::
+    grenade_selected := true
+
 ~$*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE)
         return
 
-    if (!GetKeyState("RButton") && current_weapon_type != P2020_WEAPON_TYPE)
+    if (ads_only == "on" && !GetKeyState("RButton"))
         return
-
-    if (current_weapon_type == HAVOC_WEAPON_TYPE) {
-        if (!has_turbocharger)
-            sleep 300
-    }
 
     Loop {
         x := StrSplit(current_pattern[A_Index],",")[1]
         y := StrSplit(current_pattern[A_Index],",")[2]
         interval := StrSplit(current_pattern[A_Index],",")[3]
-        if (single_fire_mode || current_weapon_type == P2020_WEAPON_TYPE) {
-            if (current_weapon_type == HEMLOK_WEAPON_TYPE || current_weapon_type == P2020_WEAPON_TYPE) {
-                GetKeyState, LButton, LButton, P
-                if LButton = U
-                    Break
-                DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
-                    Random, rand, 1, 15
-                MouseClick, Left, , , 1
-                sleep interval + rand
-            } else {
-                return
-            }
+        if (is_single_fire_weapon && !grenade_selected) {
+            GetKeyState, LButton, LButton, P
+            if LButton = U
+                Break
+            DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
+                Random, rand, 1, 20
+            MouseClick, Left, , , 1
+            sleep interval + rand
         } else {
             if (!GetKeyState("LButton") || A_Index > current_pattern.MaxIndex()) {
                 DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
@@ -308,20 +302,22 @@ IniRead:
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
         IniWrite, "5.0", settings.ini, mouse settings, sens
-        IniWrite, "1.0"`n, settings.ini, mouse settings, zoom_sens
+        IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
+        IniWrite, "on", settings.ini, mouse settings, auto_fire
+        IniWrite, "on"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "narrator", settings.ini, script configs, script_version
-        IniRead, script_name, settings.ini, script configs, script_name
         IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
         ; IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
-        IniWrite, "", settings.ini, window position, gui_positionb
         IniRead, script_name, settings.ini, script configs, script_name
         Run, %script_name%
     }
     Else {
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
+        IniRead, auto_fire, settings.ini, mouse settings, auto_fire
+        IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, script_version, settings.ini, script configs, script_version
