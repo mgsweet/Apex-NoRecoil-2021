@@ -1,7 +1,7 @@
 # Apex-NoRecoil-2021 - AHK
 An AutoHotKey script to minimize recoil with auto weapon detection for Apex Legends. (Only works on 1080p). 
 
-Apex Legends 压枪宏，带武器自动检测，包含了一个ahk的版本和一个python的版本. (只支持 1080p)
+Apex Legends 压枪宏，带武器自动检测，只支持 1080p 无边框全屏模式。
 
 ## Description
 This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection. Current support weapon: R99, R301, RE45, Flatline, Spitfire, Havoc, Volt, Devotion, L-Star, Hamlok, Prowler, Alternator and P2020.
@@ -31,13 +31,23 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 ## Usage
 The default mouse sensitivity is `5.0`. Change the sens in `settings.ini` to yours.
 
+To run in a more safer mode, set `auto_fire` to `"off"` in `settings.ini`. This would remove the auto fire feature for single shot weapon like G7, P2020, etc.
+
+To make the script work only in ads mode, set  `ads_only` to `"on"` in `settings.ini`.
+
 You need to have AutoHotKey pre-installed on your computer if you want to run the `apexmaster.ahk` file directly.
 
 Otherwise, you can just use the `apexmaster.exe` file in the `/bin`.
 
-After running the script, every time you press `1`, `2`, `B` or `E`, the script will detect your current weapon and provide compensation while you click `L Button` while holding your `R Button`. It cannot detect the weapon when you get one by "licking a dead player's box"(I haven't done this yet). But once you click any of the four buttons mention above, the detection should work :)
+After running the script, every time you press `1`, `2`, `B`, `R` or `E`, the script will detect your current weapon and provide compensation while you click `L Button` while holding your `R Button`. It cannot detect the weapon when you get one by "licking a dead player's box"(I haven't done this yet). But once you click any of the four buttons mention above, the detection should work :)
 
-默认鼠标灵敏度为 `5.0` ，可以通过改动 `settings.ini` 下的 `sen` 更改。想要直接运行 `apexmaster.ahk` 的话你需要另外安装AutoHotKey。如果不想安装 AutoHotKey，理论上直接跑 `/bin` 目录下的 `apexmaster.exe` 也是没问题的。武器检测会在你按 `1`, `2`, `B` 或 `E` 时进行，舔包时通过鼠标点击获得的武器在一开始不会被检测，但在你按下上面所述四个按钮中任意一个后武器压枪补偿就会更新。
+默认鼠标灵敏度为 `5.0` ，可以通过改动 `settings.ini` 下的 `sen` 更改。
+
+如果你不想要单发武器全自动的功能， 可以将 `settings.ini` 下 `auto_fire` 设置为 `off` （会更安全）。
+
+如果你只想在 ADS 模式下触发压枪的功能，可以将 `settings.ini` 下 `ads_only` 设置为 `on`。
+
+想要直接运行 `apexmaster.ahk` 的话你需要另外安装AutoHotKey。如果不想安装 AutoHotKey，理论上直接跑 `/bin` 目录下的 `apexmaster.exe` 也是没问题的。武器检测会在你按 `1`, `2`, `B`, `R` 或 `E` 时进行，舔包时通过鼠标点击获得的武器在一开始不会被检测，但在你按下上面所述四个按钮中任意一个后武器压枪补偿就会更新。
 
 ## How to guide
 If you want to compile the script, you need to find the following two lines, comment the first line and then uncomment the second line.
