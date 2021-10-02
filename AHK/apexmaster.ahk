@@ -85,7 +85,12 @@ LoadPattern(filename) {
     FileRead, pattern_str, %A_ScriptDir%\pattern\%filename%
     pattern := []
     Loop, Parse, pattern_str, `n, `, , `" ,`r 
-    pattern.Insert(A_LoopField)
+    {
+        if StrLen(A_LoopField) == 0 {
+            Continue
+        }
+        pattern.Insert(A_LoopField)
+    }
     return pattern
 }
 
@@ -286,9 +291,13 @@ return
         return
 
     Loop {
-        x := StrSplit(current_pattern[A_Index],",")[1]
-        y := StrSplit(current_pattern[A_Index],",")[2]
-        interval := StrSplit(current_pattern[A_Index],",")[3]
+        i := A_Index
+        if (A_Index > current_pattern.MaxIndex()) {
+            i := current_pattern.MaxIndex()
+        }
+        x := StrSplit(current_pattern[i],",")[1]
+        y := StrSplit(current_pattern[i],",")[2]
+        interval := StrSplit(current_pattern[i],",")[3]
         if (is_single_fire_weapon && !grenade_selected) {
             Click
             Random, rand, 1, 20
@@ -298,7 +307,7 @@ return
         DllCall("mouse_event", uint, 0x01, uint, Round(x * modifier), uint, Round(y * modifier))
         Sleep, interval
         
-        if (!GetKeyState("LButton","P") || A_Index >= current_pattern.MaxIndex()) {
+        if (!GetKeyState("LButton","P")) {
             DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
             break
         }
