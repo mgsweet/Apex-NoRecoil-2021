@@ -1,18 +1,21 @@
 #NoEnv
-SetWorkingDir %A_ScriptDir%
-#SingleInstance force
-#MaxThreadsBuffer on
-SetTitleMatchMode, 2
-;#IfWinActive r5apex.exe
-SetBatchLines -1
 #MaxHotkeysPerInterval 99000000
 #HotkeyInterval 99000000
 #KeyHistory 0
+#SingleInstance force
+#MaxThreadsBuffer on
+#Persistent
+Process, Priority, , A
+SetBatchLines, -1
 ListLines Off
+SetWorkingDir %A_ScriptDir%
 SetKeyDelay, -1, -1
 SetMouseDelay, -1
 SetDefaultMouseSpeed, 0
 SetWinDelay, -1
+SetControlDelay, -1
+SendMode Input
+
 if not A_IsAdmin {
     Run *RunAs "%A_ScriptFullPath%"
     ExitApp
@@ -36,6 +39,8 @@ global RE45_WEAPON_TYPE := "RE45"
 global ALTERNATOR_WEAPON_TYPE := "ALTERNATOR"
 global P2020_WEAPON_TYPE := "P2020"
 global RAMPAGE_WEAPON_TYPE := "RAMPAGE"
+global WINGMAN_WEAPON_TYPE := "WINGMAN"
+global G7_WEAPON_TYPE := "G7"
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = [1521, 1038]
@@ -52,11 +57,13 @@ global R99_PIXELS := [1606, 986, true, 1671, 974, false, 1641, 1004, true]
 global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
 global RE45_PIXELS := [1605, 975, true, 1638, 980, false, 1662, 1004, true]
 global P2020_PIXELS := [1609, 970, true, 1633, 981, false, 1650, 1004, true]
+global G7_PIXELS := [1573, 974, true, 1659, 981, false, 1703, 989, true]
 ; heavy weapon
 global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
 global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
 global HEMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
 global RAMPAGE_PIXELS := [1560, 975, true, 1645, 985, false, 1695, 983, true]
+global WINGMAN_PIXELS := [1603, 984, true, 1644, 983, false, 1657, 1001, true]
 ; energy weapon
 global LSTAR_PIXELS := [1587, 973, true, 1641, 989, false, 1667, 969, true]
 global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
@@ -122,12 +129,12 @@ SAPI.volume:=volume
 ; weapon detection
 global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
-global has_turbocharger := false
 global is_single_fire_weapon := false
 global grenade_selected := false
 
 ; mouse sensitivity setting
-global modifier := 3.40/sens
+zoom := 1.0/zoom_sens
+global modifier := 4/sens*zoom
 
 ; check whether the current weapon match the weapon pixels
 CheckWeapon(weapon_pixels)
@@ -166,9 +173,8 @@ CheckTurbocharger(turbocharger_pixels)
 
 DetectAndSetWeapon()
 {
-    sleep 500
+    sleep 100
     ; init
-    has_turbocharger := false
     is_single_fire_weapon := false
     grenade_selected := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
@@ -198,6 +204,10 @@ DetectAndSetWeapon()
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
             is_single_fire_weapon := true
+        } else if (CheckWeapon(G7_PIXELS)) {
+            current_weapon_type := G7_WEAPON_TYPE
+            current_pattern := G7_Pattern
+            is_single_fire_weapon := true
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (CheckWeapon(FLATLINE_PIXELS)) {
@@ -206,6 +216,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
+            is_single_fire_weapon := true
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
@@ -213,6 +224,10 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(RAMPAGE_PIXELS)) {
 			current_weapon_type := RAMPAGE_WEAPON_TYPE
 			current_pattern := RAMPAGE_PATTERN
+        } else if (CheckWeapon(WINGMAN_PIXELS)) {
+            current_weapon_type := WINGMAN_WEAPON_TYPE
+            current_pattern := WINGMAN_PATTERN
+            is_single_fire_weapon := true
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
@@ -221,8 +236,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(DEVOTION_PIXELS)) {
             current_weapon_type := DEVOTION_WEAPON_TYPE
             current_pattern := DEVOTION_PATTERN
-            has_turbocharger := CheckTurbocharger(DEVOTION_TURBOCHARGER_PIXELS)
-            if (has_turbocharger) {
+            if (CheckTurbocharger(DEVOTION_TURBOCHARGER_PIXELS)) {
                 current_pattern := TURBODEVOTION_PATTERN
             }
         } else if (CheckWeapon(VOLT_PIXELS)) {
@@ -249,23 +263,20 @@ DetectAndSetWeapon()
 }
 
 ~E Up::
+    Sleep, 200
     DetectAndSetWeapon()
 return
 
 ~1::
-    DetectAndSetWeapon()
-return
-
 ~2::
-    DetectAndSetWeapon()
-return
-
 ~B::
+~R::
     DetectAndSetWeapon()
 return
 
 ~G::
     grenade_selected := true
+return
 
 ~$*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE)
@@ -279,20 +290,17 @@ return
         y := StrSplit(current_pattern[A_Index],",")[2]
         interval := StrSplit(current_pattern[A_Index],",")[3]
         if (is_single_fire_weapon && !grenade_selected) {
-            GetKeyState, LButton, LButton, P
-            if LButton = U
-                Break
-            DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
-                Random, rand, 1, 20
-            MouseClick, Left, , , 1
-            sleep interval + rand
-        } else {
-            if (!GetKeyState("LButton") || A_Index > current_pattern.MaxIndex()) {
-                DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
-                break
-            }
-            DllCall("mouse_event", uint, 0x01, uint, x * modifier, uint, y * modifier)
-                sleep interval
+            Click
+            Random, rand, 1, 20
+            interval := interval + rand
+        }
+
+        DllCall("mouse_event", uint, 0x01, uint, Round(x * modifier), uint, Round(y * modifier))
+        Sleep, interval
+        
+        if (!GetKeyState("LButton","P") || A_Index >= current_pattern.MaxIndex()) {
+            DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
+            break
         }
     }
 return
@@ -304,7 +312,7 @@ IniRead:
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "on", settings.ini, mouse settings, auto_fire
-        IniWrite, "on"`n, settings.ini, mouse settings, ads_only
+        IniWrite, "off"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "narrator", settings.ini, script configs, script_version
