@@ -135,7 +135,6 @@ SAPI.volume:=volume
 global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
 global is_single_fire_weapon := false
-global grenade_selected := false
 
 ; mouse sensitivity setting
 zoom := 1.0/zoom_sens
@@ -181,7 +180,6 @@ DetectAndSetWeapon()
     sleep 100
     ; init
     is_single_fire_weapon := false
-    grenade_selected := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
     ; first check which weapon is activate
     check_point_color := 0
@@ -280,7 +278,9 @@ return
 return
 
 ~G::
-    grenade_selected := true
+    if (ads_only != "on") {
+        current_weapon_type := DEFAULT_WEAPON_TYPE
+    }
 return
 
 ~$*LButton::
@@ -288,6 +288,9 @@ return
         return
 
     if (ads_only == "on" && !GetKeyState("RButton"))
+        return
+
+    if (is_single_fire_weapon && auto_fire != "on")
         return
 
     Loop {
@@ -298,7 +301,7 @@ return
         x := StrSplit(current_pattern[i],",")[1]
         y := StrSplit(current_pattern[i],",")[2]
         interval := StrSplit(current_pattern[i],",")[3]
-        if (is_single_fire_weapon && !grenade_selected) {
+        if (is_single_fire_weapon) {
             Click
             Random, rand, 1, 20
             interval := interval + rand
