@@ -72,7 +72,8 @@ global HAVOC_PIXELS := [1656, 996, true, 1658, 985, false, 1637, 962, true]
 ; supply drop weapon
 global SPITFIRE_PIXELS := [1693, 972, true, 1652, 989, true, 1645, 962, true]
 global ALTERNATOR_PIXELS := [1615, 979, true, 1642, 980, true, 1646, 978, false]
-
+; special
+global CAR_PIXELS := [1605, 970, true, 1586, 973, true, 1605, 971, true] 
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := [1621, 1006]
 global DEVOTION_TURBOCHARGER_PIXELS := [1650, 1007]
@@ -117,6 +118,8 @@ global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
 global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
+; special
+global CAR_PATTERN := LoadPattern("CAR.txt")
 
 ; tips setting
 global hint_method
@@ -207,10 +210,9 @@ DetectAndSetWeapon()
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
             is_single_fire_weapon := true
-        } else if (CheckWeapon(G7_PIXELS)) {
-            current_weapon_type := G7_WEAPON_TYPE
-            current_pattern := G7_Pattern
-            is_single_fire_weapon := true
+        } else if (CheckWeapon(CAR_PIXELS)) { 
+            current_weapon_type := CAR_WEAPON_TYPE 
+            current_pattern := CAR_PATTERN 
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (CheckWeapon(FLATLINE_PIXELS)) {
@@ -231,6 +233,9 @@ DetectAndSetWeapon()
             current_weapon_type := WINGMAN_WEAPON_TYPE
             current_pattern := WINGMAN_PATTERN
             is_single_fire_weapon := true
+        } else if (CheckWeapon(CAR_PIXELS)) { 
+            current_weapon_type := CAR_WEAPON_TYPE 
+            current_pattern := CAR_PATTERN 
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
@@ -259,10 +264,13 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
             current_weapon_type := ALTERNATOR_WEAPON_TYPE
             current_pattern := ALTERNATOR_PATTERN
-        }
+        } else if (CheckWeapon(G7_PIXELS)) {
+            current_weapon_type := G7_WEAPON_TYPE
+            current_pattern := G7_Pattern
+            is_single_fire_weapon := true
+        } 
     }
     ; %hint_method%(current_weapon_type)
-    ; %hint_method%(single_fire_mode)
 }
 
 ~E Up::
