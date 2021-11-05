@@ -35,7 +35,11 @@ if (ads_only == "on") {
 }
 Gui, Add, Text, x112 y209 w120 h30 , resolution:
 Gui, Font, S10, 
-Gui, Add, DropDownList, x232 y209 vResolution, 1080x1920|3840x2160
+if (resolution == "3840x2160") {
+    Gui, Add, DropDownList, x232 y209 vResolution, 1080x1920|3840x2160||
+} else {
+    Gui, Add, DropDownList, x232 y209 vResolution, 1080x1920||3840x2160
+} 
 Gui, Font, S18 Bold, 
 Gui, Add, Button, x142 y259 w190 h40 , Save and Run!
 Gui, Font, , 
@@ -62,6 +66,7 @@ IniRead:
     IfNotExist, settings.ini
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
+        IniWrite, "1080x1920"`n, settings.ini, screen settings, resolution
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "on", settings.ini, mouse settings, auto_fire
@@ -75,6 +80,7 @@ IniRead:
         Run, %script_name%
     }
     Else {
+        IniRead, resolution, settings.ini, screen settings, resolution
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
