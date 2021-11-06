@@ -31,8 +31,10 @@ global FLATLINE_WEAPON_TYPE := "FLATLINE"
 global SPITFIRE_WEAPON_TYPE := "SPITFIRE"
 global LSTAR_WEAPON_TYPE := "LSTAR"
 global DEVOTION_WEAPON_TYPE := "DEVOTION"
+global DEVOTION_TURBO_WEAPON_TYPE := "DEVOTION TURBO"
 global VOLT_WEAPON_TYPE := "VOLT"
 global HAVOC_WEAPON_TYPE := "HAVOC"
+global HAVOC_TURBO_WEAPON_TYPE := "HAVOC TURBO"
 global PROWLER_WEAPON_TYPE := "PROWLER"
 global HEMLOK_WEAPON_TYPE := "HEMLOK"
 global RE45_WEAPON_TYPE := "RE45"
@@ -41,10 +43,11 @@ global P2020_WEAPON_TYPE := "P2020"
 global RAMPAGE_WEAPON_TYPE := "RAMPAGE"
 global WINGMAN_WEAPON_TYPE := "WINGMAN"
 global G7_WEAPON_TYPE := "G7"
+global CAR_WEAPON_TYPE := "CAR"
 
 ; x, y pos for weapon1 and weapon 2
-global WEAPON_1_PIXELS = [1521, 1038]
-global WEAPON_2_PIXELS = [1824, 1036]
+global WEAPON_1_PIXELS = LoadPixel("weapon1")
+global WEAPON_2_PIXELS = LoadPixel("weapon2")
 ; weapon color
 global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
@@ -53,33 +56,45 @@ global SUPPY_DROP_COLOR = 0x3701B2
 
 ; three x, y check point, true means 0xFFFFFFFF
 ; light weapon
-global R99_PIXELS := [1606, 986, true, 1671, 974, false, 1641, 1004, true]
-global R301_PIXELS := [1655, 976, false, 1683, 968, true, 1692, 974, true]
-global RE45_PIXELS := [1605, 975, true, 1638, 980, false, 1662, 1004, true]
-global P2020_PIXELS := [1609, 970, true, 1633, 981, false, 1650, 1004, true]
-global G7_PIXELS := [1573, 974, true, 1659, 981, false, 1703, 989, true]
+global R99_PIXELS := LoadPixel("r99")
+global R301_PIXELS := LoadPixel("r301")
+global RE45_PIXELS := LoadPixel("re45")
+global P2020_PIXELS := LoadPixel("p2020")
+global G7_PIXELS := LoadPixel("g7")
 ; heavy weapon
-global FLATLINE_PIXELS := [1651, 985, false, 1575, 980, true, 1586, 984, true]
-global PROWLER_PIXELS := [1607, 991, true, 1632, 985, false, 1627, 993, true]
-global HEMLOK_PIXELS := [1622, 970, true, 1646, 984, false, 1683, 974, true]
-global RAMPAGE_PIXELS := [1560, 975, true, 1645, 985, false, 1695, 983, true]
-global WINGMAN_PIXELS := [1603, 984, true, 1644, 983, false, 1657, 1001, true]
+global FLATLINE_PIXELS := LoadPixel("flatline")
+global PROWLER_PIXELS := LoadPixel("prowler")
+global HEMLOK_PIXELS := LoadPixel("hemlok")
+global RAMPAGE_PIXELS := LoadPixel("rampage")
+global WINGMAN_PIXELS := LoadPixel("wingman")
 ; energy weapon
-global LSTAR_PIXELS := [1587, 973, true, 1641, 989, false, 1667, 969, true]
-global DEVOTION_PIXELS := [1700, 971, true, 1662, 980, false, 1561, 972, true]
-global VOLT_PIXELS := [1644, 981, false, 1585, 976, true, 1680, 971, true]
-global HAVOC_PIXELS := [1656, 996, true, 1658, 985, false, 1637, 962, true]
+global LSTAR_PIXELS := LoadPixel("lstar")
+global DEVOTION_PIXELS := LoadPixel("devotion")
+global VOLT_PIXELS := LoadPixel("volt")
+global HAVOC_PIXELS := LoadPixel("havoc")
 ; supply drop weapon
-global SPITFIRE_PIXELS := [1693, 972, true, 1652, 989, true, 1645, 962, true]
-global ALTERNATOR_PIXELS := [1615, 979, true, 1642, 980, true, 1646, 978, false]
+global SPITFIRE_PIXELS := LoadPixel("spitfire")
+global ALTERNATOR_PIXELS := LoadPixel("alternator")
 ; special
-global CAR_PIXELS := [1605, 970, true, 1586, 973, true, 1605, 971, true] 
+global CAR_PIXELS := LoadPixel("car")
 ; Turbocharger
-global HAVOC_TURBOCHARGER_PIXELS := [1621, 1006]
-global DEVOTION_TURBOCHARGER_PIXELS := [1650, 1007]
+global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_terbocharger")
+global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_terbocharger")
 
-; hemlok single shot
-global SINGLESHOT_PIXELS := [1712, 1000]
+; each player can hold 2 weapons
+LoadPixel(name) {
+    global resolution
+    IniRead, weapon_pixel_str, %A_ScriptDir%\resolution\%resolution%.ini, pixels, %name%
+    weapon_num_pixels := []
+    Loop, Parse, weapon_pixel_str, `,
+    {
+        if StrLen(A_LoopField) == 0 {
+            Continue
+        }
+        weapon_num_pixels.Insert(A_LoopField)
+    }
+    return weapon_num_pixels
+}
 
 ; load pattern from file
 LoadPattern(filename) {
@@ -122,11 +137,7 @@ global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
 global CAR_PATTERN := LoadPattern("CAR.txt")
 
 ; tips setting
-global hint_method
-if (script_version = "narrator")
-    hint_method:="Say"
-else if (script_version = "tooltip")
-    hint_method:="Tooltip"
+global hint_method := "Say"
 
 ; voice setting
 SAPI.voice := SAPI.GetVoices().Item(1) 	; uncomment this line to get female voice.
@@ -156,16 +167,6 @@ CheckWeapon(weapon_pixels)
         i := i + 3
     }
     return True
-}
-
-IsSingleFireMode()
-{
-    target_color := 0xFFFFFF
-    PixelGetColor, check_point_color, SINGLESHOT_PIXELS[1], SINGLESHOT_PIXELS[2]
-    if (check_point_color == target_color) {
-        return true
-    }
-    return false
 }
 
 CheckTurbocharger(turbocharger_pixels)
@@ -246,6 +247,7 @@ DetectAndSetWeapon()
             current_pattern := DEVOTION_PATTERN
             if (CheckTurbocharger(DEVOTION_TURBOCHARGER_PIXELS)) {
                 current_pattern := TURBODEVOTION_PATTERN
+                current_weapon_type := DEVOTION_TURBO_WEAPON_TYPE
             }
         } else if (CheckWeapon(VOLT_PIXELS)) {
             current_weapon_type := VOLT_WEAPON_TYPE
@@ -255,6 +257,7 @@ DetectAndSetWeapon()
             current_pattern := HAVOC_PATTERN
             if (CheckTurbocharger(HAVOC_TURBOCHARGER_PIXELS)) {
                 current_pattern := TURBOHAVOC_PATTERN
+                current_weapon_type := HAVOC_TURBO_WEAPON_TYPE
             }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
@@ -286,7 +289,7 @@ return
 return
 
 ~G::
-    if (ads_only != "on") {
+    if (ads_only != "1") {
         current_weapon_type := DEFAULT_WEAPON_TYPE
     }
 return
@@ -295,10 +298,10 @@ return
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE)
         return
 
-    if (ads_only == "on" && !GetKeyState("RButton"))
+    if (ads_only == "1" && !GetKeyState("RButton"))
         return
 
-    if (is_single_fire_weapon && auto_fire != "on")
+    if (is_single_fire_weapon && auto_fire != "1")
         return
 
     Loop {
@@ -306,6 +309,7 @@ return
         if (A_Index > current_pattern.MaxIndex()) {
             i := current_pattern.MaxIndex()
         }
+
         x := StrSplit(current_pattern[i],",")[1]
         y := StrSplit(current_pattern[i],",")[2]
         interval := StrSplit(current_pattern[i],",")[3]
@@ -329,26 +333,28 @@ IniRead:
     IfNotExist, settings.ini
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
+
+        IniWrite, "1080x1920"`n, settings.ini, screen settings, resolution
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
-        IniWrite, "on", settings.ini, mouse settings, auto_fire
-        IniWrite, "off"`n, settings.ini, mouse settings, ads_only
+        IniWrite, "1", settings.ini, mouse settings, auto_fire
+        IniWrite, "0"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
-        IniWrite, "7"`n, settings.ini, voice settings, rate
-        IniWrite, "narrator", settings.ini, script configs, script_version
-        IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
-        ; IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
-        IniRead, script_name, settings.ini, script configs, script_name
-        Run, %script_name%
+        IniWrite, "7", settings.ini, voice settings, rate
+        if (A_ScriptName == "apexmaster.ahk") {
+            Run "apexmaster.ahk"
+        } else if (A_ScriptName == "apexmaster.exe") {
+            Run "apexmaster.exe"
+        }
     }
     Else {
+        IniRead, resolution, settings.ini, screen settings, resolution
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
-        IniRead, script_version, settings.ini, script configs, script_version
     }
 return
 
