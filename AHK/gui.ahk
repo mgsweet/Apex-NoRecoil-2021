@@ -49,7 +49,10 @@ Gui, Font, S18 Bold,
 Gui, Add, Button, x142 y259 w190 h40 gbtSave, Save and Run!
 Gui, Font, , 
 Gui, Add, Link, x158 y307 w160 h18 , <a href="https://github.com/mgsweet/Apex-NoRecoil-2021">mgsweet/Apex-NoRecoil-2021</a>
-Gui, Show, x643 y259 h335 w477, Apex NoRecoil %script_version%
+ActiveMonitorInfo(X, Y, Width, Height)
+xPos := Width / 2 - 477 / 2
+yPos := Height / 2 - 335 / 2
+Gui, Show, x%xPos% y%yPos% h335 w477, Apex NoRecoil %script_version%
 Return
 
 Slide:
@@ -118,6 +121,23 @@ CloseScript(Name) {
 	else
 		return Name . " not found"
 	}
+
+ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
+{
+    CoordMode, Mouse, Screen
+    MouseGetPos, mouseX, mouseY
+    SysGet, monCount, MonitorCount
+    Loop %monCount% {
+        SysGet, curMon, Monitor, %a_index%
+        if ( mouseX >= curMonLeft and mouseX <= curMonRight and mouseY >= curMonTop and mouseY <= curMonBottom ) {
+            X := curMonTop
+            y := curMonLeft
+            Height := curMonBottom - curMonTop
+            Width := curMonRight - curMonLeft
+            return
+        }
+    }
+}
 
 GuiClose:
 ExitApp
