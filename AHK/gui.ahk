@@ -81,7 +81,11 @@ IniRead:
         IniWrite, "0"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7", settings.ini, voice settings, rate
-        Run gui.ahk
+        if (A_ScriptName == "gui.ahk") {
+            Run "gui.ahk"
+        } else if (A_ScriptName == "gui.exe") {
+            Run "gui.exe"
+        }
     }
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
