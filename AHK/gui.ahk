@@ -7,18 +7,23 @@ DetectHiddenWindows On
 SetTitleMatchMode RegEx
 if not A_IsAdmin
 {
-	Run *RunAs "%A_ScriptFullPath%"  
-	ExitApp
+    Run *RunAs "%A_ScriptFullPath%" 
+    ExitApp
 }
 Gosub, IniRead
+
+; global variable
+script_version := "v1.2.2"
+
 ; Convert sens to sider format
 sider_sen := sens * 10
+
 ; GUI
 SetFormat, float, 0.1
 Gui, Font, S30 CDefault Bold, Verdana
 Gui, Add, Text, x71 y-1 w330 h50 , Apex-NoRecoil
 Gui, Font, ,
-Gui, Add, Text, x216 y49 w40 h20 , v1.2.2 
+Gui, Add, Text, x216 y49 w40 h20 , %script_version%
 Gui, Add, GroupBox, x11 y69 w450 h180 , Settings
 Gui, Font, S13 Bold, 
 Gui, Add, Text, x162 y89 w50 h30 , sens:
@@ -44,7 +49,7 @@ Gui, Font, S18 Bold,
 Gui, Add, Button, x142 y259 w190 h40 gbtSave, Save and Run!
 Gui, Font, , 
 Gui, Add, Link, x158 y307 w160 h18 , <a href="https://github.com/mgsweet/Apex-NoRecoil-2021">mgsweet/Apex-NoRecoil-2021</a>
-Gui, Show, x643 y259 h342 w477, New GUI Window
+Gui, Show, x643 y259 h335 w477, Apex NoRecoil %script_version%
 Return
 
 Slide:
@@ -71,12 +76,7 @@ IniRead:
         IniWrite, "0"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
-        IniWrite, "narrator", settings.ini, script configs, script_version
-        IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
-        ; IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
-        IniRead, script_name, settings.ini, script configs, script_name
         Run gui.ahk
-        ; Run, %script_name%
     }
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
@@ -85,7 +85,6 @@ IniRead:
         IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
-        IniRead, script_version, settings.ini, script configs, script_version
     }
 return
 
@@ -95,9 +94,30 @@ btSave:
     IniWrite, "%sens%", settings.ini, mouse settings, sens
     IniWrite, "%auto_fire%", settings.ini, mouse settings, auto_fire
     IniWrite, "%ads_only%", settings.ini, mouse settings, ads_only
-    ; Ans:=CloseScript(script_name)
-    Run gui.ahk
-return
+    if (A_ScriptName == "gui.ahk") {
+        CloseScript("apexmaster.ahk")
+        Run "apexmaster.ahk"
+    } else if (A_ScriptName == "gui.exe") {
+        CloseScript("apexmaster.exe")
+        Run "apexmaster.exe"
+    }
+ExitApp
+
+CloseScript(Name) {
+	DetectHiddenWindows On
+	SetTitleMatchMode RegEx
+	IfWinExist, i)%Name%.* ahk_class AutoHotkey
+		{
+		WinClose
+		WinWaitClose, i)%Name%.* ahk_class AutoHotkey, , 2
+		If ErrorLevel
+			return "Unable to close " . Name
+		else
+			return "Closed " . Name
+		}
+	else
+		return Name . " not found"
+	}
 
 GuiClose:
 ExitApp
