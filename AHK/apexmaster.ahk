@@ -31,8 +31,10 @@ global FLATLINE_WEAPON_TYPE := "FLATLINE"
 global SPITFIRE_WEAPON_TYPE := "SPITFIRE"
 global LSTAR_WEAPON_TYPE := "LSTAR"
 global DEVOTION_WEAPON_TYPE := "DEVOTION"
+global DEVOTION_TURBO_WEAPON_TYPE := "DEVOTION TURBO"
 global VOLT_WEAPON_TYPE := "VOLT"
 global HAVOC_WEAPON_TYPE := "HAVOC"
+global HAVOC_TURBO_WEAPON_TYPE := "HAVOC TURBO"
 global PROWLER_WEAPON_TYPE := "PROWLER"
 global HEMLOK_WEAPON_TYPE := "HEMLOK"
 global RE45_WEAPON_TYPE := "RE45"
@@ -245,6 +247,7 @@ DetectAndSetWeapon()
             current_pattern := DEVOTION_PATTERN
             if (CheckTurbocharger(DEVOTION_TURBOCHARGER_PIXELS)) {
                 current_pattern := TURBODEVOTION_PATTERN
+                current_weapon_type := DEVOTION_TURBO_WEAPON_TYPE
             }
         } else if (CheckWeapon(VOLT_PIXELS)) {
             current_weapon_type := VOLT_WEAPON_TYPE
@@ -254,6 +257,7 @@ DetectAndSetWeapon()
             current_pattern := HAVOC_PATTERN
             if (CheckTurbocharger(HAVOC_TURBOCHARGER_PIXELS)) {
                 current_pattern := TURBOHAVOC_PATTERN
+                current_weapon_type := HAVOC_TURBO_WEAPON_TYPE
             }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
