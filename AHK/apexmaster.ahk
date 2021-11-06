@@ -41,8 +41,11 @@ global P2020_WEAPON_TYPE := "P2020"
 global RAMPAGE_WEAPON_TYPE := "RAMPAGE"
 global WINGMAN_WEAPON_TYPE := "WINGMAN"
 global G7_WEAPON_TYPE := "G7"
+global CAR_WEAPON_TYPE := "CAR"
 
 ; x, y pos for weapon1 and weapon 2
+; global WEAPON_1_PIXELS = LoadWeaponNumPixel(1)
+; global WEAPON_2_PIXELS = LoadWeaponNumPixel(2)
 global WEAPON_1_PIXELS = [1521, 1038]
 global WEAPON_2_PIXELS = [1824, 1036]
 ; weapon color
@@ -80,6 +83,21 @@ global DEVOTION_TURBOCHARGER_PIXELS := [1650, 1007]
 
 ; hemlok single shot
 global SINGLESHOT_PIXELS := [1712, 1000]
+
+; each player can hold 2 weapons
+LoadWeaponNumPixel(num) {
+    global resolution
+    IniRead, weapon_pixel_str, %A_ScriptDir%\resolution\%resolution%.ini, weapon_num_pixel, weapon%num%
+    weapon_num_pixels := []
+    Loop, Parse, weapon_pixel_str, `,
+    {
+        if StrLen(A_LoopField) == 0 {
+            Continue
+        }
+        weapon_num_pixels.Insert(A_LoopField)
+    }
+    return weapon_num_pixels
+}
 
 ; load pattern from file
 LoadPattern(filename) {
@@ -266,7 +284,7 @@ DetectAndSetWeapon()
             is_single_fire_weapon := true
         } 
     }
-    ; %hint_method%(current_weapon_type)
+    %hint_method%(current_weapon_type)
 }
 
 ~E Up::
