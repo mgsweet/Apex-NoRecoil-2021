@@ -122,11 +122,7 @@ global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
 global CAR_PATTERN := LoadPattern("CAR.txt")
 
 ; tips setting
-global hint_method
-if (script_version = "narrator")
-    hint_method:="Say"
-else if (script_version = "tooltip")
-    hint_method:="Tooltip"
+global hint_method := "Say"
 
 ; voice setting
 SAPI.voice := SAPI.GetVoices().Item(1) 	; uncomment this line to get female voice.
@@ -286,7 +282,7 @@ return
 return
 
 ~G::
-    if (ads_only != "on") {
+    if (ads_only != "1") {
         current_weapon_type := DEFAULT_WEAPON_TYPE
     }
 return
@@ -295,10 +291,10 @@ return
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE)
         return
 
-    if (ads_only == "on" && !GetKeyState("RButton"))
+    if (ads_only == "1" && !GetKeyState("RButton"))
         return
 
-    if (is_single_fire_weapon && auto_fire != "on")
+    if (is_single_fire_weapon && auto_fire != "1")
         return
 
     Loop {
@@ -329,26 +325,27 @@ IniRead:
     IfNotExist, settings.ini
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
+
+        IniWrite, "1080x1920"`n, settings.ini, screen settings, resolution
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
-        IniWrite, "on", settings.ini, mouse settings, auto_fire
-        IniWrite, "off"`n, settings.ini, mouse settings, ads_only
+        IniWrite, "1", settings.ini, mouse settings, auto_fire
+        IniWrite, "0"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
-        IniWrite, "7"`n, settings.ini, voice settings, rate
-        IniWrite, "narrator", settings.ini, script configs, script_version
-        IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
-        ; IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
-        IniRead, script_name, settings.ini, script configs, script_name
-        Run, %script_name%
+        IniWrite, "7", settings.ini, voice settings, rate
+        if (A_ScriptName == "apexmaster.ahk") {
+            Run "apexmaster.ahk"
+        } else if (A_ScriptName == "apexmaster.exe") {
+            Run "apexmaster.exe"
+        }
     }
     Else {
+        IniRead, resolution, settings.ini, screen settings, resolution
         IniRead, sens, settings.ini, mouse settings, sens
-        IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
-        IniRead, script_version, settings.ini, script configs, script_version
     }
 return
 

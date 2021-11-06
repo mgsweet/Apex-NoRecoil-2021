@@ -78,7 +78,7 @@ IniRead:
         IniWrite, "1", settings.ini, mouse settings, auto_fire
         IniWrite, "0"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
-        IniWrite, "7"`n, settings.ini, voice settings, rate
+        IniWrite, "7", settings.ini, voice settings, rate
         Run gui.ahk
     }
     Else {
