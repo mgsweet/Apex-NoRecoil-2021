@@ -44,10 +44,10 @@ global G7_WEAPON_TYPE := "G7"
 global CAR_WEAPON_TYPE := "CAR"
 
 ; x, y pos for weapon1 and weapon 2
-; global WEAPON_1_PIXELS = LoadWeaponNumPixel(1)
-; global WEAPON_2_PIXELS = LoadWeaponNumPixel(2)
-global WEAPON_1_PIXELS = [1521, 1038]
-global WEAPON_2_PIXELS = [1824, 1036]
+global WEAPON_1_PIXELS = LoadWeaponNumPixel(1)
+global WEAPON_2_PIXELS = LoadWeaponNumPixel(2)
+; global WEAPON_1_PIXELS = [1521, 1038]
+; global WEAPON_2_PIXELS = [1824, 1036]
 ; weapon color
 global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
@@ -320,6 +320,7 @@ return
         if (A_Index > current_pattern.MaxIndex()) {
             i := current_pattern.MaxIndex()
         }
+
         x := StrSplit(current_pattern[i],",")[1]
         y := StrSplit(current_pattern[i],",")[2]
         interval := StrSplit(current_pattern[i],",")[3]
@@ -360,6 +361,7 @@ IniRead:
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
         IniRead, sens, settings.ini, mouse settings, sens
+        IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
