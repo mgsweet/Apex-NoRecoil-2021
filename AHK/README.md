@@ -1,15 +1,52 @@
 # Apex-NoRecoil-2021 - AHK
-An AutoHotKey script to minimize recoil with auto weapon detection for Apex Legends. (Only works on 1080p). 
+An AutoHotKey script to minimize recoil with auto weapon detection for Apex Legends. (works on 1080p, 2k, 4k). 
 
-Apex Legends 压枪宏，带武器自动检测，只支持 1080p 无边框全屏模式。
+Apex Legends 压枪宏，带武器自动检测，支持 1080p, 2k, 4k 无边框全屏模式。
 
 ## Description
 This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection. Current support weapon: R99, R301, RE45, Flatline, Spitfire, Havoc, Volt, Devotion, L-Star, Hamlok, Prowler, Alternator and P2020.
 
 该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，不会封号（这就类似于那些淘宝卖好几百的主播专用压枪宏）。目前支持枪械包括 R99, R301, RE45, Alternator, Flatline, Spitfire, Havoc, Volt, Devotion, L-Star, Hamlok, Prowler and P2020.
 
+## Usage
+How to run:
+- Download or clone the repo.
+- Make sure the `/pattern`, `/resolution`, `gui.exe` and `apexmaster.exe` are in the same directory.
+- Open `gui.exe` and do some configuration. Then click `Save and Run`. The GUI will then disappear and `apexmaster.exe` will run in the background.
+- Run the game in borderless mode.
+- After running the script, every time you press `1`, `2`, `B`, `R` or `E`, the script will detect your current weapon and provide compensation while you click `L Button` while holding your `R Button` (is you click ads_only). It cannot detect the weapon when you get one by "licking a dead player's box"(I haven't done this yet). But once you click any of the four buttons mention above, the detection should work :)
+- Enjoy!
+
+How to close:
+- right click the tiny icon and quit.
+
+Config description:
+- auto_fire: To run in a more safer mode, untick `auto_fire`. This would remove the auto fire feature for single shot weapon like G7, P2020, etc.
+- ads_only: To make the script work only in ads mode, tick `ads_only`
+- sens: The default mouse sensitivity is `5.0`. Change the sens to yours.
+
+如何運行：
+- 下載或克隆該項目。
+- 確保 `/pattern`, `/resolution`, `gui.exe` and `apexmaster.exe` 在同一目錄下。
+- 啓動 `gui.exe` 做一些必要的設置。點擊 `Save and Run`， 然後圖形界面會消失且 `apexmaster.exe`會在後臺運行。
+- 在無邊框模式下啓動游戲
+- 武器检测会在你按 `1`, `2`, `B`, `R` 或 `E` 时进行，舔包时通过鼠标点击获得的武器在一开始不会被检测，但在你按下上面所述四个按钮中任意一个后武器压枪补偿就会更新。
+
+怎麽關閉：
+- 鼠標右擊小圖標並退出即可
+
+設置項説明：
+- auto_fire：如果你不想要单发武器全自动的功能， 勾選此項（会更安全）。
+- ads_only: 如果你只想在 ADS 模式下触发压枪的功能，勾選此項。
+- sens: 對應游戲裏設置的鼠標靈敏度
+
+
 ## Update
-### 2021/11/5 version 1.2
+### 2021/11/6 version 1.2.2
+- support multiple resolution (1080, 2k, 4k)
+- add GUI for config setting
+
+### 2021/11/5 version 1.2.1
 - support car smg
 - fix g7 color problem
 
@@ -19,7 +56,7 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 
 ### 2021/10/03 version 1.1
 - Support G7, Wingman auto fire mode
-- Seperate recoil pattern to txt file (learn from [ApexAHK-Reduce-recoil](https://github.com/sayoui001/ApexAHK-Reduce-recoil))
+- Seperate recoil pattern to txt file (learn from [ApexAHK-Reduce-recoil](https://github.com/sayoui001/ApexAHK-Reduce-recoil)).
 - Update recoil pattern (also copy from [ApexAHK-Reduce-recoil](https://github.com/sayoui001/ApexAHK-Reduce-recoil)).
 
 ### 2021/08/22
@@ -41,34 +78,10 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 - Add fire mode detection, the script will do nothing in single fire mode for all weapon except Hamlok and P2020
 - change the recoil pattern struct to support changing interval between each shot.
 
-## Usage
-The default mouse sensitivity is `5.0`. Change the sens in `settings.ini` to yours.
+## How to modify the code
+All the ahk src file is now more to `/src`. You need to have AutoHotKey pre-installed on your computer if you want to run the `apexmaster.ahk` file directly. 
 
-To run in a more safer mode, set `auto_fire` to `"off"` in `settings.ini`. This would remove the auto fire feature for single shot weapon like G7, P2020, etc.
-
-To make the script work only in ads mode, set  `ads_only` to `"on"` in `settings.ini`.
-
-You need to have AutoHotKey pre-installed on your computer if you want to run the `apexmaster.ahk` file directly.
-
-Otherwise, you can just use the `apexmaster.exe` file in the `/bin`.
-
-After running the script, every time you press `1`, `2`, `B`, `R` or `E`, the script will detect your current weapon and provide compensation while you click `L Button` while holding your `R Button`. It cannot detect the weapon when you get one by "licking a dead player's box"(I haven't done this yet). But once you click any of the four buttons mention above, the detection should work :)
-
-默认鼠标灵敏度为 `5.0` ，可以通过改动 `settings.ini` 下的 `sen` 更改。
-
-如果你不想要单发武器全自动的功能， 可以将 `settings.ini` 下 `auto_fire` 设置为 `off` （会更安全）。
-
-如果你只想在 ADS 模式下触发压枪的功能，可以将 `settings.ini` 下 `ads_only` 设置为 `on`。
-
-想要直接运行 `apexmaster.ahk` 的话你需要另外安装AutoHotKey。如果不想安装 AutoHotKey，理论上直接跑 `/bin` 目录下的 `apexmaster.exe` 也是没问题的。武器检测会在你按 `1`, `2`, `B`, `R` 或 `E` 时进行，舔包时通过鼠标点击获得的武器在一开始不会被检测，但在你按下上面所述四个按钮中任意一个后武器压枪补偿就会更新。
-
-## How to guide
-If you want to compile the script, you need to find the following two lines, comment the first line and then uncomment the second line.
-
-```go
-IniWrite, "apexmaster.ahk"`n, settings.ini, script configs, script_name
-; IniWrite, "apexmaster.exe"`n, settings.ini, script configs, script_name
-```
+When debuging, you can uncomment `%hint_method%(current_weapon_type)`. This would tell you which weapon you are holding while the detection logic works.
 
 ## Credit
 
