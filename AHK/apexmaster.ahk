@@ -273,7 +273,7 @@ DetectAndSetWeapon()
             is_single_fire_weapon := true
         } 
     }
-    %hint_method%(current_weapon_type)
+    ; %hint_method%(current_weapon_type)
 }
 
 ~E Up::
