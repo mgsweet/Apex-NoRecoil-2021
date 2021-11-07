@@ -358,3 +358,7 @@ IsMouseShown()
     else
         Return false
 }
+
+~End::
+    ExitApp
+Return
