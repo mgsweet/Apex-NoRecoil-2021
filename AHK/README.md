@@ -12,9 +12,8 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 
 ## Usage
 How to run:
-- Download or clone the repo.
-- Make sure the `/pattern`, `/resolution`, `gui.exe` and `apexmaster.exe` are in the same directory.
-- Open `gui.exe` and do some configuration. Then click `Save and Run`. The GUI will then disappear and `apexmaster.exe` will run in the background.
+- Download and run `apexmaster-v1.2.2.exe`.
+- Then click `Save and Run`. The GUI will then disappear and `apexmaster.exe` will run in the background.
 - Run the game in borderless mode.
 - After running the script, every time you press `1`, `2`, `B`, `R` or `E`, the script will detect your current weapon and provide compensation while you click `L Button` while holding your `R Button` (is you click ads_only). It cannot detect the weapon when you get one by "licking a dead player's box"(I haven't done this yet). But once you click any of the four buttons mention above, the detection should work :)
 - Enjoy!
@@ -28,9 +27,8 @@ Config description:
 - sens: The default mouse sensitivity is `5.0`. Change the sens to yours.
 
 如何運行：
-- 下載或克隆該項目。
-- 確保 `/pattern`, `/resolution`, `gui.exe` and `apexmaster.exe` 在同一目錄下。
-- 啓動 `gui.exe` 做一些必要的設置。點擊 `Save and Run`， 然後圖形界面會消失且 `apexmaster.exe`會在後臺運行。
+- 下載並運行 `apexmaster-v1.2.2.exe`。
+- 點擊 `Save and Run`， 然後圖形界面會消失且 `apexmaster.exe`會在後臺運行。
 - 在無邊框模式下啓動游戲
 - 武器检测会在你按 `1`, `2`, `B`, `R` 或 `E` 时进行，舔包时通过鼠标点击获得的武器在一开始不会被检测，但在你按下上面所述四个按钮中任意一个后武器压枪补偿就会更新。
 
