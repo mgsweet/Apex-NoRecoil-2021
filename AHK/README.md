@@ -85,7 +85,7 @@ When debuging, you can uncomment `%hint_method%(current_weapon_type)`. This woul
 
 ## Credit
 
-I learn a lot from [thyaguster/NoRecoilApex](https://github.com/thyaguster/NoRecoilApex). But his code is pretty bad. There are thousands of lines of duplicated code in that repo. And some of the logic is wrong. (e.g. sleep twice to get the accuracy. Why not double the sleep value). So I make my own. Their code is about three thousand lines, but mine is only about 350, which comes with auto-weapon-detection. I didn't write the GUI to help to change the mouse sensitivity yet. You can send me a pull request if you do so.
+I learn a lot from [thyaguster/NoRecoilApex](https://github.com/thyaguster/NoRecoilApex). But his code is pretty bad. There are thousands of lines of duplicated code in that repo. And some of the logic is wrong. (e.g. sleep twice to get the accuracy. Why not double the sleep value). So I make my own. Their code is about three thousand lines, but mine is only about 350, which comes with auto-weapon-detection.
 
 From version 1.1, the pattern is "stolen" from sayoui001's repo -- [ApexAHK-Reduce-recoil](https://github.com/sayoui001/ApexAHK-Reduce-recoil). The features we provided are pretty much the same lol. The mainly difference is the detection logic. 
 
