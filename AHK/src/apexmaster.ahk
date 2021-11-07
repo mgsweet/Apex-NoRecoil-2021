@@ -66,6 +66,7 @@ global PROWLER_PIXELS := LoadPixel("prowler")
 global HEMLOK_PIXELS := LoadPixel("hemlok")
 global RAMPAGE_PIXELS := LoadPixel("rampage")
 global WINGMAN_PIXELS := LoadPixel("wingman")
+; special
 global CAR_PIXELS := LoadPixel("car")
 ; energy weapon
 global LSTAR_PIXELS := LoadPixel("lstar")
@@ -73,9 +74,9 @@ global DEVOTION_PIXELS := LoadPixel("devotion")
 global VOLT_PIXELS := LoadPixel("volt")
 global HAVOC_PIXELS := LoadPixel("havoc")
 ; supply drop weapon
+global G7_PIXELS := LoadPixel("g7")
 global SPITFIRE_PIXELS := LoadPixel("spitfire")
 global ALTERNATOR_PIXELS := LoadPixel("alternator")
-global G7_PIXELS := LoadPixel("g7")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
@@ -121,6 +122,8 @@ global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global VOLT_PATTERN := LoadPattern("Volt.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
 global TURBOHAVOC_PATTERN := LoadPattern("HavocTurbo.txt")
+; special
+global CAR_PATTERN := LoadPattern("CAR.txt")
 ; heavy weapon pattern
 global FLATLINE_PATTERN := LoadPattern("Flatline.txt")
 global RAMPAGE_PATTERN := LoadPattern("Rampage.txt")
@@ -128,11 +131,19 @@ global RAMPAGEAMP_PATTERN := LoadPattern("RampageAmp.txt")
 global PROWLER_PATTERN := LoadPattern("Prowler.txt")
 global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
-global CAR_PATTERN := LoadPattern("CAR.txt")
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
 global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
 global G7_Pattern := LoadPattern("G7.txt")
+
+; tips setting
+global hint_method := "Say"
+
+; voice setting
+SAPI.voice := SAPI.GetVoices().Item(1) 	; uncomment this line to get female voice.
+SAPI:=ComObjCreate("SAPI.SpVoice")
+SAPI.rate:=rate 
+SAPI.volume:=volume
 
 ; weapon detection
 global current_pattern := ["0,0,0"]
@@ -262,6 +273,7 @@ DetectAndSetWeapon()
             is_single_fire_weapon := true
         } 
     }
+    ; %hint_method%(current_weapon_type)
 }
 
 ~E Up::
@@ -273,25 +285,34 @@ return
 ~2::
 ~B::
 ~R::
-~WheelUp::
-~WheelDown::
     DetectAndSetWeapon()
 return
 
-~G::
 ~3::
-~Z::
     current_weapon_type := DEFAULT_WEAPON_TYPE
+return
+
+; For user using ads_only, they don't have to reset the current_weapon_type. 
+; This is meaningful to me since I sometimes will shot after throwing a grenade.
+~G::
+~Z::
+    if (!ads_only) {
+        current_weapon_type := DEFAULT_WEAPON_TYPE
+    }
+return
+
+~End::
+    ExitApp
 return
 
 ~$*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE)
         return
 
-    if (ads_only == "1" && !GetKeyState("RButton"))
+    if (ads_only && !GetKeyState("RButton"))
         return
 
-    if (is_single_fire_weapon && auto_fire != "1")
+    if (is_single_fire_weapon && !auto_fire)
         return
 
     Loop {
@@ -329,6 +350,8 @@ IniRead:
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
         IniWrite, "0"`n, settings.ini, mouse settings, ads_only
+        IniWrite, "80", settings.ini, voice settings, volume
+        IniWrite, "7", settings.ini, voice settings, rate
         if (A_ScriptName == "apexmaster.ahk") {
             Run "apexmaster.ahk"
         } else if (A_ScriptName == "apexmaster.exe") {
@@ -341,6 +364,8 @@ IniRead:
         IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
+        IniRead, volume, settings.ini, voice settings, volume
+        IniRead, rate, settings.ini, voice settings, rate
     }
 return
 
@@ -359,6 +384,42 @@ IsMouseShown()
         Return false
 }
 
-~End::
-    ExitApp
-Return
+ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
+{
+    CoordMode, Mouse, Screen
+    MouseGetPos, mouseX, mouseY
+    SysGet, monCount, MonitorCount
+    Loop %monCount% {
+        SysGet, curMon, Monitor, %a_index%
+        if ( mouseX >= curMonLeft and mouseX <= curMonRight and mouseY >= curMonTop and mouseY <= curMonBottom ) {
+            X := curMonTop
+            y := curMonLeft
+            Height := curMonBottom - curMonTop
+            Width := curMonRight - curMonLeft
+            return
+        }
+    }
+}
+
+
+Say(text)
+{
+    global SAPI
+    SAPI.Speak(text, 1)
+    sleep 150
+    return
+}
+
+Tooltip(Text)
+{
+    ActiveMonitorInfo(X, Y, Width, Height)
+    xPos := Width / 2 - 50
+    yPos := Height / 2 + (Height / 10)
+    Tooltip, %Text%, xPos, yPos
+    SetTimer, RemoveTooltip, 500
+    return
+    RemoveTooltip:
+        SetTimer, RemoveTooltip, Off
+        Tooltip
+    return
+}
