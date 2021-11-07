@@ -79,8 +79,6 @@ IniRead:
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
         IniWrite, "0"`n, settings.ini, mouse settings, ads_only
-        IniWrite, "80", settings.ini, voice settings, volume
-        IniWrite, "7", settings.ini, voice settings, rate
         if (A_ScriptName == "gui.ahk") {
             Run "gui.ahk"
         } else if (A_ScriptName == "gui.exe") {
@@ -92,8 +90,6 @@ IniRead:
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
-        IniRead, volume, settings.ini, voice settings, volume
-        IniRead, rate, settings.ini, voice settings, rate
     }
 return
 
@@ -105,7 +101,9 @@ btSave:
     IniWrite, "%ads_only%", settings.ini, mouse settings, ads_only
     if (A_ScriptName == "gui.ahk") {
         CloseScript("apexmaster.ahk")
+        CloseScript("AHKHider.ahk")
         Run "apexmaster.ahk"
+        Run "AHKHider.ahk"
     } else if (A_ScriptName == "gui.exe") {
         CloseScript("apexmaster.exe")
         Run "apexmaster.exe"

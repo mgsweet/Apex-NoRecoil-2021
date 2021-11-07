@@ -60,13 +60,13 @@ global R99_PIXELS := LoadPixel("r99")
 global R301_PIXELS := LoadPixel("r301")
 global RE45_PIXELS := LoadPixel("re45")
 global P2020_PIXELS := LoadPixel("p2020")
-global G7_PIXELS := LoadPixel("g7")
 ; heavy weapon
 global FLATLINE_PIXELS := LoadPixel("flatline")
 global PROWLER_PIXELS := LoadPixel("prowler")
 global HEMLOK_PIXELS := LoadPixel("hemlok")
 global RAMPAGE_PIXELS := LoadPixel("rampage")
 global WINGMAN_PIXELS := LoadPixel("wingman")
+global CAR_PIXELS := LoadPixel("car")
 ; energy weapon
 global LSTAR_PIXELS := LoadPixel("lstar")
 global DEVOTION_PIXELS := LoadPixel("devotion")
@@ -75,11 +75,10 @@ global HAVOC_PIXELS := LoadPixel("havoc")
 ; supply drop weapon
 global SPITFIRE_PIXELS := LoadPixel("spitfire")
 global ALTERNATOR_PIXELS := LoadPixel("alternator")
-; special
-global CAR_PIXELS := LoadPixel("car")
+global G7_PIXELS := LoadPixel("g7")
 ; Turbocharger
-global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_terbocharger")
-global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_terbocharger")
+global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
+global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 
 ; each player can hold 2 weapons
 LoadPixel(name) {
@@ -115,7 +114,6 @@ global R301_PATTERN := LoadPattern("R301.txt")
 global R99_PATTERN := LoadPattern("R99.txt")
 global RE45_PATTERN := LoadPattern("RE45.txt")
 global P2020_PATTERN := LoadPattern("P2020.txt")
-global G7_Pattern := LoadPattern("G7.txt")
 ; energy weapon pattern
 global LSTAR_PATTERN := LoadPattern("Lstar.txt")
 global DEVOTION_PATTERN := LoadPattern("Devotion.txt")
@@ -130,20 +128,11 @@ global RAMPAGEAMP_PATTERN := LoadPattern("RampageAmp.txt")
 global PROWLER_PATTERN := LoadPattern("Prowler.txt")
 global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
+global CAR_PATTERN := LoadPattern("CAR.txt")
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
 global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
-; special
-global CAR_PATTERN := LoadPattern("CAR.txt")
-
-; tips setting
-global hint_method := "Say"
-
-; voice setting
-SAPI.voice := SAPI.GetVoices().Item(1) 	; uncomment this line to get female voice.
-SAPI:=ComObjCreate("SAPI.SpVoice")
-SAPI.rate:=rate 
-SAPI.volume:=volume
+global G7_Pattern := LoadPattern("G7.txt")
 
 ; weapon detection
 global current_pattern := ["0,0,0"]
@@ -273,7 +262,6 @@ DetectAndSetWeapon()
             is_single_fire_weapon := true
         } 
     }
-    ; %hint_method%(current_weapon_type)
 }
 
 ~E Up::
@@ -285,13 +273,15 @@ return
 ~2::
 ~B::
 ~R::
+~WheelUp::
+~WheelDown::
     DetectAndSetWeapon()
 return
 
 ~G::
-    if (ads_only != "1") {
-        current_weapon_type := DEFAULT_WEAPON_TYPE
-    }
+~3::
+~Z::
+    current_weapon_type := DEFAULT_WEAPON_TYPE
 return
 
 ~$*LButton::
@@ -339,8 +329,6 @@ IniRead:
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
         IniWrite, "0"`n, settings.ini, mouse settings, ads_only
-        IniWrite, "80", settings.ini, voice settings, volume
-        IniWrite, "7", settings.ini, voice settings, rate
         if (A_ScriptName == "apexmaster.ahk") {
             Run "apexmaster.ahk"
         } else if (A_ScriptName == "apexmaster.exe") {
@@ -353,8 +341,6 @@ IniRead:
         IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
-        IniRead, volume, settings.ini, voice settings, volume
-        IniRead, rate, settings.ini, voice settings, rate
     }
 return
 
@@ -371,44 +357,4 @@ IsMouseShown()
         return true
     else
         Return false
-}
-
-ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
-{
-    CoordMode, Mouse, Screen
-    MouseGetPos, mouseX, mouseY
-    SysGet, monCount, MonitorCount
-    Loop %monCount% {
-        SysGet, curMon, Monitor, %a_index%
-        if ( mouseX >= curMonLeft and mouseX <= curMonRight and mouseY >= curMonTop and mouseY <= curMonBottom ) {
-            X := curMonTop
-            y := curMonLeft
-            Height := curMonBottom - curMonTop
-            Width := curMonRight - curMonLeft
-            return
-        }
-    }
-}
-
-
-Say(text)
-{
-    global SAPI
-    SAPI.Speak(text, 1)
-    sleep 150
-    return
-}
-
-Tooltip(Text)
-{
-    ActiveMonitorInfo(X, Y, Width, Height)
-    xPos := Width / 2 - 50
-    yPos := Height / 2 + (Height / 10)
-    Tooltip, %Text%, xPos, yPos
-    SetTimer, RemoveTooltip, 500
-    return
-    RemoveTooltip:
-        SetTimer, RemoveTooltip, Off
-        Tooltip
-    return
 }
