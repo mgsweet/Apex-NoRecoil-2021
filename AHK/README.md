@@ -94,7 +94,7 @@ All the ahk src file is now more to `/src`. You need to have AutoHotKey pre-inst
 
 When debuging, you can uncomment `%hint_method%(current_weapon_type)`. This would tell you which weapon you are holding while the detection logic works.
 
-For people who want support for more resolutions, check this video: [Apex-NoRecoil-2021 AHK | Customized Resolution](https://www.youtube.com/watch?v=9oVhqTkFmEw).
+For people who want support for more resolutions, check this video: [Apex-NoRecoil-2021 AHK | Customized Resolution](https://www.youtube.com/watch?v=VhpEi4_U3lc).
 
 ## Credit
 
