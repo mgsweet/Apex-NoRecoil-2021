@@ -20,6 +20,7 @@ How to run:
 
 How to close:
 - right click the tiny icon and quit.
+- or press `End` key
 
 Config description:
 - auto_fire: To run in a more safer mode, untick `auto_fire`. This would remove the auto fire feature for single shot weapon like G7, P2020, etc.
@@ -34,14 +35,22 @@ Config description:
 
 怎麽關閉：
 - 鼠標右擊小圖標並退出即可
+- 或使用键盘 `End` 键退出
 
 設置項説明：
 - auto_fire：如果你不想要单发武器全自动的功能， 勾選此項（会更安全）。
 - ads_only: 如果你只想在 ADS 模式下触发压枪的功能，勾選此項。
 - sens: 對應游戲裏設置的鼠標靈敏度
 
-
 ## Update
+
+### 2021/11/9 version 1.2.3
+
+- support 1600x900
+- update patterns
+- fix spelling mistakes
+- now `End` can exit the script
+
 ### 2021/11/6 version 1.2.2
 - support multiple resolution (1080, 2k, 4k)
 - add GUI for config setting

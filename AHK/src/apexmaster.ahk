@@ -60,26 +60,26 @@ global R99_PIXELS := LoadPixel("r99")
 global R301_PIXELS := LoadPixel("r301")
 global RE45_PIXELS := LoadPixel("re45")
 global P2020_PIXELS := LoadPixel("p2020")
-global G7_PIXELS := LoadPixel("g7")
 ; heavy weapon
 global FLATLINE_PIXELS := LoadPixel("flatline")
 global PROWLER_PIXELS := LoadPixel("prowler")
 global HEMLOK_PIXELS := LoadPixel("hemlok")
 global RAMPAGE_PIXELS := LoadPixel("rampage")
 global WINGMAN_PIXELS := LoadPixel("wingman")
+; special
+global CAR_PIXELS := LoadPixel("car")
 ; energy weapon
 global LSTAR_PIXELS := LoadPixel("lstar")
 global DEVOTION_PIXELS := LoadPixel("devotion")
 global VOLT_PIXELS := LoadPixel("volt")
 global HAVOC_PIXELS := LoadPixel("havoc")
 ; supply drop weapon
+global G7_PIXELS := LoadPixel("g7")
 global SPITFIRE_PIXELS := LoadPixel("spitfire")
 global ALTERNATOR_PIXELS := LoadPixel("alternator")
-; special
-global CAR_PIXELS := LoadPixel("car")
 ; Turbocharger
-global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_terbocharger")
-global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_terbocharger")
+global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
+global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 
 ; each player can hold 2 weapons
 LoadPixel(name) {
@@ -115,7 +115,6 @@ global R301_PATTERN := LoadPattern("R301.txt")
 global R99_PATTERN := LoadPattern("R99.txt")
 global RE45_PATTERN := LoadPattern("RE45.txt")
 global P2020_PATTERN := LoadPattern("P2020.txt")
-global G7_Pattern := LoadPattern("G7.txt")
 ; energy weapon pattern
 global LSTAR_PATTERN := LoadPattern("Lstar.txt")
 global DEVOTION_PATTERN := LoadPattern("Devotion.txt")
@@ -123,6 +122,8 @@ global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global VOLT_PATTERN := LoadPattern("Volt.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
 global TURBOHAVOC_PATTERN := LoadPattern("HavocTurbo.txt")
+; special
+global CAR_PATTERN := LoadPattern("CAR.txt")
 ; heavy weapon pattern
 global FLATLINE_PATTERN := LoadPattern("Flatline.txt")
 global RAMPAGE_PATTERN := LoadPattern("Rampage.txt")
@@ -133,8 +134,7 @@ global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
 global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
-; special
-global CAR_PATTERN := LoadPattern("CAR.txt")
+global G7_Pattern := LoadPattern("G7.txt")
 
 ; tips setting
 global hint_method := "Say"
@@ -288,20 +288,31 @@ return
     DetectAndSetWeapon()
 return
 
+~3::
+    current_weapon_type := DEFAULT_WEAPON_TYPE
+return
+
+; For user using ads_only, they don't have to reset the current_weapon_type. 
+; This is meaningful to me since I sometimes will shot after throwing a grenade.
 ~G::
-    if (ads_only != "1") {
+~Z::
+    if (!ads_only) {
         current_weapon_type := DEFAULT_WEAPON_TYPE
     }
+return
+
+~End::
+    ExitApp
 return
 
 ~$*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE)
         return
 
-    if (ads_only == "1" && !GetKeyState("RButton"))
+    if (ads_only && !GetKeyState("RButton"))
         return
 
-    if (is_single_fire_weapon && auto_fire != "1")
+    if (is_single_fire_weapon && !auto_fire)
         return
 
     Loop {

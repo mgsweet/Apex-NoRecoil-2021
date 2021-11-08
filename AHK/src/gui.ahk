@@ -13,7 +13,7 @@ if not A_IsAdmin
 Gosub, IniRead
 
 ; global variable
-script_version := "v1.2.2"
+script_version := "v1.2.3"
 
 ; Convert sens to sider format
 sider_sen := sens * 10
@@ -41,11 +41,13 @@ if (ads_only == "1") {
 Gui, Add, Text, x112 y209 w120 h30 , resolution:
 Gui, Font, S10, 
 if (resolution == "3840x2160") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1080x1920|2560x1440|3840x2160||
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1920x1080|2560x1440|3840x2160||
 } else if (resolution == "2560x1440") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1080x1920|2560x1440||3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1920x1080|2560x1440||3840x2160|
+} else if (resolution == "1600x900") {
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900||1920x1080|2560x1440|3840x2160|
 } else {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1080x1920||3840x2160|2560x1440
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1920x1080||2560x1440|3840x2160
 } 
 Gui, Font, S18 Bold, 
 Gui, Add, Button, x142 y259 w190 h40 gbtSave, Save and Run!
