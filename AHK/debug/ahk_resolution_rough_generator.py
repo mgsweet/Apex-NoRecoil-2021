@@ -21,8 +21,8 @@ havoc = "3312,1992,1,3316,1970,0,3274,1924,1"
 spitfire = "3386,1944,1,3304,1978,1,3290,1924,1"
 alternator = "3230,1958,1,3284,1960,1,3292,1956,0"
 car = "3210,1940,1,3172,1946,1,3210,1942,1"
-havoc_terbocharger = "3242,2012"
-devotion_terbocharger = "3300,2014"'''
+havoc_turbocharger = "3242,2012"
+devotion_turbocharger = "3300,2014"'''
     print('[pixels]')
     lines = origin_text.split("\n")
     for line in lines:
