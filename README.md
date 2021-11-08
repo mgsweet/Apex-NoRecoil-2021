@@ -1,6 +1,6 @@
 # Apex-NoRecoil-2021
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 An AutoHotKey script (works on 1080p，2k, 4k) and Python CLI (works on 1080p) to minimize recoil with auto weapon detection for Apex Legends. 
 
@@ -58,6 +58,7 @@ It would be good if you can help me setup some more accurate recoil value or mak
     <td align="center"><a href="http://mgsweet.com"><img src="https://avatars.githubusercontent.com/u/15327389?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aaron Yau</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=mgsweet" title="Code">💻</a></td>
     <td align="center"><a href="https://www.wemakeart.co.za"><img src="https://avatars.githubusercontent.com/u/21266436?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brandon Williams</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=krampus-nuggets" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/filen1"><img src="https://avatars.githubusercontent.com/u/88589472?v=4?s=100" width="100px;" alt=""/><br /><sub><b>filen1</b></sub></a><br /><a href="#data-filen1" title="Data">🔣</a></td>
+    <td align="center"><a href="https://github.com/sayoui001"><img src="https://avatars.githubusercontent.com/u/89756686?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sayoui001</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=sayoui001" title="Code">💻</a></td>
   </tr>
 </table>
 
