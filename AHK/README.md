@@ -11,6 +11,8 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 ![apex](https://user-images.githubusercontent.com/15327389/140604672-a4649ba6-9e81-49b2-981a-e79bfa4278fc.png)
 
 ## Usage
+> Youtube Tutorial: [Apex-NoRecoil-2021 AHK | Usage Description](https://www.youtube.com/watch?v=9oVhqTkFmEw)
+
 How to run:
 - Download and run `apexmaster-v1.2.2.exe`.
 - Then click `Save and Run`. The GUI will then disappear and `apexmaster.exe` will run in the background.
@@ -91,6 +93,8 @@ Config description:
 All the ahk src file is now more to `/src`. You need to have AutoHotKey pre-installed on your computer if you want to run the `apexmaster.ahk` file directly. 
 
 When debuging, you can uncomment `%hint_method%(current_weapon_type)`. This would tell you which weapon you are holding while the detection logic works.
+
+For people who want support for more resolutions, check this video: [Apex-NoRecoil-2021 AHK | Customized Resolution](https://www.youtube.com/watch?v=9oVhqTkFmEw).
 
 ## Credit
 
