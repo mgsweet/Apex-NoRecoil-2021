@@ -13,7 +13,7 @@ if not A_IsAdmin
 Gosub, IniRead
 
 ; global variable
-script_version := "v1.2.2"
+script_version := "v1.2.3"
 
 ; Convert sens to sider format
 sider_sen := sens * 10
