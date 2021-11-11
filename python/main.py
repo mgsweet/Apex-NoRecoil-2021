@@ -96,8 +96,12 @@ try:
         if left_click_state() and active_state:
             try:
                 for i in range(len(recoil_patterns[active_weapon])):
-                    win32api.mouse_event(0x0001, int(recoil_patterns[active_weapon][i][0]/data["modifier_value"]), int(recoil_patterns[active_weapon][i][1]/data["modifier_value"]))
-                    time.sleep(recoil_patterns[active_weapon][i][2])
+                    if left_click_state() and active_state:
+                        win32api.mouse_event(0x0001, int(recoil_patterns[active_weapon][i][0]/data["modifier_value"]), int(recoil_patterns[active_weapon][i][1]/data["modifier_value"]))
+                        time.sleep(recoil_patterns[active_weapon][i][2])
+                    else:
+                        break
+
                 supported_weapon = True
             except KeyError:
                 supported_weapon = False
