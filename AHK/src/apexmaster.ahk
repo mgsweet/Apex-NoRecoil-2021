@@ -44,6 +44,7 @@ global RAMPAGE_WEAPON_TYPE := "RAMPAGE"
 global WINGMAN_WEAPON_TYPE := "WINGMAN"
 global G7_WEAPON_TYPE := "G7"
 global CAR_WEAPON_TYPE := "CAR"
+global P3030_WEAPON_TYPE := "3030"
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = LoadPixel("weapon1")
@@ -66,6 +67,7 @@ global PROWLER_PIXELS := LoadPixel("prowler")
 global HEMLOK_PIXELS := LoadPixel("hemlok")
 global RAMPAGE_PIXELS := LoadPixel("rampage")
 global WINGMAN_PIXELS := LoadPixel("wingman")
+global P3030_PIXELS := LoadPixel("p3030")
 ; special
 global CAR_PIXELS := LoadPixel("car")
 ; energy weapon
@@ -122,6 +124,7 @@ global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global VOLT_PATTERN := LoadPattern("Volt.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
 global TURBOHAVOC_PATTERN := LoadPattern("HavocTurbo.txt")
+global P3030_PATTERN := LoadPattern("3030.txt")
 ; special
 global CAR_PATTERN := LoadPattern("CAR.txt")
 ; heavy weapon pattern
@@ -237,6 +240,10 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
+        } else if (CheckWeapon(P3030_PIXELS)) {
+            current_weapon_type := P3030_WEAPON_TYPE 
+            current_pattern := P3030_PATTERN
+            is_single_fire_weapon := true
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
