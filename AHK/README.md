@@ -14,7 +14,7 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 > Youtube Tutorial: [Apex-NoRecoil-2021 AHK | Usage Description](https://www.youtube.com/watch?v=9oVhqTkFmEw)
 
 How to run:
-- Download and run `apexmaster-v1.2.2.exe`.
+- Download and run `apexmaster-v1.x.x.exe`.
 - Then click `Save and Run`. The GUI will then disappear and `apexmaster.exe` will run in the background.
 - Run the game in borderless mode.
 - After running the script, every time you press `1`, `2`, `B`, `R` or `E`, the script will detect your current weapon and provide compensation while you click `L Button` while holding your `R Button` (is you click ads_only). It cannot detect the weapon when you get one by "licking a dead player's box"(I haven't done this yet). But once you click any of the four buttons mention above, the detection should work :)
