@@ -28,6 +28,7 @@ Config description:
 - auto_fire: To run in a more safer mode, untick `auto_fire`. This would remove the auto fire feature for single shot weapon like G7, P2020, etc.
 - ads_only: To make the script work only in ads mode, tick `ads_only`
 - sens: The default mouse sensitivity is `5.0`. Change the sens to yours.
+- op_gold_optics: Aim asist for gold optics for shotgun.
 
 如何運行：
 - 下載並運行 `apexmaster-v1.2.2.exe`。
@@ -43,11 +44,15 @@ Config description:
 - auto_fire：如果你不想要单发武器全自动的功能， 勾選此項（会更安全）。
 - ads_only: 如果你只想在 ADS 模式下触发压枪的功能，勾選此項。
 - sens: 對應游戲裏設置的鼠標靈敏度
+- op_gold_optics: 霰弹枪金镜辅助
 
 ## Update
+### 2021/11/21 version 1.2.4
+- support 3030
+- update patterns
+- new feature: gold optics shotgun aimbot
 
 ### 2021/11/9 version 1.2.3
-
 - support 1600x900
 - update patterns
 - fix spelling mistakes
