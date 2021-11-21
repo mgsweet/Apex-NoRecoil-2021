@@ -45,6 +45,7 @@ global WINGMAN_WEAPON_TYPE := "WINGMAN"
 global G7_WEAPON_TYPE := "G7"
 global CAR_WEAPON_TYPE := "CAR"
 global P3030_WEAPON_TYPE := "3030"
+global SHOTGUN_WEAPON_TYPE := "shotgun"
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = LoadPixel("weapon1")
@@ -54,6 +55,7 @@ global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
 global ENERGY_WEAPON_COLOR = 0x286E5A
 global SUPPY_DROP_COLOR = 0x3701B2
+global SHOTGUN_WEAPON_COLOR = 0x07206B
 
 ; three x, y check point, true means 0xFFFFFFFF
 ; light weapon
@@ -82,6 +84,24 @@ global ALTERNATOR_PIXELS := LoadPixel("alternator")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
+
+; for gold optics
+EMCol := 0x3841AD,0x333DB1
+ColVn := 8
+AntiShakeX := (A_ScreenHeight // 80)
+AntiShakeY := (A_ScreenHeight // 64)
+ZeroX := (A_ScreenWidth // 2)
+ZeroY := (A_ScreenHeight // 2)
+CFovX := (A_ScreenWidth // 32)
+CFovY := (A_ScreenHeight // 32)
+ScanL := ZeroX - CFovX
+ScanT := ZeroY - CFovY
+ScanR := ZeroX + CFovX
+ScanB := ZeroY + CFovY
+NearAimScanL := ZeroX - AntiShakeX
+NearAimScanT := ZeroY - AntiShakeY
+NearAimScanR := ZeroX + AntiShakeX
+NearAimScanB := ZeroY + AntiShakeY
 
 ; each player can hold 2 weapons
 LoadPixel(name) {
@@ -152,6 +172,7 @@ SAPI.volume:=volume
 global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
 global is_single_fire_weapon := false
+global is_op_gold_optics_weapon := false
 
 ; mouse sensitivity setting
 zoom := 1.0/zoom_sens
@@ -187,14 +208,17 @@ DetectAndSetWeapon()
     sleep 100
     ; init
     is_single_fire_weapon := false
+    is_op_gold_optics_weapon := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
     ; first check which weapon is activate
     check_point_color := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
-    if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR) {
+    if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR 
+        || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR || check_weapon1_color == SHOTGUN_WEAPON_COLOR) {
         check_point_color := check_weapon1_color
-    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR || check_weapon2_color == SUPPY_DROP_COLOR) {
+    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR 
+        || check_weapon2_color == SUPPY_DROP_COLOR || check_weapon2_color == SHOTGUN_WEAPON_COLOR) {
         check_point_color := check_weapon2_color
     } else {
         return
@@ -237,6 +261,7 @@ DetectAndSetWeapon()
             current_weapon_type := WINGMAN_WEAPON_TYPE
             current_pattern := WINGMAN_PATTERN
             is_single_fire_weapon := true
+            ; is_op_gold_optics_weapon := true
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
@@ -279,6 +304,9 @@ DetectAndSetWeapon()
             current_pattern := G7_Pattern
             is_single_fire_weapon := true
         } 
+    } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
+        current_weapon_type := SHOTGUN_WEAPON_TYPE
+        is_op_gold_optics_weapon := true
     }
     ; %hint_method%(current_weapon_type)
 }
@@ -312,8 +340,43 @@ return
     ExitApp
 return
 
+~$*RButton::
+    if (IsMouseShown() || !op_gold_optics || !is_op_gold_optics_weapon)
+        return
+    Loop, {
+        PixelSearch, AimPixelX, AimPixelY, NearAimScanL, NearAimScanT, NearAimScanR, NearAimScanB, EMCol, ColVn, Fast
+        ; If the collimator is already in the corresponding color attachment, do not move to avoid shaking
+        if (ErrorLevel) {
+            loop, 10 {
+                PixelSearch, AimPixelX, AimPixelY, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Fast
+                AimX := AimPixelX - ZeroX
+                AimY := AimPixelY - ZeroY
+                DirX := -1
+                DirY := -1
+                If ( AimX > 0 ) {
+                    DirX := 1
+                }
+                If ( AimY > 0 ) {
+                    DirY := 1
+                }
+                AimOffsetX := AimX * DirX
+                AimOffsetY := AimY * DirY
+                MoveX := Floor(( AimOffsetX ** ( 1 / 2 ))) * DirX
+                MoveY := Floor(( AimOffsetY ** ( 1 / 2 ))) * DirY
+                DllCall("mouse_event", uint, 1, int, MoveX * 1.5, int, MoveY, uint, 0, int, 0)
+                if (!GetKeyState("RButton","P")) {
+                    break
+                }
+            }
+        }
+        if (!GetKeyState("RButton","P")) {
+            break
+        }
+    }
+return
+
 ~$*LButton::
-    if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE)
+    if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
         return
 
     if (ads_only && !GetKeyState("RButton"))
@@ -328,9 +391,14 @@ return
             i := current_pattern.MaxIndex()
         }
 
-        x := StrSplit(current_pattern[i],",")[1]
-        y := StrSplit(current_pattern[i],",")[2]
-        interval := StrSplit(current_pattern[i],",")[3]
+        compensation := StrSplit(current_pattern[i],",")
+        if (compensation.MaxIndex() < 3) {
+            return
+        }
+        x := compensation[1]
+        y := compensation[2]
+        interval := compensation[3]
+        
         if (is_single_fire_weapon) {
             Click
             Random, rand, 1, 20
@@ -356,20 +424,21 @@ IniRead:
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
-        IniWrite, "0"`n, settings.ini, mouse settings, ads_only
+        IniWrite, "0", settings.ini, mouse settings, ads_only
+        IniWrite, "0"`n, settings.ini, mouse settings, op_gold_optics
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7", settings.ini, voice settings, rate
-        if (A_ScriptName == "apexmaster.ahk") {
-            Run "apexmaster.ahk"
-        } else if (A_ScriptName == "apexmaster.exe") {
-            Run "apexmaster.exe"
+        if (A_ScriptName == "gui.ahk") {
+            Run "gui.ahk"
+        } else if (A_ScriptName == "gui.exe") {
+            Run "gui.exe"
         }
     }
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
         IniRead, sens, settings.ini, mouse settings, sens
-        IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
+        IniRead, op_gold_optics, settings.ini, mouse settings, op_gold_optics
         IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
