@@ -308,7 +308,7 @@ DetectAndSetWeapon()
         current_weapon_type := SHOTGUN_WEAPON_TYPE
         is_op_gold_optics_weapon := true
     }
-    ; %hint_method%(current_weapon_type)
+    %hint_method%(current_weapon_type)
 }
 
 ~E Up::
@@ -428,14 +428,15 @@ IniRead:
         IniWrite, "0"`n, settings.ini, mouse settings, op_gold_optics
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7", settings.ini, voice settings, rate
-        if (A_ScriptName == "gui.ahk") {
-            Run "gui.ahk"
-        } else if (A_ScriptName == "gui.exe") {
-            Run "gui.exe"
+        if (A_ScriptName == "apexmaster.ahk") {
+            Run "apexmaster.ahk"
+        } else if (A_ScriptName == "apexmaster.exe") {
+            Run "apexmaster.exe"
         }
     }
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
+        IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, op_gold_optics, settings.ini, mouse settings, op_gold_optics
