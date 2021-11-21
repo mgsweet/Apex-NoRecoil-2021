@@ -47,7 +47,9 @@ Config description:
 - op_gold_optics: 霰弹枪金镜辅助，建议开启后同时修改游戏中的伤害显示抬头。
 
 For Those who tick the op_gold_optics option:
+
 ![image](https://user-images.githubusercontent.com/15327389/142760551-3132d208-ec46-4ad3-aab6-7ef0649be4cf.png)
+
 The reason is that their color is similar and will confuse the pixel search process.
 
 ## Update
