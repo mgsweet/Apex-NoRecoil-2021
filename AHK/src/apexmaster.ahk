@@ -308,7 +308,7 @@ DetectAndSetWeapon()
         current_weapon_type := SHOTGUN_WEAPON_TYPE
         is_op_gold_optics_weapon := true
     }
-    %hint_method%(current_weapon_type)
+    ; %hint_method%(current_weapon_type)
 }
 
 ~E Up::
