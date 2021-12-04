@@ -246,6 +246,11 @@ DetectAndSetWeapon()
         if (CheckWeapon(FLATLINE_PIXELS)) {
             current_weapon_type := FLATLINE_WEAPON_TYPE
             current_pattern := FLATLINE_PATTERN
+        } else if (CheckWeapon(WINGMAN_PIXELS)) {
+            current_weapon_type := WINGMAN_WEAPON_TYPE
+            current_pattern := WINGMAN_PATTERN
+            is_single_fire_weapon := true
+            ; is_op_gold_optics_weapon := true
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
@@ -257,11 +262,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(RAMPAGE_PIXELS)) {
 			current_weapon_type := RAMPAGE_WEAPON_TYPE
 			current_pattern := RAMPAGE_PATTERN
-        } else if (CheckWeapon(WINGMAN_PIXELS)) {
-            current_weapon_type := WINGMAN_WEAPON_TYPE
-            current_pattern := WINGMAN_PATTERN
-            is_single_fire_weapon := true
-            ; is_op_gold_optics_weapon := true
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
