@@ -45,7 +45,7 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
-### 2021/11/21 version 1.2.5
+### 2021/12/04 version 1.2.5
 - support 1680x1050 
 - remove gold optics shotgun aimbot (because people memtioned they are banned because of it)
 
