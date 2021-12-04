@@ -85,24 +85,6 @@ global ALTERNATOR_PIXELS := LoadPixel("alternator")
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 
-; for gold optics
-EMCol := 0x3841AD,0x333DB1
-ColVn := 8
-AntiShakeX := (A_ScreenHeight // 80)
-AntiShakeY := (A_ScreenHeight // 64)
-ZeroX := (A_ScreenWidth // 2)
-ZeroY := (A_ScreenHeight // 2)
-CFovX := (A_ScreenWidth // 32)
-CFovY := (A_ScreenHeight // 32)
-ScanL := ZeroX - CFovX
-ScanT := ZeroY - CFovY
-ScanR := ZeroX + CFovX
-ScanB := ZeroY + CFovY
-NearAimScanL := ZeroX - AntiShakeX
-NearAimScanT := ZeroY - AntiShakeY
-NearAimScanR := ZeroX + AntiShakeX
-NearAimScanB := ZeroY + AntiShakeY
-
 ; each player can hold 2 weapons
 LoadPixel(name) {
     global resolution
@@ -246,6 +228,10 @@ DetectAndSetWeapon()
         if (CheckWeapon(FLATLINE_PIXELS)) {
             current_weapon_type := FLATLINE_WEAPON_TYPE
             current_pattern := FLATLINE_PATTERN
+        } else if (CheckWeapon(WINGMAN_PIXELS)) {
+            current_weapon_type := WINGMAN_WEAPON_TYPE
+            current_pattern := WINGMAN_PATTERN
+            is_single_fire_weapon := true
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
@@ -257,11 +243,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(RAMPAGE_PIXELS)) {
 			current_weapon_type := RAMPAGE_WEAPON_TYPE
 			current_pattern := RAMPAGE_PATTERN
-        } else if (CheckWeapon(WINGMAN_PIXELS)) {
-            current_weapon_type := WINGMAN_WEAPON_TYPE
-            current_pattern := WINGMAN_PATTERN
-            is_single_fire_weapon := true
-            ; is_op_gold_optics_weapon := true
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
@@ -306,7 +287,6 @@ DetectAndSetWeapon()
         } 
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         current_weapon_type := SHOTGUN_WEAPON_TYPE
-        is_op_gold_optics_weapon := true
     }
     ; %hint_method%(current_weapon_type)
 }
@@ -338,41 +318,6 @@ return
 
 ~End::
     ExitApp
-return
-
-~$*RButton::
-    if (IsMouseShown() || !op_gold_optics || !is_op_gold_optics_weapon)
-        return
-    Loop, {
-        PixelSearch, AimPixelX, AimPixelY, NearAimScanL, NearAimScanT, NearAimScanR, NearAimScanB, EMCol, ColVn, Fast
-        ; If the collimator is already in the corresponding color attachment, do not move to avoid shaking
-        if (ErrorLevel) {
-            loop, 10 {
-                PixelSearch, AimPixelX, AimPixelY, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Fast
-                AimX := AimPixelX - ZeroX
-                AimY := AimPixelY - ZeroY
-                DirX := -1
-                DirY := -1
-                If ( AimX > 0 ) {
-                    DirX := 1
-                }
-                If ( AimY > 0 ) {
-                    DirY := 1
-                }
-                AimOffsetX := AimX * DirX
-                AimOffsetY := AimY * DirY
-                MoveX := Floor(( AimOffsetX ** ( 1 / 2 ))) * DirX
-                MoveY := Floor(( AimOffsetY ** ( 1 / 2 ))) * DirY
-                DllCall("mouse_event", uint, 1, int, MoveX * 1.5, int, MoveY, uint, 0, int, 0)
-                if (!GetKeyState("RButton","P")) {
-                    break
-                }
-            }
-        }
-        if (!GetKeyState("RButton","P")) {
-            break
-        }
-    }
 return
 
 ~$*LButton::
@@ -425,7 +370,6 @@ IniRead:
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
         IniWrite, "0", settings.ini, mouse settings, ads_only
-        IniWrite, "0"`n, settings.ini, mouse settings, op_gold_optics
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7", settings.ini, voice settings, rate
         if (A_ScriptName == "apexmaster.ahk") {
@@ -439,7 +383,6 @@ IniRead:
         IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
-        IniRead, op_gold_optics, settings.ini, mouse settings, op_gold_optics
         IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
