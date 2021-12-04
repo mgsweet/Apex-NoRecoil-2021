@@ -46,6 +46,7 @@ Config description:
 
 ## Update
 ### 2021/11/21 version 1.2.5
+- support 1680x1050 
 - remove gold optics shotgun aimbot (because people memtioned they are banned because of it)
 
 ### 2021/11/21 version 1.2.4
