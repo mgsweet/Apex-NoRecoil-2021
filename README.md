@@ -9,6 +9,9 @@ Apex Legends 压枪宏，带武器自动检测，包含了一个ahk的版本 (�
 ## Warning 警告
 Respawn may updated their cheating detection strategy, and we am still doing some testing. The reason for the current ban is not yet clear. Maybe is time to archive the whole project:(
 
+重生可能更新了他们的反作弊策略。我们还在做一些测试，最近被封的原因尚不明确，可能是时候删库跑路了23333.
+
+
 ## AHK Script - Description 介绍
 This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection. 
 
