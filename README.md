@@ -6,10 +6,13 @@ An AutoHotKey script (works on multiple resolutions) and Python CLI (works on 10
 
 Apex Legends 压枪宏，带武器自动检测，包含了一个ahk的版本 (支持多分辨率) 和一个python的版本 (只支持 1080p) 。
 
+## Warning 警告
+Respawn may updated their cheating detection strategy, and we am still doing some testing. The reason for the current ban is not yet clear. Maybe is time to archive the whole project:(
+
 ## AHK Script - Description 介绍
 This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection. 
 
-该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，不会封号（这就类似于那些淘宝卖好几百的主播专用压枪宏）。
+该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标（这就类似于那些淘宝卖好几百的主播专用压枪宏）。
 
 ### [AHK Script - Details and Usage 详细使用指南](https://github.com/mgsweet/Apex-NoRecoil-2021/tree/main/AHK)
 
