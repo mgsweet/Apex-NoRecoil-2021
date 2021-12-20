@@ -41,15 +41,17 @@ if (ads_only == "1") {
 Gui, Add, Text, x112 y209 w120 h30 , resolution:
 Gui, Font, S10, 
 if (resolution == "3840x2160") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080|2560x1440|3840x2160||
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080|2560x1440|2560x1600|3840x2160||
 } else if (resolution == "2560x1440") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080|2560x1440||3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080|2560x1440||2560x1600|3840x2160|
+} else if (resolution == "2560x1600") {
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080|2560x1440|2560x1600||3840x2160|
 } else if (resolution == "1600x900") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900||1680x1050|1920x1080|2560x1440|3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900||1680x1050|1920x1080|2560x1440|2560x1600|3840x2160|
 } else if (resolution == "1680x1050") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050||1920x1080|2560x1440|3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050||1920x1080|2560x1440|2560x1600|3840x2160|
 } else {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080||2560x1440|3840x2160
+    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080||2560x1440|2560x1600|3840x2160
 } 
 Gui, Font, S18 Bold, 
 Gui, Add, Button, x142 y259 w190 h40 gbtSave, Save and Run!
