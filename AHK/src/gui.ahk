@@ -5,15 +5,13 @@ SendMode Input
 SetWorkingDir %A_ScriptDir%
 DetectHiddenWindows On
 SetTitleMatchMode RegEx
-if not A_IsAdmin
-{
-    Run *RunAs "%A_ScriptFullPath%" 
-    ExitApp
-}
+
+RunAsAdmin()
+
 Gosub, IniRead
 
 ; global variable
-script_version := "v1.2.5"
+script_version := "v1.2.6"
 
 ; Convert sens to sider format
 sider_sen := sens * 10
@@ -151,6 +149,18 @@ ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
             return
         }
     }
+}
+
+RunAsAdmin()
+{
+	Global 0
+	IfEqual, A_IsAdmin, 1, Return 0
+	
+	Loop, %0%
+		params .= A_Space . %A_Index%
+	
+	DllCall("shell32\ShellExecute" (A_IsUnicode ? "":"A"),uint,0,str,"RunAs",str,(A_IsCompiled ? A_ScriptFullPath : A_AhkPath),str,(A_IsCompiled ? "": """" . A_ScriptFullPath . """" . A_Space) params,str,A_WorkingDir,int,1)
+	ExitApp
 }
 
 GuiClose:
