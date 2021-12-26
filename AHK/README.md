@@ -115,6 +115,8 @@ When debuging, you can uncomment `%hint_method%(current_weapon_type)`. This woul
 
 For people who want support for more resolutions, check this video: [Apex-NoRecoil-2021 AHK | Customized Resolution](https://www.youtube.com/watch?v=VhpEi4_U3lc).
 
+Tutorial from PetrosPastor may help u better understand the whole process: [Tutorial-How to make your own resolution for no-re*coil-(fully covered)](https://www.youtube.com/watch?v=wYyIMbdagw4).
+
 ## Credit
 
 I learn a lot from [thyaguster/NoRecoilApex](https://github.com/thyaguster/NoRecoilApex). But his code is pretty bad. There are thousands of lines of duplicated code in that repo. And some of the logic is wrong. (e.g. sleep twice to get the accuracy. Why not double the sleep value). So I make my own. Their code is about three thousand lines, but mine is only about 350, which comes with auto-weapon-detection.
