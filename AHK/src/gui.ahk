@@ -5,15 +5,13 @@ SendMode Input
 SetWorkingDir %A_ScriptDir%
 DetectHiddenWindows On
 SetTitleMatchMode RegEx
-if not A_IsAdmin
-{
-    Run *RunAs "%A_ScriptFullPath%" 
-    ExitApp
-}
+
+RunAsAdmin()
+
 Gosub, IniRead
 
 ; global variable
-script_version := "v1.2.5"
+script_version := "v1.2.6"
 
 ; Convert sens to sider format
 sider_sen := sens * 10
@@ -41,15 +39,19 @@ if (ads_only == "1") {
 Gui, Add, Text, x112 y209 w120 h30 , resolution:
 Gui, Font, S10, 
 if (resolution == "3840x2160") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080|2560x1440|3840x2160||
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1920x1080|2560x1440|3840x2160||
 } else if (resolution == "2560x1440") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080|2560x1440||3840x2160|
-} else if (resolution == "1600x900") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900||1680x1050|1920x1080|2560x1440|3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1920x1080|2560x1440||3840x2160|
 } else if (resolution == "1680x1050") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050||1920x1080|2560x1440|3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900||1680x1050||1920x1080|2560x1440|3840x2160|
+} else if (resolution == "1600x900") {
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900||1680x1050|1920x1080|2560x1440|3840x2160|
+} else if (resolution == "1366x768") {
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768||1600x900|1600x900|1920x1080|2560x1440|3840x2160|
+} else if (resolution == "1280x720") {
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720||1366x768|1600x900|1600x900|1920x1080|2560x1440|3840x2160|
 } else {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1600x900|1680x1050|1920x1080||2560x1440|3840x2160
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1920x1080||2560x1440|3840x2160
 } 
 Gui, Font, S18 Bold, 
 Gui, Add, Button, x142 y259 w190 h40 gbtSave, Save and Run!
@@ -147,6 +149,18 @@ ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
             return
         }
     }
+}
+
+RunAsAdmin()
+{
+	Global 0
+	IfEqual, A_IsAdmin, 1, Return 0
+	
+	Loop, %0%
+		params .= A_Space . %A_Index%
+	
+	DllCall("shell32\ShellExecute" (A_IsUnicode ? "":"A"),uint,0,str,"RunAs",str,(A_IsCompiled ? A_ScriptFullPath : A_AhkPath),str,(A_IsCompiled ? "": """" . A_ScriptFullPath . """" . A_Space) params,str,A_WorkingDir,int,1)
+	ExitApp
 }
 
 GuiClose:

@@ -6,13 +6,19 @@ Apex Legends 压枪宏，带武器自动检测，支持多种分辨率无边框�
 ## Description
 This repository contains an Autohotkey script to help you minimize weapon recoil. Your weapon is auto-detected by the script (no need to press the F key anymore! XD). The detection is based on a straightforward and naive strategy (I call it three-pixel-detection). It is pretty safe because all it does is just capture some pixels and then use mouse DllCall to move your mouse. Run the compiled version if you want more protection.
 
-该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，不会封号（这就类似于那些淘宝卖好几百的主播专用压枪宏）。
+该库包含了一个带自动武器检测的 Apex Legends 压枪宏，不读内存，不注入游戏文件，纯粹就是识别像素颜色并帮助你移动鼠标，这就类似于那些淘宝卖好几百的主播专用压枪宏。
 
 ![apex](https://user-images.githubusercontent.com/15327389/140604672-a4649ba6-9e81-49b2-981a-e79bfa4278fc.png)
 
-## Usage
-> Youtube Tutorial: [Apex-NoRecoil-2021 AHK | Usage Description](https://www.youtube.com/watch?v=9oVhqTkFmEw)
 
+## To run in the most safest way
+### AHK Only
+- run the uuid_generator.py in `AHK/src`
+- tick `ads_only`
+- untick `auto_fire`
+- run the script
+
+## Usage
 How to run:
 - Download and run `apexmaster-v1.x.x.exe`.
 - Then click `Save and Run`. The GUI will then disappear and `apexmaster.exe` will run in the background.
@@ -30,7 +36,7 @@ Config description:
 - sens: The default mouse sensitivity is `5.0`. Change the sens to yours.
 
 如何運行：
-- 下載並運行 `apexmaster-v1.2.2.exe`。
+- 下載並運行 `apexmaster-v1.x.x.exe`。
 - 點擊 `Save and Run`， 然後圖形界面會消失且 `apexmaster.exe`會在後臺運行。
 - 在無邊框模式下啓動游戲
 - 武器检测会在你按 `1`, `2`, `B`, `R` 或 `E` 时进行，舔包时通过鼠标点击获得的武器在一开始不会被检测，但在你按下上面所述四个按钮中任意一个后武器压枪补偿就会更新。
@@ -45,6 +51,12 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2021/12/25 version 1.2.6
+- build-in ahkhider
+- support 1280*720
+- support 1366*768
+- add a UUID generator to help do a slightly
+
 ### 2021/12/04 version 1.2.5
 - support 1680x1050 
 - remove gold optics shotgun aimbot (because people mentioned  they are banned because of it)
