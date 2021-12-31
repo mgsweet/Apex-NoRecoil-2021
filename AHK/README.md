@@ -16,7 +16,7 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 - run the uuid_generator.py in `AHK/src`
 - tick `ads_only`
 - untick `auto_fire`
-- run the script
+- run the ahk scripts
 
 ## Usage
 How to run:
@@ -52,7 +52,7 @@ Config description:
 
 ## Update
 ### 2021/12/25 version 1.2.6
-- build-in ahkhider
+- built-in ahkhider
 - support 1280*720
 - support 1366*768
 - add a UUID generator to help do a slightly
