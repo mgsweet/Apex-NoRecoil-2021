@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "e29d89fb1e994694ab32a7b591387598"
+global UUID := "9faa104762f346bfa3b000896a13e29a"
 
 HideProcess()
 
@@ -56,7 +56,7 @@ global WEAPON_2_PIXELS = LoadPixel("weapon2")
 global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
 global ENERGY_WEAPON_COLOR = 0x286E5A
-global SUPPY_DROP_COLOR = 0x3701B2
+global SUPPY_DROP_COLOR = 0x312E90
 global SHOTGUN_WEAPON_COLOR = 0x07206B
 
 ; three x, y check point, true means 0xFFFFFFFF
@@ -86,6 +86,24 @@ global ALTERNATOR_PIXELS := LoadPixel("alternator")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
+
+; for gold optics
+EMCol := 0x3841AD,0x333DB1
+ColVn := 8
+AntiShakeX := (A_ScreenHeight // 128)
+AntiShakeY := (A_ScreenHeight // 128)
+ZeroX := (A_ScreenWidth // 2)
+ZeroY := (A_ScreenHeight // 2)
+CFovX := (A_ScreenWidth // 32)
+CFovY := (A_ScreenHeight // 32)
+ScanL := ZeroX - CFovX
+ScanT := ZeroY - CFovY
+ScanR := ZeroX + CFovX
+ScanB := ZeroY + CFovY
+NearAimScanL := ZeroX - AntiShakeX
+NearAimScanT := ZeroY - AntiShakeY
+NearAimScanR := ZeroX + AntiShakeX
+NearAimScanB := ZeroY + AntiShakeY
 
 ; each player can hold 2 weapons
 LoadPixel(name) {
@@ -157,6 +175,7 @@ global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
 global is_single_fire_weapon := false
 global is_op_gold_optics_weapon := false
+global op_gold_optics := false
 
 ; mouse sensitivity setting
 zoom := 1.0/zoom_sens
@@ -233,7 +252,8 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(WINGMAN_PIXELS)) {
             current_weapon_type := WINGMAN_WEAPON_TYPE
             current_pattern := WINGMAN_PATTERN
-            is_single_fire_weapon := true
+            ; is_single_fire_weapon := true
+            is_op_gold_optics_weapon := true
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
@@ -285,10 +305,11 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(G7_PIXELS)) {
             current_weapon_type := G7_WEAPON_TYPE
             current_pattern := G7_Pattern
-            is_single_fire_weapon := true
+            ; is_single_fire_weapon := true
         } 
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         current_weapon_type := SHOTGUN_WEAPON_TYPE
+        is_op_gold_optics_weapon := true
     }
     ; %hint_method%(current_weapon_type)
 }
@@ -321,6 +342,46 @@ return
 ~End::
     ExitApp
 return
+
+; ~0::
+;     op_gold_optics := !op_gold_optics
+;     Tooltip(op_gold_optics)
+; return
+
+; ~$*RButton::
+;     if (IsMouseShown() || !op_gold_optics)
+;         return
+;     Loop, {
+;         PixelSearch, AimPixelX, AimPixelY, NearAimScanL, NearAimScanT, NearAimScanR, NearAimScanB, EMCol, ColVn, Fast
+;         ; If the collimator is already in the corresponding color attachment, do not move to avoid shaking
+;         if (ErrorLevel) {
+;             loop, 10 {
+;                 PixelSearch, AimPixelX, AimPixelY, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Fast
+;                 AimX := AimPixelX - ZeroX
+;                 AimY := AimPixelY - ZeroY
+;                 DirX := -1
+;                 DirY := -1
+;                 If ( AimX > 0 ) {
+;                     DirX := 1
+;                 }
+;                 If ( AimY > 0 ) {
+;                     DirY := 1
+;                 }
+;                 AimOffsetX := AimX * DirX
+;                 AimOffsetY := AimY * DirY
+;                 MoveX := Floor(( AimOffsetX ** ( 1 / 2 ))) * DirX
+;                 MoveY := Floor(( AimOffsetY ** ( 1 / 2 ))) * DirY
+;                 DllCall("mouse_event", uint, 1, int, MoveX * 1.5, int, MoveY, uint, 0, int, 0)
+;                 if (!GetKeyState("RButton","P")) {
+;                     break
+;                 }
+;             }
+;         }
+;         if (!GetKeyState("RButton","P")) {
+;             break
+;         }
+;     }
+; return
 
 ~$*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
