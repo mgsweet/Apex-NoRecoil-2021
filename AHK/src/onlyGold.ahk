@@ -343,7 +343,7 @@ return
     ExitApp
 return
 
-~0::
+~$*0::
     op_gold_optics := !op_gold_optics
     Tooltip(op_gold_optics)
 return
