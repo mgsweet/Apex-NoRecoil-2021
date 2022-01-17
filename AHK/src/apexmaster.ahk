@@ -56,7 +56,8 @@ global WEAPON_2_PIXELS = LoadPixel("weapon2")
 global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
 global ENERGY_WEAPON_COLOR = 0x286E5A
-global SUPPY_DROP_COLOR = 0x312E90
+global SUPPY_DROP_COLOR = 0x3701B2
+; global SUPPY_DROP_COLOR = 0x312E90
 global SHOTGUN_WEAPON_COLOR = 0x07206B
 
 ; three x, y check point, true means 0xFFFFFFFF
