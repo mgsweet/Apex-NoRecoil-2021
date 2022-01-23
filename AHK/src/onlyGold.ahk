@@ -48,6 +48,7 @@ global G7_WEAPON_TYPE := "G7"
 global CAR_WEAPON_TYPE := "CAR"
 global P3030_WEAPON_TYPE := "3030"
 global SHOTGUN_WEAPON_TYPE := "shotgun"
+global SNIPER_WEAPON_TYPE := "sniper"
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = LoadPixel("weapon1")
@@ -56,8 +57,10 @@ global WEAPON_2_PIXELS = LoadPixel("weapon2")
 global LIGHT_WEAPON_COLOR = 0x2D547D
 global HEAVY_WEAPON_COLOR = 0x596B38
 global ENERGY_WEAPON_COLOR = 0x286E5A
-global SUPPY_DROP_COLOR = 0x312E90
+global SUPPY_DROP_COLOR = 0x3701B2
+; global SUPPY_DROP_COLOR = 0x312E90
 global SHOTGUN_WEAPON_COLOR = 0x07206B
+global SNIPER_WEAPON_COLOR = 0x8f404b
 
 ; three x, y check point, true means 0xFFFFFFFF
 ; light weapon
@@ -92,8 +95,8 @@ global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 ; for gold optics
 EMCol := 0x3841AD,0x333DB1
 ColVn := 8
-AntiShakeX := (A_ScreenHeight // 512)
-AntiShakeY := (A_ScreenHeight // 512)
+AntiShakeX := (A_ScreenHeight // 1024)
+AntiShakeY := (A_ScreenHeight // 1024)
 ZeroX := (A_ScreenWidth // 2)
 ZeroY := (A_ScreenHeight // 2)
 CFovX := (A_ScreenWidth // 32)
@@ -220,9 +223,11 @@ DetectAndSetWeapon()
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
     if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR 
-        || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR || check_weapon1_color == SHOTGUN_WEAPON_COLOR) {
+        || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR 
+        || check_weapon1_color == SHOTGUN_WEAPON_COLOR || check_weapon1_color == SNIPER_WEAPON_COLOR) {
         check_point_color := check_weapon1_color
-    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR 
+    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR 
+        || check_weapon2_color == ENERGY_WEAPON_COLOR || check_weapon2_color == SNIPER_WEAPON_COLOR
         || check_weapon2_color == SUPPY_DROP_COLOR || check_weapon2_color == SHOTGUN_WEAPON_COLOR) {
         check_point_color := check_weapon2_color
     } else {
@@ -319,6 +324,9 @@ DetectAndSetWeapon()
         } 
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         current_weapon_type := SHOTGUN_WEAPON_TYPE
+        is_op_gold_optics_weapon := true
+    } else if(check_point_color == SNIPER_WEAPON_COLOR) {
+        current_weapon_type := SNIPER_WEAPON_TYPE
         is_op_gold_optics_weapon := true
     }
     ; %hint_method%(current_weapon_type)
