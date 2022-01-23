@@ -92,8 +92,8 @@ global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 ; for gold optics
 EMCol := 0x3841AD,0x333DB1
 ColVn := 8
-AntiShakeX := (A_ScreenHeight // 1024)
-AntiShakeY := (A_ScreenHeight // 1024)
+AntiShakeX := (A_ScreenHeight // 512)
+AntiShakeY := (A_ScreenHeight // 512)
 ZeroX := (A_ScreenWidth // 2)
 ZeroY := (A_ScreenHeight // 2)
 CFovX := (A_ScreenWidth // 32)
