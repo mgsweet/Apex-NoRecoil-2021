@@ -86,12 +86,14 @@ global ALTERNATOR_PIXELS := LoadPixel("alternator")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
+; Gold Optics
+; global P2020_GOLD_OPTICS := LoadPixel("p2020_gold_optics")
 
 ; for gold optics
 EMCol := 0x3841AD,0x333DB1
 ColVn := 8
-AntiShakeX := (A_ScreenHeight // 128)
-AntiShakeY := (A_ScreenHeight // 128)
+AntiShakeX := (A_ScreenHeight // 1024)
+AntiShakeY := (A_ScreenHeight // 1024)
 ZeroX := (A_ScreenWidth // 2)
 ZeroY := (A_ScreenHeight // 2)
 CFovX := (A_ScreenWidth // 32)
@@ -196,7 +198,7 @@ CheckWeapon(weapon_pixels)
     return True
 }
 
-CheckTurbocharger(turbocharger_pixels)
+CheckWhite(turbocharger_pixels)
 {
     target_color := 0xFFFFFF
     PixelGetColor, check_point_color, turbocharger_pixels[1], turbocharger_pixels[2]
@@ -234,16 +236,20 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(R99_PIXELS)) {
             current_weapon_type := R99_WEAPON_TYPE
             current_pattern := R99_PATTERN
+            is_op_gold_optics_weapon := true
         } else if (CheckWeapon(RE45_PIXELS)) {
             current_weapon_type := RE45_WEAPON_TYPE
             current_pattern := RE45_PATTERN
+            is_op_gold_optics_weapon := true
         } else if (CheckWeapon(P2020_PIXELS)) {
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
             is_single_fire_weapon := true
+            is_op_gold_optics_weapon := true
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
+            is_op_gold_optics_weapon := true
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (CheckWeapon(FLATLINE_PIXELS)) {
@@ -258,6 +264,7 @@ DetectAndSetWeapon()
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
             is_single_fire_weapon := true
+            is_op_gold_optics_weapon := true
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
@@ -268,6 +275,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
+            is_op_gold_optics_weapon := true
         } else if (CheckWeapon(P3030_PIXELS)) {
             current_weapon_type := P3030_WEAPON_TYPE 
             current_pattern := P3030_PATTERN
@@ -280,17 +288,18 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(DEVOTION_PIXELS)) {
             current_weapon_type := DEVOTION_WEAPON_TYPE
             current_pattern := DEVOTION_PATTERN
-            if (CheckTurbocharger(DEVOTION_TURBOCHARGER_PIXELS)) {
+            if (CheckWhite(DEVOTION_TURBOCHARGER_PIXELS)) {
                 current_pattern := TURBODEVOTION_PATTERN
                 current_weapon_type := DEVOTION_TURBO_WEAPON_TYPE
             }
         } else if (CheckWeapon(VOLT_PIXELS)) {
             current_weapon_type := VOLT_WEAPON_TYPE
             current_pattern := VOLT_PATTERN
+            is_op_gold_optics_weapon := true
         } else if (CheckWeapon(HAVOC_PIXELS)) {
             current_weapon_type := HAVOC_WEAPON_TYPE
             current_pattern := HAVOC_PATTERN
-            if (CheckTurbocharger(HAVOC_TURBOCHARGER_PIXELS)) {
+            if (CheckWhite(HAVOC_TURBOCHARGER_PIXELS)) {
                 current_pattern := TURBOHAVOC_PATTERN
                 current_weapon_type := HAVOC_TURBO_WEAPON_TYPE
             }
@@ -302,6 +311,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
             current_weapon_type := ALTERNATOR_WEAPON_TYPE
             current_pattern := ALTERNATOR_PATTERN
+            is_op_gold_optics_weapon := true
         } else if (CheckWeapon(G7_PIXELS)) {
             current_weapon_type := G7_WEAPON_TYPE
             current_pattern := G7_Pattern
@@ -314,17 +324,17 @@ DetectAndSetWeapon()
     ; %hint_method%(current_weapon_type)
 }
 
-~E Up::
-    Sleep, 200
-    DetectAndSetWeapon()
-return
+; ~E Up::
+;     Sleep, 200
+;     DetectAndSetWeapon()
+; return
 
-~1::
-~2::
-~B::
-~R::
-    DetectAndSetWeapon()
-return
+; ~1::
+; ~2::
+; ~B::
+; ~R::
+;     DetectAndSetWeapon()
+; return
 
 ~3::
     current_weapon_type := DEFAULT_WEAPON_TYPE
@@ -349,7 +359,8 @@ return
 return
 
 ~$*RButton::
-    if (IsMouseShown() || !op_gold_optics)
+    DetectAndSetWeapon()
+    if (IsMouseShown() || !op_gold_optics || !is_op_gold_optics_weapon)
         return
     Loop, {
         PixelSearch, AimPixelX, AimPixelY, NearAimScanL, NearAimScanT, NearAimScanR, NearAimScanB, EMCol, ColVn, Fast
