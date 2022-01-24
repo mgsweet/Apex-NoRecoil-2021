@@ -315,21 +315,21 @@ DetectAndSetWeapon()
     ; %hint_method%(current_weapon_type)
 }
 
-; ~E Up::
-;     Sleep, 200
-;     DetectAndSetWeapon()
-; return
-
-; ~1::
-; ~2::
-; ~B::
-; ~R::
-;     DetectAndSetWeapon()
-; return
-
-~$*RButton::
+~E Up::
+    Sleep, 200
     DetectAndSetWeapon()
 return
+
+~1::
+~2::
+~B::
+~R::
+    DetectAndSetWeapon()
+return
+
+; ~$*RButton::
+;     DetectAndSetWeapon()
+; return
 
 ~3::
     current_weapon_type := DEFAULT_WEAPON_TYPE

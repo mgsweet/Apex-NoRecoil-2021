@@ -332,17 +332,17 @@ DetectAndSetWeapon()
     ; %hint_method%(current_weapon_type)
 }
 
-; ~E Up::
-;     Sleep, 200
-;     DetectAndSetWeapon()
-; return
+~E Up::
+    Sleep, 200
+    DetectAndSetWeapon()
+return
 
-; ~1::
-; ~2::
-; ~B::
-; ~R::
-;     DetectAndSetWeapon()
-; return
+~1::
+~2::
+~B::
+~R::
+    DetectAndSetWeapon()
+return
 
 ~3::
     current_weapon_type := DEFAULT_WEAPON_TYPE
@@ -367,7 +367,7 @@ return
 return
 
 ~$*RButton::
-    DetectAndSetWeapon()
+    ; DetectAndSetWeapon()
     if (IsMouseShown() || !op_gold_optics || !is_op_gold_optics_weapon)
         return
     Loop, {
