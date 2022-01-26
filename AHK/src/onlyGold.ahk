@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "c073303d5326401a9c9c54ee787b6023"
+global UUID := "b695b7aee7f24986ab88e4c06dac3de9"
 
 HideProcess()
 
@@ -95,8 +95,8 @@ global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 ; for gold optics
 EMCol := 0x3841AD,0x333DB1
 ColVn := 8
-AntiShakeX := (A_ScreenHeight // 1024)
-AntiShakeY := (A_ScreenHeight // 1024)
+AntiShakeX := 1
+AntiShakeY := 1
 ZeroX := (A_ScreenWidth // 2)
 ZeroY := (A_ScreenHeight // 2)
 CFovX := (A_ScreenWidth // 32)
