@@ -55,7 +55,7 @@ Config description:
 - built-in ahkhider
 - support 1280*720
 - support 1366*768
-- add a UUID generator to help do a slightly
+- add a UUID generator to help do a slight change
 
 ### 2021/12/04 version 1.2.5
 - support 1680x1050 
