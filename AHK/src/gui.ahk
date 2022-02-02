@@ -39,19 +39,23 @@ if (ads_only == "1") {
 Gui, Add, Text, x112 y209 w120 h30 , resolution:
 Gui, Font, S10, 
 if (resolution == "3840x2160") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1920x1080|2560x1440|3840x2160||
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160||
 } else if (resolution == "2560x1440") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1920x1080|2560x1440||3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200|2560x1440||3840x2160|
+} else if (resolution == "1920x1200") {
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200||2560x1440|3840x2160|
+} else if (resolution == "1728x1080") {
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080||1920x1200|2560x1440|3840x2160|
 } else if (resolution == "1680x1050") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900||1680x1050||1920x1080|2560x1440|3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080||1920x1080|1920x1200|2560x1440|3840x2160|
 } else if (resolution == "1600x900") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900||1680x1050|1920x1080|2560x1440|3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050||1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|
 } else if (resolution == "1366x768") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768||1600x900|1600x900|1920x1080|2560x1440|3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900||1600x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|
 } else if (resolution == "1280x720") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720||1366x768|1600x900|1600x900|1920x1080|2560x1440|3840x2160|
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768||1600x900|1600x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|
 } else {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1920x1080||2560x1440|3840x2160
+    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720||1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|
 } 
 Gui, Font, S18 Bold, 
 Gui, Add, Button, x142 y259 w190 h40 gbtSave, Save and Run!
