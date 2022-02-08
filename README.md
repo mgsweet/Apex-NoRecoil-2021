@@ -44,9 +44,7 @@ The repository also contains a Python version of the AHK script. It uses the Goo
 I post a [thread](https://www.unknowncheats.me/forum/apex-legends/476508-apex-norecoil-2021-official-post-auto-detect-multiple-resolution-supported.html) there too, to let more people know the script.
 
 ## Contributing
-It would be good if you can help me setup some more accurate recoil value or make the script support more weapons. Check the code and send me a pull request if you do so. I really appreciate that. 
-
-目前补偿还不是特别精确，因为调试的过程比较枯燥。我希望有朋友可以帮我调试相应的补偿或提供更多枪械的检测。欢迎大家给我发 pull request。谢谢！
+Pull Request is always welcome!
 
 ## Contributors
 <table>
