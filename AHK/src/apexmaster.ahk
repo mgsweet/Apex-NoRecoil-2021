@@ -233,7 +233,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(WINGMAN_PIXELS)) {
             current_weapon_type := WINGMAN_WEAPON_TYPE
             current_pattern := WINGMAN_PATTERN
-            is_single_fire_weapon := true
+            ; is_single_fire_weapon := true
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
