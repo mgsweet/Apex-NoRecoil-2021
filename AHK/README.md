@@ -54,7 +54,7 @@ Config description:
 ### 2021/12/25 version 1.2.7
 - support 1728x1080 and 1920x1200 (from [SiLeNT-Sooul](https://github.com/SiLeNT-Sooul))
 - remove wingman auto-fire
-- remove exe, which will be move to releases
+- remove exe, which will be moved to releases
 
 ### 2021/12/25 version 1.2.6
 - built-in ahkhider
