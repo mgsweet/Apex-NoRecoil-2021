@@ -65,6 +65,7 @@ global R99_PIXELS := LoadPixel("r99")
 global R301_PIXELS := LoadPixel("r301")
 global RE45_PIXELS := LoadPixel("re45")
 global P2020_PIXELS := LoadPixel("p2020")
+global ALTERNATOR_PIXELS := LoadPixel("alternator")
 ; heavy weapon
 global FLATLINE_PIXELS := LoadPixel("flatline")
 global PROWLER_PIXELS := LoadPixel("prowler")
@@ -77,12 +78,11 @@ global CAR_PIXELS := LoadPixel("car")
 ; energy weapon
 global LSTAR_PIXELS := LoadPixel("lstar")
 global DEVOTION_PIXELS := LoadPixel("devotion")
-global VOLT_PIXELS := LoadPixel("volt")
 global HAVOC_PIXELS := LoadPixel("havoc")
 ; supply drop weapon
 global G7_PIXELS := LoadPixel("g7")
 global SPITFIRE_PIXELS := LoadPixel("spitfire")
-global ALTERNATOR_PIXELS := LoadPixel("alternator")
+global VOLT_PIXELS := LoadPixel("volt")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
@@ -121,11 +121,11 @@ global R301_PATTERN := LoadPattern("R301.txt")
 global R99_PATTERN := LoadPattern("R99.txt")
 global RE45_PATTERN := LoadPattern("RE45.txt")
 global P2020_PATTERN := LoadPattern("P2020.txt")
+global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
 ; energy weapon pattern
 global LSTAR_PATTERN := LoadPattern("Lstar.txt")
 global DEVOTION_PATTERN := LoadPattern("Devotion.txt")
 global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
-global VOLT_PATTERN := LoadPattern("Volt.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
 global TURBOHAVOC_PATTERN := LoadPattern("HavocTurbo.txt")
 global P3030_PATTERN := LoadPattern("3030.txt")
@@ -140,9 +140,8 @@ global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
-global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
 global G7_Pattern := LoadPattern("G7.txt")
-
+global VOLT_PATTERN := LoadPattern("Volt.txt")
 ; tips setting
 global hint_method := "Say"
 
@@ -225,6 +224,9 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
+        } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
+            current_weapon_type := ALTERNATOR_WEAPON_TYPE
+            current_pattern := ALTERNATOR_PATTERN
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (CheckWeapon(FLATLINE_PIXELS)) {
@@ -233,7 +235,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(WINGMAN_PIXELS)) {
             current_weapon_type := WINGMAN_WEAPON_TYPE
             current_pattern := WINGMAN_PATTERN
-            ; is_single_fire_weapon := true
+            is_single_fire_weapon := true
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
@@ -264,9 +266,6 @@ DetectAndSetWeapon()
                 current_pattern := TURBODEVOTION_PATTERN
                 current_weapon_type := DEVOTION_TURBO_WEAPON_TYPE
             }
-        } else if (CheckWeapon(VOLT_PIXELS)) {
-            current_weapon_type := VOLT_WEAPON_TYPE
-            current_pattern := VOLT_PATTERN
         } else if (CheckWeapon(HAVOC_PIXELS)) {
             current_weapon_type := HAVOC_WEAPON_TYPE
             current_pattern := HAVOC_PATTERN
@@ -279,18 +278,18 @@ DetectAndSetWeapon()
         if (CheckWeapon(SPITFIRE_PIXELS)) {
             current_weapon_type := SPITFIRE_WEAPON_TYPE
             current_pattern := SPITFIRE_PATTERN
-        } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
-            current_weapon_type := ALTERNATOR_WEAPON_TYPE
-            current_pattern := ALTERNATOR_PATTERN
         } else if (CheckWeapon(G7_PIXELS)) {
             current_weapon_type := G7_WEAPON_TYPE
             current_pattern := G7_Pattern
             is_single_fire_weapon := true
-        } 
+        } else if (CheckWeapon(VOLT_PIXELS)) {
+            current_weapon_type := VOLT_WEAPON_TYPE
+            current_pattern := VOLT_PATTERN
+        }
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         current_weapon_type := SHOTGUN_WEAPON_TYPE
     }
-    ; %hint_method%(current_weapon_type)
+    ;%hint_method%(current_weapon_type)
 }
 
 ~E Up::
