@@ -235,7 +235,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(WINGMAN_PIXELS)) {
             current_weapon_type := WINGMAN_WEAPON_TYPE
             current_pattern := WINGMAN_PATTERN
-            is_single_fire_weapon := true
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
@@ -253,7 +252,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(P3030_PIXELS)) {
             current_weapon_type := P3030_WEAPON_TYPE 
             current_pattern := P3030_PATTERN
-            is_single_fire_weapon := true
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
@@ -289,7 +287,7 @@ DetectAndSetWeapon()
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         current_weapon_type := SHOTGUN_WEAPON_TYPE
     }
-    ;%hint_method%(current_weapon_type)
+    ; %hint_method%(current_weapon_type)
 }
 
 ~E Up::
