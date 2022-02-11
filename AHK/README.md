@@ -51,7 +51,11 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
-### 2021/12/25 version 1.2.7
+### 2021/02/11 version 1.2.8
+- change alternator back to light weapon
+- change volt to supply weapon
+
+### 2021/02/9 version 1.2.7
 - support 1728x1080 and 1920x1200 (from [SiLeNT-Sooul](https://github.com/SiLeNT-Sooul))
 - remove wingman auto-fire
 - remove exe, which will be moved to releases
