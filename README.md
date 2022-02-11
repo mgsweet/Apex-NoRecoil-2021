@@ -1,6 +1,6 @@
 # Apex-NoRecoil-2021
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 An AutoHotKey script (works on multiple resolutions) and Python CLI (works on 1080p) to minimize recoil with auto weapon detection for Apex Legends. 
 
@@ -60,6 +60,7 @@ Pull Request is always welcome!
     <td align="center"><a href="https://github.com/sayoui001"><img src="https://avatars.githubusercontent.com/u/89756686?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sayoui001</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=sayoui001" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/SiLeNT-Sooul"><img src="https://avatars.githubusercontent.com/u/72454428?v=4?s=100" width="100px;" alt=""/><br /><sub><b>SiLeNT-Sooul</b></sub></a><br /><a href="#data-SiLeNT-Sooul" title="Data">🔣</a></td>
     <td align="center"><a href="https://github.com/ThirdPetros"><img src="https://avatars.githubusercontent.com/u/60510041?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Petros</b></sub></a><br /><a href="#data-thirdpetros" title="Data">🔣</a></td>
+    <td align="center"><a href="https://github.com/VStorm001"><img src="https://avatars.githubusercontent.com/u/79291809?v=4?s=100" width="100px;" alt=""/><br /><sub><b>VStorm001</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=VStorm001" title="Code">💻</a></td>
   </tr>
 </table>
 
