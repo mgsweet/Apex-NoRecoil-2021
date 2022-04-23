@@ -48,8 +48,6 @@ def left_click_state():
     left_click = win32api.GetKeyState(0x01)
     return left_click < 0
 
-# RETURN SELECTED WEAPON | read_weapon(weapon_screenshot("one"))
-
 active_state = False
 last_toggle_state = False
 active_weapon_slot = 1
