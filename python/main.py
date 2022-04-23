@@ -1,14 +1,16 @@
 from modules.helpers import config_generator, read_config
 from modules.recoil_patterns import recoil_patterns
 from modules.banners import print_banner
+from mss import mss
 import numpy as np
 import pytesseract
 import cv2 as cv
-import pyautogui
 import keyboard
 import win32api
 import time
 import sys
+
+sct = mss()
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
@@ -27,11 +29,21 @@ toggle_button = "delete"
 
 def weapon_screenshot(select_weapon):
     if select_weapon == "one":
-        image = pyautogui.screenshot(region=(data["scan_coord_one"]["left"], data["scan_coord_one"]["top"], data["scan_coord_one"]["width"], data["scan_coord_one"]["height"]))
+        image = sct.grab({
+            "left": data["scan_coord_one"]["left"],
+            "top": data["scan_coord_one"]["top"],
+            "width": data["scan_coord_one"]["width"],
+            "height": data["scan_coord_one"]["height"]
+        })
         image = cv.cvtColor(np.array(image), cv.COLOR_RGB2BGR)
         return image
     elif select_weapon == "two":
-        image = pyautogui.screenshot(region=(data["scan_coord_two"]["left"], data["scan_coord_two"]["top"], data["scan_coord_two"]["width"], data["scan_coord_two"]["height"]))
+        image = sct.grab({
+            "left": data["scan_coord_two"]["left"],
+            "top": data["scan_coord_two"]["top"],
+            "width": data["scan_coord_two"]["width"],
+            "height": data["scan_coord_two"]["height"]
+        })
         image = cv.cvtColor(np.array(image), cv.COLOR_RGB2BGR)
         return image
     else:
