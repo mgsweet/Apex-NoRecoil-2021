@@ -1,0 +1,11 @@
+modifier_value: 1
+scan_coord_one:
+  height: 25
+  left: 1555
+  top: 1030
+  width: 110
+scan_coord_two:
+  height: 25
+  left: 1715
+  top: 1030
+  width: 110
