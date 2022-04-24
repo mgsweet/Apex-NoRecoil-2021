@@ -36,7 +36,8 @@ def weapon_screenshot(select_weapon):
             "width": data["scan_coord_one"]["width"],
             "height": data["scan_coord_one"]["height"]
         })
-        image = cv.cvtColor(np.array(image), cv.COLOR_RGB2BGR)
+        image = cv.cvtColor(np.array(image), cv.COLOR_RGB2GRAY)
+        _, image = cv.threshold(image, 140, 255, cv.THRESH_BINARY)
         return image
     elif select_weapon == "two":
         image = sct.grab({
@@ -45,7 +46,8 @@ def weapon_screenshot(select_weapon):
             "width": data["scan_coord_two"]["width"],
             "height": data["scan_coord_two"]["height"]
         })
-        image = cv.cvtColor(np.array(image), cv.COLOR_RGB2BGR)
+        image = cv.cvtColor(np.array(image), cv.COLOR_RGB2GRAY)
+        _, image = cv.threshold(image, 140, 255, cv.THRESH_BINARY)
         return image
     else:
         print("ERROR: Invalid weapon selection | FUNC: weapon_screenshot")
@@ -53,9 +55,16 @@ def weapon_screenshot(select_weapon):
         sys.exit(1)
 
 def read_weapon(cv_image):
+    excluded_char = [",", "."]
+
     text = pytesseract.image_to_string(cv_image)
     text = text.split()
-    return str(text[0])
+    text = text[0]
+
+    for char in excluded_char:
+        text = text.replace(char, '')
+
+    return str(text)
 
 def left_click_state():
     left_click = win32api.GetKeyState(0x01)
