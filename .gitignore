@@ -10,3 +10,6 @@ python/export.json
 python/pythoncom39.dll
 python/pywintypes39.dll
 python/output
+
+# IDE
+.idea
