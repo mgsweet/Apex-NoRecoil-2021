@@ -13,3 +13,6 @@ python/output
 
 # IDE
 .idea
+
+# AHK
+AHK/bin
