@@ -252,6 +252,9 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(P3030_PIXELS)) {
             current_weapon_type := P3030_WEAPON_TYPE 
             current_pattern := P3030_PATTERN
+        } else if (CheckWeapon(SPITFIRE_PIXELS)) {
+            current_weapon_type := SPITFIRE_WEAPON_TYPE
+            current_pattern := SPITFIRE_PATTERN
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
@@ -273,10 +276,7 @@ DetectAndSetWeapon()
             }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
-        if (CheckWeapon(SPITFIRE_PIXELS)) {
-            current_weapon_type := SPITFIRE_WEAPON_TYPE
-            current_pattern := SPITFIRE_PATTERN
-        } else if (CheckWeapon(G7_PIXELS)) {
+        if (CheckWeapon(G7_PIXELS)) {
             current_weapon_type := G7_WEAPON_TYPE
             current_pattern := G7_Pattern
             is_single_fire_weapon := true
