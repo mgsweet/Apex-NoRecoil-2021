@@ -49,7 +49,7 @@ Config description:
 
 ## Update
 ### 2022/05/13 version 1.2.9
-- remove bin, which may cause people get banned.
+- remove `bin/`, which may cause people to get banned
 - move spitfire out of supply weapon (from [VerTox](https://github.com/VerTox))
 
 ### 2021/02/11 version 1.2.8
