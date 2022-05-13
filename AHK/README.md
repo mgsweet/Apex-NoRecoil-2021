@@ -11,17 +11,14 @@ This repository contains an Autohotkey script to help you minimize weapon recoil
 ![apex](https://user-images.githubusercontent.com/15327389/140604672-a4649ba6-9e81-49b2-981a-e79bfa4278fc.png)
 
 
-## To run in the most safest way
-### AHK Only
-- run the uuid_generator.py in `AHK/src`
-- tick `ads_only`
-- untick `auto_fire`
-- run the ahk scripts
-
 ## Usage
 How to run:
-- Download and run `apexmaster-v1.x.x.exe`.
-- Then click `Save and Run`. The GUI will then disappear and `apexmaster.exe` will run in the background.
+- Download and install [AutoHotKey](https://www.autohotkey.com/)
+- Download Python3
+- Download this repo.
+- run the `uuid_generator.py` in `AHK/src`
+- run the `AHK/src/gui.ahk`, do some configuration works.
+- Then click `Save and Run`. The GUI will then disappear and `apexmaster.ahk` will run in the background.
 - Run the game in borderless mode.
 - After running the script, every time you press `1`, `2`, `B`, `R` or `E`, the script will detect your current weapon and provide compensation while you click `L Button` while holding your `R Button` (is you click ads_only). It cannot detect the weapon when you get one by "licking a dead player's box"(I haven't done this yet). But once you click any of the four buttons mention above, the detection should work :)
 - Enjoy!
@@ -51,6 +48,10 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2022/05/13 version 1.2.9
+- remove bin, which may cause people get banned.
+- move spitfire out of supply weapon (from [VerTox](https://github.com/VerTox))
+
 ### 2021/02/11 version 1.2.8
 - change alternator back to light weapon
 - change volt to supply weapon
@@ -123,8 +124,6 @@ All the ahk src file is now more to `/src`. You need to have AutoHotKey pre-inst
 When debuging, you can uncomment `%hint_method%(current_weapon_type)`. This would tell you which weapon you are holding while the detection logic works.
 
 For people who want support for more resolutions, check this video: [Apex-NoRecoil-2021 AHK | Customized Resolution](https://www.youtube.com/watch?v=VhpEi4_U3lc).
-
-Tutorial from PetrosPastor may help u better understand the whole process: [Tutorial-How to make your own resolution for no-re*coil-(fully covered)](https://www.youtube.com/watch?v=wYyIMbdagw4).
 
 ## Credit
 
