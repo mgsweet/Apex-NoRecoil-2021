@@ -220,21 +220,25 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(P2020_PIXELS)) {
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
-            is_single_fire_weapon := true
+            is_single_fire_weapon := false
+		} else if (CheckWeapon(ALTERNATOR_PIXELS)) {
+            current_weapon_type := ALTERNATOR_WEAPON_TYPE
+            current_pattern := ALTERNATOR_PATTERN
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
-        } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
-            current_weapon_type := ALTERNATOR_WEAPON_TYPE
-            current_pattern := ALTERNATOR_PATTERN
-        }
-    } else if (check_point_color == HEAVY_WEAPON_COLOR) {
+        }else if (CheckWeapon(G7_PIXELS)) {
+            current_weapon_type := G7_WEAPON_TYPE
+            current_pattern := G7_Pattern
+            is_single_fire_weapon := true
+        } else if (CheckWeapon(SPITFIRE_PIXELS)) {
+            current_weapon_type := SPITFIRE_WEAPON_TYPE
+            current_pattern := SPITFIRE_PATTERN 
+		}
+	} else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (CheckWeapon(FLATLINE_PIXELS)) {
             current_weapon_type := FLATLINE_WEAPON_TYPE
             current_pattern := FLATLINE_PATTERN
-        } else if (CheckWeapon(WINGMAN_PIXELS)) {
-            current_weapon_type := WINGMAN_WEAPON_TYPE
-            current_pattern := WINGMAN_PATTERN
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
@@ -243,24 +247,22 @@ DetectAndSetWeapon()
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
             is_single_fire_weapon := true
-        } else if (CheckWeapon(RAMPAGE_PIXELS)) {
-			current_weapon_type := RAMPAGE_WEAPON_TYPE
-			current_pattern := RAMPAGE_PATTERN
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
         } else if (CheckWeapon(P3030_PIXELS)) {
             current_weapon_type := P3030_WEAPON_TYPE 
             current_pattern := P3030_PATTERN
-        } else if (CheckWeapon(SPITFIRE_PIXELS)) {
-            current_weapon_type := SPITFIRE_WEAPON_TYPE
-            current_pattern := SPITFIRE_PATTERN
+            is_single_fire_weapon := false
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
             current_weapon_type := LSTAR_WEAPON_TYPE
             current_pattern := LSTAR_PATTERN
-        } else if (CheckWeapon(DEVOTION_PIXELS)) {
+        } else if (CheckWeapon(VOLT_PIXELS)) {
+            current_weapon_type := VOLT_WEAPON_TYPE
+            current_pattern := VOLT_PATTERN
+		} else if (CheckWeapon(DEVOTION_PIXELS)) {
             current_weapon_type := DEVOTION_WEAPON_TYPE
             current_pattern := DEVOTION_PATTERN
             if (CheckTurbocharger(DEVOTION_TURBOCHARGER_PIXELS)) {
@@ -276,17 +278,13 @@ DetectAndSetWeapon()
             }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
-        if (CheckWeapon(G7_PIXELS)) {
-            current_weapon_type := G7_WEAPON_TYPE
-            current_pattern := G7_Pattern
-            is_single_fire_weapon := true
-        } else if (CheckWeapon(VOLT_PIXELS)) {
-            current_weapon_type := VOLT_WEAPON_TYPE
-            current_pattern := VOLT_PATTERN
-        }
+		if (CheckWeapon(RAMPAGE_PIXELS)) {
+			current_weapon_type := RAMPAGE_WEAPON_TYPE
+			current_pattern := RAMPAGE_PATTERN
+        } 
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         current_weapon_type := SHOTGUN_WEAPON_TYPE
-    }
+    } 	
     ; %hint_method%(current_weapon_type)
 }
 
