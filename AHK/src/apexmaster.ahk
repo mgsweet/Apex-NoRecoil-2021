@@ -442,9 +442,9 @@ return
 
 RunAsAdmin()
 {
-	Global 0
-	IfEqual, A_IsAdmin, 1, Return 0
     Global 0
+IfEqual, A_IsAdmin, 1, Return 0
+
 Loop, %0%
     params .= A_Space . %A_Index%
 
