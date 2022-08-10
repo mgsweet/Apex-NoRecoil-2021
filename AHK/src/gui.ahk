@@ -11,21 +11,22 @@ RunAsAdmin()
 Gosub, IniRead
 
 ; global variable
-script_version := "v1.2.9"
+global script_version := "v1.2.10"
 
 ; Convert sens to sider format
-sider_sen := sens * 10
+global sider_sen := sens * 10
+global UUID := "08345128d0e94177931166f9889dee29"
 
 ; GUI
 SetFormat, float, 0.1
 Gui, Font, S30 CDefault Bold, Verdana
 Gui, Add, Text, x71 y-1 w330 h50 , Apex-NoRecoil
 Gui, Font, ,
-Gui, Add, Text, x216 y49 w40 h20 , %script_version%
+Gui, Add, Text, x123 y49 w300 h20 , UUID:%UUID%
 Gui, Add, GroupBox, x11 y69 w450 h180 , Settings
 Gui, Font, S13 Bold, 
-Gui, Add, Text, x162 y89 w50 h30 , sens:
-Gui, Add, Slider, x212 y89 w100 h30 vsider_sen gSlide range0-50 tickinterval1 AltSubmit, %sider_sen%
+Gui, Add, Text, x137 y89 w50 h30 , sens:
+Gui, Add, Slider, x187 y89 w150 h30 vsider_sen gSlide range0-60 tickinterval1 AltSubmit, %sider_sen%
 if (auto_fire == "1") {
     Gui, Add, CheckBox, x182 y129 w110 h30 vauto_fire Checked, auto_fire
 } else {
