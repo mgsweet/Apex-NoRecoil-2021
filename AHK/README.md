@@ -48,6 +48,11 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2022/08/10 version 1.2.10
+- update to support weapon type changes of S14 (from [jayking999](https://github.com/jayking999))
+- now gui.ahk also has a UUID
+- provide a better way to support customized resolutions.
+
 ### 2022/05/13 version 1.2.9
 - remove `bin/`, which may cause people to get banned
 - move spitfire out of supply weapon (from [VerTox](https://github.com/VerTox))
