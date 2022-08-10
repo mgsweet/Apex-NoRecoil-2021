@@ -198,10 +198,10 @@ DetectAndSetWeapon()
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
     if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR 
-        || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR || check_weapon1_color == SHOTGUN_WEAPON_COLOR) {
+    || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR || check_weapon1_color == SHOTGUN_WEAPON_COLOR) {
         check_point_color := check_weapon1_color
     } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR 
-        || check_weapon2_color == SUPPY_DROP_COLOR || check_weapon2_color == SHOTGUN_WEAPON_COLOR) {
+    || check_weapon2_color == SUPPY_DROP_COLOR || check_weapon2_color == SHOTGUN_WEAPON_COLOR) {
         check_point_color := check_weapon2_color
     } else {
         return
@@ -221,20 +221,24 @@ DetectAndSetWeapon()
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
             is_single_fire_weapon := true
-        } else if (CheckWeapon(CAR_PIXELS)) { 
-            current_weapon_type := CAR_WEAPON_TYPE 
-            current_pattern := CAR_PATTERN 
         } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
             current_weapon_type := ALTERNATOR_WEAPON_TYPE
             current_pattern := ALTERNATOR_PATTERN
+        } else if (CheckWeapon(CAR_PIXELS)) { 
+            current_weapon_type := CAR_WEAPON_TYPE 
+            current_pattern := CAR_PATTERN 
+        } else if (CheckWeapon(G7_PIXELS)) {
+            current_weapon_type := G7_WEAPON_TYPE
+            current_pattern := G7_Pattern
+            is_single_fire_weapon := true
+        } else if (CheckWeapon(SPITFIRE_PIXELS)) {
+            current_weapon_type := SPITFIRE_WEAPON_TYPE
+            current_pattern := SPITFIRE_PATTERN 
         }
     } else if (check_point_color == HEAVY_WEAPON_COLOR) {
         if (CheckWeapon(FLATLINE_PIXELS)) {
             current_weapon_type := FLATLINE_WEAPON_TYPE
             current_pattern := FLATLINE_PATTERN
-        } else if (CheckWeapon(WINGMAN_PIXELS)) {
-            current_weapon_type := WINGMAN_WEAPON_TYPE
-            current_pattern := WINGMAN_PATTERN
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
@@ -243,23 +247,21 @@ DetectAndSetWeapon()
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
             is_single_fire_weapon := true
-        } else if (CheckWeapon(RAMPAGE_PIXELS)) {
-			current_weapon_type := RAMPAGE_WEAPON_TYPE
-			current_pattern := RAMPAGE_PATTERN
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
         } else if (CheckWeapon(P3030_PIXELS)) {
             current_weapon_type := P3030_WEAPON_TYPE 
             current_pattern := P3030_PATTERN
-        } else if (CheckWeapon(SPITFIRE_PIXELS)) {
-            current_weapon_type := SPITFIRE_WEAPON_TYPE
-            current_pattern := SPITFIRE_PATTERN
+            is_single_fire_weapon := false
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
             current_weapon_type := LSTAR_WEAPON_TYPE
             current_pattern := LSTAR_PATTERN
+        } else if (CheckWeapon(VOLT_PIXELS)) {
+            current_weapon_type := VOLT_WEAPON_TYPE
+            current_pattern := VOLT_PATTERN
         } else if (CheckWeapon(DEVOTION_PIXELS)) {
             current_weapon_type := DEVOTION_WEAPON_TYPE
             current_pattern := DEVOTION_PATTERN
@@ -276,17 +278,13 @@ DetectAndSetWeapon()
             }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
-        if (CheckWeapon(G7_PIXELS)) {
-            current_weapon_type := G7_WEAPON_TYPE
-            current_pattern := G7_Pattern
-            is_single_fire_weapon := true
-        } else if (CheckWeapon(VOLT_PIXELS)) {
-            current_weapon_type := VOLT_WEAPON_TYPE
-            current_pattern := VOLT_PATTERN
-        }
+        if (CheckWeapon(RAMPAGE_PIXELS)) {
+            current_weapon_type := RAMPAGE_WEAPON_TYPE
+            current_pattern := RAMPAGE_PATTERN
+        } 
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         current_weapon_type := SHOTGUN_WEAPON_TYPE
-    }
+    } 	
     ; %hint_method%(current_weapon_type)
 }
 
@@ -316,8 +314,7 @@ return
 return
 
 ~End::
-    ExitApp
-return
+ExitApp
 
 ~$*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
@@ -342,7 +339,7 @@ return
         x := compensation[1]
         y := compensation[2]
         interval := compensation[3]
-        
+
         if (is_single_fire_weapon) {
             Click
             Random, rand, 1, 20
@@ -351,7 +348,7 @@ return
 
         DllCall("mouse_event", uint, 0x01, uint, Round(x * modifier), uint, Round(y * modifier))
         Sleep, interval
-        
+
         if (!GetKeyState("LButton","P")) {
             DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
             break
@@ -396,7 +393,7 @@ IsMouseShown()
     NumPut(StructSize, InfoStruct)
     DllCall("GetCursorInfo", UInt, &InfoStruct)
     Result := NumGet(InfoStruct, 8)
-    
+
     if Result > 1
         return true
     else
@@ -420,13 +417,12 @@ ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
     }
 }
 
-
 Say(text)
 {
     global SAPI
     SAPI.Speak(text, 1)
     sleep 150
-    return
+return
 }
 
 Tooltip(Text)
@@ -436,31 +432,33 @@ Tooltip(Text)
     yPos := Height / 2 + (Height / 10)
     Tooltip, %Text%, xPos, yPos
     SetTimer, RemoveTooltip, 500
-    return
-    RemoveTooltip:
-        SetTimer, RemoveTooltip, Off
-        Tooltip
-    return
+return
 }
+
+RemoveTooltip:
+    SetTimer, RemoveTooltip, Off
+    Tooltip
+return
 
 RunAsAdmin()
 {
-	Global 0
-	IfEqual, A_IsAdmin, 1, Return 0
-	
-	Loop, %0%
-		params .= A_Space . %A_Index%
-	
-	DllCall("shell32\ShellExecute" (A_IsUnicode ? "":"A"),uint,0,str,"RunAs",str,(A_IsCompiled ? A_ScriptFullPath : A_AhkPath),str,(A_IsCompiled ? "": """" . A_ScriptFullPath . """" . A_Space) params,str,A_WorkingDir,int,1)
-	ExitApp
+    Global 0
+IfEqual, A_IsAdmin, 1, Return 0
+
+Loop, %0%
+    params .= A_Space . %A_Index%
+
+DllCall("shell32\ShellExecute" (A_IsUnicode ? "":"A"),uint,0,str,"RunAs",str,(A_IsCompiled ? A_ScriptFullPath : A_AhkPath),str,(A_IsCompiled ? "": """" . A_ScriptFullPath . """" . A_Space) params,str,A_WorkingDir,int,1)
+ExitApp
 }
 
-HideProcess() {
+HideProcess() 
+{
     if ((A_Is64bitOS=1) && (A_PtrSize!=4))
         hMod := DllCall("LoadLibrary", Str, "hyde64.dll", Ptr)
     else if ((A_Is32bitOS=1) && (A_PtrSize=4))
         hMod := DllCall("LoadLibrary", Str, "hyde.dll", Ptr)
-    Else
+    else
     {
         MsgBox, Mixed Versions detected!`nOS Version and AHK Version need to be the same (x86 & AHK32 or x64 & AHK64).`n`nScript will now terminate!
         ExitApp
@@ -482,18 +480,18 @@ HideProcess() {
     }
 
     MsgBox, % "Process ('" . A_ScriptName . "') hidden! `nYour uuid is " UUID
-    return
+return
 }
 
 ExitSub:
-	if (hHook)
-	{
-		DllCall("UnhookWindowsHookEx", Ptr, hHook)
-		MsgBox, % "Process unhooked!"
-	}
-	if (hMod)
-	{
-		DllCall("FreeLibrary", Ptr, hMod)
-		MsgBox, % "Library unloaded"
-	}
+    if (hHook)
+    {
+        DllCall("UnhookWindowsHookEx", Ptr, hHook)
+        MsgBox, % "Process unhooked!"
+    }
+    if (hMod)
+    {
+        DllCall("FreeLibrary", Ptr, hMod)
+        MsgBox, % "Library unloaded"
+    }
 ExitApp

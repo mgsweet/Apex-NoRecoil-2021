@@ -1,6 +1,6 @@
 # Apex-NoRecoil-2021
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 An AutoHotKey script (works on multiple resolutions) and Python CLI (works on 1080p) to minimize recoil with auto weapon detection for Apex Legends. 
 
@@ -64,6 +64,7 @@ Pull Request is always welcome!
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/VerTox"><img src="https://avatars.githubusercontent.com/u/5575681?v=4?s=100" width="100px;" alt=""/><br /><sub><b>VerTox</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=VerTox" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jayking999"><img src="https://avatars.githubusercontent.com/u/67616183?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jayking999</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=jayking999" title="Code">💻</a></td>
   </tr>
 </table>
 
