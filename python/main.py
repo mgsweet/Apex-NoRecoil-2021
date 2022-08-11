@@ -36,25 +36,38 @@ def dynamic_coords(top: int, left: int):
 
     return (scaled_top, scaled_left)
 
+def weapon_screenshot(select_weapon: str):
     if select_weapon == "one":
-        image = sct.grab({
-            "left": data["scan_coord_one"]["left"],
-            "top": data["scan_coord_one"]["top"],
+        scaled_coord = dynamic_coords(data["scan_coord_one"]["top"], data["scan_coord_one"]["left"])
+
+        area = {
+            "top": scaled_coord[0],
+            "left": scaled_coord[1],
             "width": data["scan_coord_one"]["width"],
             "height": data["scan_coord_one"]["height"]
-        })
+        }
+
+        image = sct.grab(area)
+
         image = cv.cvtColor(np.array(image), cv.COLOR_RGB2GRAY)
         _, image = cv.threshold(image, 140, 255, cv.THRESH_BINARY)
+
         return image
     elif select_weapon == "two":
-        image = sct.grab({
-            "left": data["scan_coord_two"]["left"],
-            "top": data["scan_coord_two"]["top"],
+        scaled_coord = dynamic_coords(data["scan_coord_two"]["top"], data["scan_coord_two"]["left"])
+
+        area = {
+            "top": scaled_coord[0],
+            "left": scaled_coord[1],
             "width": data["scan_coord_two"]["width"],
             "height": data["scan_coord_two"]["height"]
-        })
+        }
+
+        image = sct.grab(area)
+
         image = cv.cvtColor(np.array(image), cv.COLOR_RGB2GRAY)
         _, image = cv.threshold(image, 140, 255, cv.THRESH_BINARY)
+
         return image
     else:
         print("ERROR: Invalid weapon selection | FUNC: weapon_screenshot")
