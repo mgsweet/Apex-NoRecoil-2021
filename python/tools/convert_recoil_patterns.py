@@ -7,7 +7,7 @@ recoil_pattern_dir = project_dir + '\\AHK\\src\\pattern\\'
 
 exclude_list = ['DevotionTurbo', 'HavocTurbo', 'RampageAmp']
 
-def get_patterns(pattern_dir):
+def get_patterns():
     patterns = []
 
     for file in glob(recoil_pattern_dir + '*.txt'):
