@@ -86,9 +86,13 @@ def read_weapon(cv_image):
 
     return str(text)
 
-def left_click_state():
-    left_click = win32api.GetKeyState(0x01)
-    return left_click < 0
+def mouse_click_state(button_name: str):
+    mouse_key_state = MouseButtonState(button_name)
+
+    if (mouse_key_state > 1):
+        return True
+    else:
+        return False
 
 active_state = False
 last_toggle_state = False
