@@ -1,13 +1,12 @@
-from modules.helpers import config_generator, read_config
+from modules.helpers import config_generator, read_config, get_monitor_res
 from modules.recoil_patterns import recoil_patterns
-from modules.native_controller import MouseMoveTo
+from modules.native_controller import MouseMoveTo, MouseButtonState
 from modules.banners import print_banner
 from mss import mss
 import numpy as np
 import pytesseract
 import cv2 as cv
 import keyboard
-import win32api
 import time
 import sys
 
