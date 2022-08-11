@@ -1,4 +1,5 @@
 from modules.banners import print_banner
+from ctypes import windll
 import yaml
 import os
 
@@ -44,3 +45,8 @@ def read_config():
     config_file = yaml_config
     stream = open(config_file, "r")
     return yaml.load(stream, Loader=yaml.SafeLoader)
+
+def get_monitor_res():
+    user32 = windll.user32
+    resolution = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+    return resolution
