@@ -108,7 +108,7 @@ try:
     while True:
         key_state = keyboard.is_pressed(toggle_button)
         
-        print(f"RECOIL-CONTROL: {active_state} | ACTIVE-WEAPON: {active_weapon} | RECOGNIZED: {recognized_weapon} | SUPPORTED: {supported_weapon}", end=" \r")
+        print(f"RECOIL-CONTROL: {active_state} | ACTIVE-WEAPON: {active_weapon} | RECOGNIZED: {recognized_weapon} | SUPPORTED: {supported_weapon}".ljust(15), end="\r")
 
         # TOGGLE: Enable/Disable Recoil-Control
         if key_state != last_toggle_state:
@@ -137,10 +137,10 @@ try:
                 continue
 
         # ACTION: Apply Recoil-Control w/ Left-Click
-        if left_click_state() and active_state:
+        if mouse_click_state(button_name="left") and active_state:
             try:
                 for i in range(len(recoil_patterns[active_weapon])):
-                    if left_click_state():
+                    if mouse_click_state(button_name="left"):
                         MouseMoveTo(int(recoil_patterns[active_weapon][i][0]/data["modifier_value"]), int(recoil_patterns[active_weapon][i][1]/data["modifier_value"]))
                         time.sleep(recoil_patterns[active_weapon][i][2])
                 supported_weapon = True
