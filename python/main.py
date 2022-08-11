@@ -27,7 +27,15 @@ except FileNotFoundError:
 
 toggle_button = "delete"
 
-def weapon_screenshot(select_weapon):
+def dynamic_coords(top: int, left: int):
+    default_res = (1920, 1080) # (width, height)
+    primary_display = get_monitor_res() # (width, height)
+
+    scaled_top = int((top / default_res[1]) * primary_display[1])
+    scaled_left = int(left / default_res[0] * primary_display[0])
+
+    return (scaled_top, scaled_left)
+
     if select_weapon == "one":
         image = sct.grab({
             "left": data["scan_coord_one"]["left"],
