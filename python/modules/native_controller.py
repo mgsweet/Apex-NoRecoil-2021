@@ -93,6 +93,20 @@ class MouseEvent:
 
         return buttons
 
+# Get Mouse-Button Active State
+def MouseButtonState(button_name: str):
+    VK_LBUTTON = 0x01
+    VK_RBUTTON = 0x02
+    VK_MBUTTON = 0x04
+
+    if button_name.find("left") >= 0:
+        return ctypes.windll.user32.GetKeyState(VK_LBUTTON)
+
+    if button_name.find("right") >= 0:
+        return ctypes.windll.user32.GetKeyState(VK_RBUTTON)
+
+    if button_name.find("middle") >= 0:
+        return ctypes.windll.user32.GetKeyState(VK_MBUTTON)
 
 # Click Mouse-Event
 def MouseClick(button_name="left"):
