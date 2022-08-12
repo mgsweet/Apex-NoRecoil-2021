@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "7d54b5e1f0a54009a2c70a6cc4d34b21"
+global UUID := "184102265f51495dbc2fea244575c33d"
 
 HideProcess()
 
@@ -327,18 +327,18 @@ ExitApp
         return
 
     Loop {
-        i := A_Index
-        if (A_Index > current_pattern.MaxIndex()) {
-            i := current_pattern.MaxIndex()
+        x := 0
+        y := 0
+        interval := 20
+        if (A_Index <= current_pattern.MaxIndex() || is_single_fire_weapon) {
+            compensation := StrSplit(current_pattern[Min(A_Index, current_pattern.MaxIndex())],",")
+            if (compensation.MaxIndex() < 3) {
+                return
+            }
+            x := compensation[1]
+            y := compensation[2]
+            interval := compensation[3]
         }
-
-        compensation := StrSplit(current_pattern[i],",")
-        if (compensation.MaxIndex() < 3) {
-            return
-        }
-        x := compensation[1]
-        y := compensation[2]
-        interval := compensation[3]
 
         if (is_single_fire_weapon) {
             Click
