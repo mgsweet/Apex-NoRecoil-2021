@@ -51,14 +51,15 @@ global SHOTGUN_WEAPON_TYPE := "shotgun"
 global PEACEKEEPER_WEAPON_TYPE := "peacekeeper"
 
 ; x, y pos for weapon1 and weapon 2
-global WEAPON_1_PIXELS = LoadPixel("weapon1")
-global WEAPON_2_PIXELS = LoadPixel("weapon2")
+global WEAPON_1_PIXELS := LoadPixel("weapon1")
+global WEAPON_2_PIXELS := LoadPixel("weapon2")
 ; weapon color
-global LIGHT_WEAPON_COLOR = 0x2D547D
-global HEAVY_WEAPON_COLOR = 0x596B38
-global ENERGY_WEAPON_COLOR = 0x286E5A
-global SUPPY_DROP_COLOR = 0x3701B2
-global SHOTGUN_WEAPON_COLOR = 0x07206B
+global LIGHT_WEAPON_COLOR := 0x2D547D
+global HEAVY_WEAPON_COLOR := 0x596B38
+global ENERGY_WEAPON_COLOR := 0x286E5A
+global SUPPY_DROP_COLOR := 0x3701B2
+global SHOTGUN_WEAPON_COLOR := 0x07206B
+global SNIPER_WEAPON_COLOR := 0x8F404B
 
 ; three x, y check point, true means 0xFFFFFFFF
 ; light weapon
@@ -89,6 +90,47 @@ global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 ; shotgun
 global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
+
+; for gold optics
+global EMCol := 0x3841AD,0x333DB1
+global ColVn := 8
+global ZeroX := (A_ScreenWidth // 2)
+global ZeroY := (A_ScreenHeight // 2)
+global CFovX := (A_ScreenWidth // 32)
+global CFovY := (A_ScreenHeight // 32)
+global ScanL := ZeroX - CFovX
+global ScanT := ZeroY - CFovY
+global ScanR := ZeroX + CFovX
+global ScanB := ZeroY + CFovY
+
+MoveMouse2Red() 
+{ 
+    PixelSearch, AimPixelX, AimPixelY, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Fast
+    AimX := AimPixelX - ZeroX
+    AimY := AimPixelY - ZeroY
+    DllCall("mouse_event", uint, 1, int, AimX / 2, int, AimY / 2, uint, 0, int, 0)
+}
+
+PeacekeeperFastReload() 
+{
+    if (current_weapon_num != 1 && current_weapon_num != 2) {
+        return
+    }
+
+    if (peackkeeperLock == 0) {
+        peackkeeperLock := 1
+        ; SendInput, {LButton}
+        Sleep, 150
+        SendInput, {R}
+        Sleep, 150
+        SendInput, {3}
+        Sleep, 50
+        SendInput, {%current_weapon_num%}
+        KeyWait, LButton
+        Sleep, 350
+        peackkeeperLock := 0
+    }
+}
 
 ; each player can hold 2 weapons
 LoadPixel(name) {
@@ -162,6 +204,7 @@ global is_single_fire_weapon := false
 global is_op_gold_optics_weapon := false
 global peackkeeperLock := 0
 
+
 ; mouse sensitivity setting
 zoom := 1.0/zoom_sens
 global modifier := 4/sens*zoom
@@ -203,14 +246,14 @@ DetectAndSetWeapon()
     current_weapon_num := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
-    if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR 
+    if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR || check_weapon1_color == SNIPER_WEAPON_COLOR 
     || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR || check_weapon1_color == SHOTGUN_WEAPON_COLOR) {
         current_weapon_num := 1
         check_point_color := check_weapon1_color
-    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR 
-    || check_weapon2_color == SUPPY_DROP_COLOR || check_weapon2_color == SHOTGUN_WEAPON_COLOR) {
-        current_weapon_num := 2
+    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == SNIPER_WEAPON_COLOR
+    || check_weapon2_color == ENERGY_WEAPON_COLOR || check_weapon2_color == SUPPY_DROP_COLOR || check_weapon2_color == SHOTGUN_WEAPON_COLOR) {
         check_point_color := check_weapon2_color
+        current_weapon_num := 2
     } else {
         return
     }
@@ -296,7 +339,11 @@ DetectAndSetWeapon()
         } else {
             current_weapon_type := SHOTGUN_WEAPON_TYPE 
         }
-    }	
+    } else if (check_point_color == SNIPER_WEAPON_COLOR) {
+        if (CheckWeapon(WINGMAN_PIXELS)) {
+            current_weapon_type := WINGMAN_WEAPON_TYPE
+        }
+    }
     global debug
     if (debug) {
         %hint_method%(current_weapon_type)
@@ -331,7 +378,19 @@ return
 ~End::
 ExitApp
 
-~$*LButton::
+$*LButton up::
+    Send {LButton up}
+return
+
+$*LButton::
+    if (current_weapon_type == WINGMAN_WEAPON_TYPE && gold_optics) {
+        MoveMouse2Red()
+        Send {LButton down}
+        return
+    } 
+
+    Send {LButton down}
+
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
         return
 
@@ -387,25 +446,28 @@ IniRead:
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
-        IniWrite, "1"`n, settings.ini, mouse settings, ads_only
+        IniWrite, "0", settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
-        IniWrite, "7"`n, settings.ini, voice settings, rate
+        IniWrite, "7", settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
+        IniWrite, "0", settings.ini, other settings, gold_optics
         IniWrite, "0"`n, settings.ini, other settings, fast_pk
-        if (A_ScriptName == "gui.ahk") {
-            Run "gui.ahk"
-        } else if (A_ScriptName == "gui.exe") {
-            Run "gui.exe"
+        if (A_ScriptName == "apexmaster.ahk") {
+            Run "apexmaster.ahk"
+        } else if (A_ScriptName == "apexmaster.exe") {
+            Run "apexmaster.exe"
         }
     }
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
+        IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
+        IniRead, gold_optics, settings.ini, other settings, gold_optics
         IniRead, fast_pk, settings.ini, other settings, fast_pk
     }
 return
@@ -422,29 +484,7 @@ IsMouseShown()
     if Result > 1
         return true
     else
-        return false
-}
-
-PeacekeeperFastReload() 
-{
-    if (current_weapon_num != 1 && current_weapon_num != 2) {
-        return
-    }
-
-    if (peackkeeperLock == 0) {
-        peackkeeperLock := 1
-        SendInput, {LButton}
-        Sleep, 150
-        SendInput, {R}
-        Sleep, 150
-        SendInput, {3}
-        Sleep, 50
-        SendInput, {%current_weapon_num%}
-        KeyWait, LButton
-        Sleep, 350
-        peackkeeperLock := 0
-    }
-return
+        Return false
 }
 
 ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
