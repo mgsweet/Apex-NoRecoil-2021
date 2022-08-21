@@ -28,24 +28,29 @@ Gui, Font, S13 Bold,
 Gui, Add, Text, x137 y89 w50 h30 , sens:
 Gui, Add, Slider, x187 y89 w150 h30 vsider_sen gSlide range0-60 tickinterval1 AltSubmit, %sider_sen%
 if (auto_fire == "1") {
-    Gui, Add, CheckBox, x110 y129 w110 h30 vauto_fire Checked, auto_fire
+    Gui, Add, CheckBox, x70 y129 w110 h30 vauto_fire Checked, auto_fire
 } else {
-    Gui, Add, CheckBox, x110 y129 w110 h30 vauto_fire, auto_fire
+    Gui, Add, CheckBox, x70 y129 w110 h30 vauto_fire, auto_fire
 }
 if (ads_only == "1") {
-    Gui, Add, CheckBox, x110 y169 w110 h30 vads_only Checked, ads_only
+    Gui, Add, CheckBox, x200 y129 w110 h30 vads_only Checked, ads_only
 } else {
-    Gui, Add, CheckBox, x110 y169 w110 h30 vads_only, ads_only
+    Gui, Add, CheckBox, x200 y129 w110 h30 vads_only, ads_only
 }
 if (debug == "1") {
-    Gui, Add, CheckBox, x260 y129 w110 h30 vdebug Checked, debug
+    Gui, Add, CheckBox, x320 y129 w110 h30 vdebug Checked, debug
 } else {
-    Gui, Add, CheckBox, x260 y129 w110 h30 vdebug, debug
+    Gui, Add, CheckBox, x320 y129 w110 h30 vdebug, debug
 }
 if (fast_pk == "1") {
-    Gui, Add, CheckBox, x260 y169 w110 h30 vfast_pk Checked, fast_pk
+    Gui, Add, CheckBox, x140 y169 w110 h30 vfast_pk Checked, fast_pk
 } else {
-    Gui, Add, CheckBox, x260 y169 w110 h30 vfast_pk, fast_pk
+    Gui, Add, CheckBox, x140 y169 w110 h30 vfast_pk, fast_pk
+}
+if (gold_optics == "1") {
+    Gui, Add, CheckBox, x250 y169 w150 h30 vgold_optics Checked, gold_optics
+} else {
+    Gui, Add, CheckBox, x250 y169 w150 h30 vgold_optics, gold_optics
 }
 Gui, Add, Text, x112 y209 w120 h30 , resolution:
 Gui, Font, S10, 
@@ -105,6 +110,7 @@ IniRead:
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
+        IniWrite, "0", settings.ini, other settings, gold_optics
         IniWrite, "0"`n, settings.ini, other settings, fast_pk
         if (A_ScriptName == "gui.ahk") {
             Run "gui.ahk"
@@ -121,6 +127,9 @@ IniRead:
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
         IniRead, fast_pk, settings.ini, other settings, fast_pk
+        IniRead, debug, settings.ini, other settings, debug
+        IniRead, gold_optics, settings.ini, other settings, gold_optics
+        IniRead, fast_pk, settings.ini, other settings, fast_pk
     }
 return
 
@@ -132,6 +141,7 @@ btSave:
     IniWrite, "%ads_only%", settings.ini, mouse settings, ads_only
     IniWrite, "%debug%", settings.ini, other settings, debug    
     IniWrite, "%fast_pk%", settings.ini, other settings, fast_pk
+    IniWrite, "%gold_optics%", settings.ini, other settings, gold_optics
     if (A_ScriptName == "gui.ahk") {
         CloseScript("apexmaster.ahk")
         Run "apexmaster.ahk"
