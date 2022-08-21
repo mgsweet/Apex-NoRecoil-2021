@@ -108,7 +108,18 @@ MoveMouse2Red()
     PixelSearch, AimPixelX, AimPixelY, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Fast
     AimX := AimPixelX - ZeroX
     AimY := AimPixelY - ZeroY
-    DllCall("mouse_event", uint, 1, int, AimX / 2, int, AimY / 2, uint, 0, int, 0)
+    MoveALittleMore := 5
+    DirX := -1
+    DirY := -1
+    If ( AimX > 0 ) {
+        DirX := 1
+    }
+    If (AimY > 0 ) {
+        DirY := 1
+    }
+    MoveX := Ceil((AimX + DirX * MoveALittleMore) / 2)
+    MoveY := Ceil((AimY + DirY * MoveALittleMore) / 2)
+    DllCall("mouse_event", uint, 1, int, MoveX, int, MoveY, uint, 0, int, 0)
 }
 
 PeacekeeperFastReload() 
