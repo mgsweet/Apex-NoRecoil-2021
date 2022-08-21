@@ -48,6 +48,7 @@ global G7_WEAPON_TYPE := "G7"
 global CAR_WEAPON_TYPE := "CAR"
 global P3030_WEAPON_TYPE := "3030"
 global SHOTGUN_WEAPON_TYPE := "shotgun"
+global PEACEKEEPER_WEAPON_TYPE := "peacekeeper"
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS = LoadPixel("weapon1")
@@ -86,6 +87,8 @@ global VOLT_PIXELS := LoadPixel("volt")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
+; shotgun
+global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
 
 ; each player can hold 2 weapons
 LoadPixel(name) {
@@ -154,8 +157,10 @@ SAPI.volume:=volume
 ; weapon detection
 global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
+global current_weapon_num := 0
 global is_single_fire_weapon := false
 global is_op_gold_optics_weapon := false
+global peackkeeperLock := 0
 
 ; mouse sensitivity setting
 zoom := 1.0/zoom_sens
@@ -195,13 +200,16 @@ DetectAndSetWeapon()
     current_weapon_type := DEFAULT_WEAPON_TYPE
     ; first check which weapon is activate
     check_point_color := 0
+    current_weapon_num := 0
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
     if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR 
     || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR || check_weapon1_color == SHOTGUN_WEAPON_COLOR) {
+        current_weapon_num := 1
         check_point_color := check_weapon1_color
     } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == ENERGY_WEAPON_COLOR 
     || check_weapon2_color == SUPPY_DROP_COLOR || check_weapon2_color == SHOTGUN_WEAPON_COLOR) {
+        current_weapon_num := 2
         check_point_color := check_weapon2_color
     } else {
         return
@@ -283,9 +291,16 @@ DetectAndSetWeapon()
             current_pattern := RAMPAGE_PATTERN
         } 
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
-        current_weapon_type := SHOTGUN_WEAPON_TYPE
-    } 	
-    ; %hint_method%(current_weapon_type)
+        if (CheckWeapon(PEACEKEEPER_PIXELS)) {
+            current_weapon_type := PEACEKEEPER_WEAPON_TYPE
+        } else {
+            current_weapon_type := SHOTGUN_WEAPON_TYPE 
+        }
+    }	
+    global debug
+    if (debug) {
+        %hint_method%(current_weapon_type)
+    }
 }
 
 ~E Up::
@@ -319,6 +334,13 @@ ExitApp
 ~$*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
         return
+
+    if (current_weapon_type == PEACEKEEPER_WEAPON_TYPE) {
+        if (fast_pk) {
+            PeacekeeperFastReload()
+        }
+        return
+    }
 
     if (ads_only && !GetKeyState("RButton"))
         return
@@ -365,23 +387,26 @@ IniRead:
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
-        IniWrite, "0", settings.ini, mouse settings, ads_only
+        IniWrite, "1"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
-        IniWrite, "7", settings.ini, voice settings, rate
-        if (A_ScriptName == "apexmaster.ahk") {
-            Run "apexmaster.ahk"
-        } else if (A_ScriptName == "apexmaster.exe") {
-            Run "apexmaster.exe"
+        IniWrite, "7"`n, settings.ini, voice settings, rate
+        IniWrite, "0", settings.ini, other settings, debug
+        IniWrite, "0"`n, settings.ini, other settings, fast_pk
+        if (A_ScriptName == "gui.ahk") {
+            Run "gui.ahk"
+        } else if (A_ScriptName == "gui.exe") {
+            Run "gui.exe"
         }
     }
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
-        IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
+        IniRead, debug, settings.ini, other settings, debug
+        IniRead, fast_pk, settings.ini, other settings, fast_pk
     }
 return
 
@@ -397,7 +422,29 @@ IsMouseShown()
     if Result > 1
         return true
     else
-        Return false
+        return false
+}
+
+PeacekeeperFastReload() 
+{
+    if (current_weapon_num != 1 && current_weapon_num != 2) {
+        return
+    }
+
+    if (peackkeeperLock == 0) {
+        peackkeeperLock := 1
+        SendInput, {LButton}
+        Sleep, 150
+        SendInput, {R}
+        Sleep, 150
+        SendInput, {3}
+        Sleep, 50
+        SendInput, {%current_weapon_num%}
+        KeyWait, LButton
+        Sleep, 350
+        peackkeeperLock := 0
+    }
+return
 }
 
 ActiveMonitorInfo(ByRef X, ByRef Y, ByRef Width, ByRef Height)
