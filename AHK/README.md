@@ -48,6 +48,12 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2022/08/21 version 1.3.0
+- update some patterns
+- debug mode is provided for gui customization
+- peacekeeper fast reload is now supported (only for 2560x1440) 
+- add wingman gold optics aimbot (may cause u banned, still in testing)
+
 ### 2022/08/10 version 1.2.10
 - update to support weapon type changes of S14 (from [jayking999](https://github.com/jayking999))
 - now gui.ahk also has a UUID
