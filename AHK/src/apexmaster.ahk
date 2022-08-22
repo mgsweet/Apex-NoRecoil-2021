@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "184102265f51495dbc2fea244575c33d"
+global UUID := "7d4966c885074a9bb83ca5557e26ec6e"
 
 HideProcess()
 
@@ -108,7 +108,7 @@ MoveMouse2Red()
     PixelSearch, AimPixelX, AimPixelY, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Fast
     AimX := AimPixelX - ZeroX
     AimY := AimPixelY - ZeroY
-    MoveALittleMore := 5
+    MoveALittleMore := 2
     DirX := -1
     DirY := -1
     If ( AimX > 0 ) {
@@ -212,9 +212,9 @@ global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
 global current_weapon_num := 0
 global is_single_fire_weapon := false
-global is_op_gold_optics_weapon := false
+global is_gold_optics_weapon := false
 global peackkeeperLock := 0
-
+global has_gold_optics := false
 
 ; mouse sensitivity setting
 zoom := 1.0/zoom_sens
@@ -250,7 +250,7 @@ DetectAndSetWeapon()
     sleep 100
     ; init
     is_single_fire_weapon := false
-    is_op_gold_optics_weapon := false
+    is_gold_optics_weapon := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
     ; first check which weapon is activate
     check_point_color := 0
@@ -276,19 +276,24 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(R99_PIXELS)) {
             current_weapon_type := R99_WEAPON_TYPE
             current_pattern := R99_PATTERN
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(RE45_PIXELS)) {
             current_weapon_type := RE45_WEAPON_TYPE
             current_pattern := RE45_PATTERN
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(P2020_PIXELS)) {
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
             is_single_fire_weapon := true
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
             current_weapon_type := ALTERNATOR_WEAPON_TYPE
             current_pattern := ALTERNATOR_PATTERN
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(G7_PIXELS)) {
             current_weapon_type := G7_WEAPON_TYPE
             current_pattern := G7_Pattern
@@ -312,6 +317,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(P3030_PIXELS)) {
             current_weapon_type := P3030_WEAPON_TYPE 
             current_pattern := P3030_PATTERN
@@ -324,6 +330,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(VOLT_PIXELS)) {
             current_weapon_type := VOLT_WEAPON_TYPE
             current_pattern := VOLT_PATTERN
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(DEVOTION_PIXELS)) {
             current_weapon_type := DEVOTION_WEAPON_TYPE
             current_pattern := DEVOTION_PATTERN
@@ -345,6 +352,7 @@ DetectAndSetWeapon()
             current_pattern := RAMPAGE_PATTERN
         } 
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
+        is_gold_optics_weapon := true
         if (CheckWeapon(PEACEKEEPER_PIXELS)) {
             current_weapon_type := PEACEKEEPER_WEAPON_TYPE
         } else {
@@ -353,6 +361,7 @@ DetectAndSetWeapon()
     } else if (check_point_color == SNIPER_WEAPON_COLOR) {
         if (CheckWeapon(WINGMAN_PIXELS)) {
             current_weapon_type := WINGMAN_WEAPON_TYPE
+            is_gold_optics_weapon := true
         }
     }
     global debug
@@ -377,9 +386,16 @@ return
     current_weapon_type := DEFAULT_WEAPON_TYPE
 return
 
+~0::
+    if (gold_optics) {
+        has_gold_optics := !has_gold_optics
+        Tooltip("has_gold_optics: " + has_gold_optics)
+    }
+return
+
 ; For user using ads_only, they don't have to reset the current_weapon_type. 
 ; This is meaningful to me since I sometimes will shot after throwing a grenade.
-~G::
+~G Up::
 ~Z::
     if (!ads_only) {
         current_weapon_type := DEFAULT_WEAPON_TYPE
@@ -394,11 +410,9 @@ $*LButton up::
 return
 
 $*LButton::
-    if (current_weapon_type == WINGMAN_WEAPON_TYPE && gold_optics) {
+    if (has_gold_optics && gold_optics) {
         MoveMouse2Red()
-        Send {LButton down}
-        return
-    } 
+    }
 
     Send {LButton down}
 
@@ -577,7 +591,7 @@ HideProcess()
         ExitApp
     }
 
-    MsgBox, % "Process ('" . A_ScriptName . "') hidden! `nYour uuid is " UUID
+    ; MsgBox, % "Process ('" . A_ScriptName . "') hidden! `nYour uuid is " UUID
 return
 }
 
