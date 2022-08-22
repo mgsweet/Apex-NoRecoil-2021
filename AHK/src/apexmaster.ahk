@@ -16,14 +16,14 @@ SetWinDelay, -1
 SetControlDelay, -1
 SendMode Input
 
-RunAsAdmin()
+; RunAsAdmin()
 
 ; read settings.ini
 GoSub, IniRead
 
 global UUID := "7d4966c885074a9bb83ca5557e26ec6e"
 
-HideProcess()
+; HideProcess()
 
 ; weapon type constant, mainly for debuging
 global DEFAULT_WEAPON_TYPE := "DEFAULT"
@@ -92,12 +92,14 @@ global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
 
 ; for gold optics
-global EMCol := 0x3841AD,0x333DB1
+; global EMCol := 0x3841AD,0x333DB1,0x5764BC
+; global EMCol := 0x333DB1
+; global EMCol := 0x333DB1
 global ColVn := 8
 global ZeroX := (A_ScreenWidth // 2)
 global ZeroY := (A_ScreenHeight // 2)
-global CFovX := (A_ScreenWidth // 32)
-global CFovY := (A_ScreenHeight // 32)
+global CFovX := (A_ScreenWidth // 16)
+global CFovY := (A_ScreenHeight // 16)
 global ScanL := ZeroX - CFovX
 global ScanT := ZeroY - CFovY
 global ScanR := ZeroX + CFovX
@@ -105,9 +107,20 @@ global ScanB := ZeroY + CFovY
 
 MoveMouse2Red() 
 { 
-    PixelSearch, AimPixelX, AimPixelY, ScanL, ScanT, ScanR, ScanB, EMCol, ColVn, Fast
-    AimX := AimPixelX - ZeroX
-    AimY := AimPixelY - ZeroY
+    reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
+    aimPixelX := ZeroX
+    aimPixelY := ZeroY
+    Loop, 5 {
+        if A_Index > array.Length()
+            return
+
+        wantColor := reds[A_Index]
+        PixelSearch, aimPixelX, aimPixelY, ScanL, ScanT, ScanR, ScanB, wantColor, ColVn, Fast
+        if (!ErrorLevel)
+            break
+    }
+    AimX := aimPixelX - ZeroX
+    AimY := aimPixelY - ZeroY
     MoveALittleMore := 2
     DirX := -1
     DirY := -1
