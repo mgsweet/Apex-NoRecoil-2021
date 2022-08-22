@@ -16,14 +16,14 @@ SetWinDelay, -1
 SetControlDelay, -1
 SendMode Input
 
-; RunAsAdmin()
+RunAsAdmin()
 
 ; read settings.ini
 GoSub, IniRead
 
 global UUID := "7d4966c885074a9bb83ca5557e26ec6e"
 
-; HideProcess()
+HideProcess()
 
 ; weapon type constant, mainly for debuging
 global DEFAULT_WEAPON_TYPE := "DEFAULT"
@@ -92,9 +92,6 @@ global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
 
 ; for gold optics
-; global EMCol := 0x3841AD,0x333DB1,0x5764BC
-; global EMCol := 0x333DB1
-; global EMCol := 0x333DB1
 global ColVn := 8
 global ZeroX := (A_ScreenWidth // 2)
 global ZeroY := (A_ScreenHeight // 2)
