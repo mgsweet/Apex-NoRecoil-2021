@@ -104,17 +104,20 @@ global ScanB := ZeroY + CFovY
 
 MoveMouse2Red() 
 { 
+    ; reds := [0x3841AD,0x5764BC]
+    ; reds := [0x3841AD,0x333DB1,0x5764BC]
+    ; reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
     reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
     aimPixelX := ZeroX
     aimPixelY := ZeroY
     Loop, 5 {
-        if A_Index > array.Length()
+        if A_Index > reds.Length()
             return
 
         wantColor := reds[A_Index]
         PixelSearch, aimPixelX, aimPixelY, ScanL, ScanT, ScanR, ScanB, wantColor, ColVn, Fast
         if (!ErrorLevel)
-            break
+            Break
     }
     AimX := aimPixelX - ZeroX
     AimY := aimPixelY - ZeroY
@@ -420,7 +423,7 @@ $*LButton up::
 return
 
 $*LButton::
-    if (has_gold_optics && gold_optics) {
+    if (has_gold_optics && gold_optics && is_gold_optics_weapon && GetKeyState("RButton")) {
         MoveMouse2Red()
     }
 
