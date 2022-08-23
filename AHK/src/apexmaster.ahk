@@ -141,8 +141,8 @@ PeacekeeperFastReload()
         return
     }
 
-    if (peackkeeperLock == 0) {
-        peackkeeperLock := 1
+    if (peackkeeper_lock == 0) {
+        peackkeeper_lock := 1
         ; SendInput, {LButton}
         Sleep, 150
         SendInput, {R}
@@ -152,7 +152,7 @@ PeacekeeperFastReload()
         SendInput, {%current_weapon_num%}
         KeyWait, LButton
         Sleep, 350
-        peackkeeperLock := 0
+        peackkeeper_lock := 0
     }
 }
 
@@ -226,7 +226,7 @@ global current_weapon_type := DEFAULT_WEAPON_TYPE
 global current_weapon_num := 0
 global is_single_fire_weapon := false
 global is_gold_optics_weapon := false
-global peackkeeperLock := 0
+global peackkeeper_lock := false
 global has_gold_optics := false
 
 ; mouse sensitivity setting
@@ -258,16 +258,21 @@ CheckTurbocharger(turbocharger_pixels)
     return false
 }
 
-DetectAndSetWeapon()
+Reset()
 {
-    sleep 100
-    ; init
+    peackkeeper_lock := false
     is_single_fire_weapon := false
     is_gold_optics_weapon := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
-    ; first check which weapon is activate
     check_point_color := 0
     current_weapon_num := 0
+}
+
+DetectAndSetWeapon()
+{
+    sleep 100
+    Reset()
+    ; first check which weapon is activate
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
     if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR || check_weapon1_color == SNIPER_WEAPON_COLOR 
@@ -383,23 +388,23 @@ DetectAndSetWeapon()
     }
 }
 
-~E Up::
+~$*E Up::
     Sleep, 200
     DetectAndSetWeapon()
 return
 
-~1::
-~2::
-~B::
-~R::
+~$*1::
+~$*2::
+~$*B::
+~$*R::
     DetectAndSetWeapon()
 return
 
-~3::
-    current_weapon_type := DEFAULT_WEAPON_TYPE
+~$*3::
+    Reset()
 return
 
-~0::
+~$*0::
     if (gold_optics) {
         has_gold_optics := !has_gold_optics
         Tooltip("has_gold_optics: " + has_gold_optics)
@@ -408,11 +413,9 @@ return
 
 ; For user using ads_only, they don't have to reset the current_weapon_type. 
 ; This is meaningful to me since I sometimes will shot after throwing a grenade.
-~G Up::
-~Z::
-    if (!ads_only) {
-        current_weapon_type := DEFAULT_WEAPON_TYPE
-    }
+~$*G Up::
+~$*Z::
+    Reset()
 return
 
 ~End::
