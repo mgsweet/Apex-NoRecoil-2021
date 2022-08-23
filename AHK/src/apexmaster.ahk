@@ -607,7 +607,7 @@ HideProcess()
         ExitApp
     }
 
-    ; MsgBox, % "Process ('" . A_ScriptName . "') hidden! `nYour uuid is " UUID
+    MsgBox, % "Process ('" . A_ScriptName . "') hidden! `nYour uuid is " UUID
 return
 }
 

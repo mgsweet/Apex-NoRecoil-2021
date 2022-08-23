@@ -48,6 +48,11 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2022/08/24 version 1.3.1
+- added gold optics aimbot to more guns
+- fixed known bugs created by the gold optics features
+- added a trigger for the gold optics feature
+
 ### 2022/08/21 version 1.3.0
 - update some patterns
 - debug mode is provided for gui customization
