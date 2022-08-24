@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "7d4966c885074a9bb83ca5557e26ec6e"
+global UUID := "d922cb59be074bd2ae67f3aa201e713d"
 
 HideProcess()
 
@@ -104,13 +104,13 @@ global ScanB := ZeroY + CFovY
 
 MoveMouse2Red() 
 { 
-    ; reds := [0x3841AD,0x5764BC]
+    reds := [0x3841AD,0x5764BC,0x6866C3]
     ; reds := [0x3841AD,0x333DB1,0x5764BC]
     ; reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
-    reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
+    ; reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
     aimPixelX := ZeroX
     aimPixelY := ZeroY
-    Loop, 5 {
+    Loop, 4 {
         if A_Index > reds.Length()
             return
 
@@ -422,7 +422,7 @@ return
 ExitApp
 
 $*LButton up::
-    Send {LButton up}
+    Click, Up
 return
 
 $*LButton::
@@ -430,7 +430,7 @@ $*LButton::
         MoveMouse2Red()
     }
 
-    Send {LButton down}
+    Click, Down
 
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
         return
