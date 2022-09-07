@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "d922cb59be074bd2ae67f3aa201e713d"
+global UUID := "c3fd20862b134df9a322785d9a4154c9"
 
 HideProcess()
 
@@ -92,11 +92,10 @@ global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
 
 ; for gold optics
-global ColVn := 8
 global ZeroX := (A_ScreenWidth // 2)
 global ZeroY := (A_ScreenHeight // 2)
-global CFovX := (A_ScreenWidth // 16)
-global CFovY := (A_ScreenHeight // 16)
+global CFovX := (A_ScreenWidth // 24)
+global CFovY := (A_ScreenHeight // 24)
 global ScanL := ZeroX - CFovX
 global ScanT := ZeroY - CFovY
 global ScanR := ZeroX + CFovX
@@ -104,35 +103,34 @@ global ScanB := ZeroY + CFovY
 
 MoveMouse2Red() 
 { 
-    reds := [0x3841AD,0x5764BC,0x6866C3]
+    ; reds := [0x3841AD,0x5764BC,0x6866C3]
     ; reds := [0x3841AD,0x333DB1,0x5764BC]
+    reds := [0x3841AD]
     ; reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
-    ; reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
-    aimPixelX := ZeroX
-    aimPixelY := ZeroY
-    Loop, 4 {
-        if A_Index > reds.Length()
-            return
+    For key, value in reds {
+        aimPixelX := ZeroX
+        aimPixelY := ZeroY  
+        wantColor := reds[key]
+        PixelSearch, aimPixelX, aimPixelY, ScanL, ScanT, ScanR, ScanB, %value%, 8, Fast
+        if (ErrorLevel) {
+            continue
+        }
 
-        wantColor := reds[A_Index]
-        PixelSearch, aimPixelX, aimPixelY, ScanL, ScanT, ScanR, ScanB, wantColor, ColVn, Fast
-        if (!ErrorLevel)
-            Break
+        AimX := aimPixelX - ZeroX
+        AimY := aimPixelY - ZeroY
+        MoveALittleMore := 2
+        DirX := -1
+        DirY := -1
+        If ( AimX > 0 ) {
+            DirX := 1
+        }
+        If (AimY > 0 ) {
+            DirY := 1
+        }
+        MoveX := Ceil((AimX + DirX * MoveALittleMore) / 2)
+        MoveY := Ceil((AimY + DirY * MoveALittleMore) / 2)
+        DllCall("mouse_event", uint, 1, int, MoveX, int, MoveY, uint, 0, int, 0)
     }
-    AimX := aimPixelX - ZeroX
-    AimY := aimPixelY - ZeroY
-    MoveALittleMore := 2
-    DirX := -1
-    DirY := -1
-    If ( AimX > 0 ) {
-        DirX := 1
-    }
-    If (AimY > 0 ) {
-        DirY := 1
-    }
-    MoveX := Ceil((AimX + DirX * MoveALittleMore) / 2)
-    MoveY := Ceil((AimY + DirY * MoveALittleMore) / 2)
-    DllCall("mouse_event", uint, 1, int, MoveX, int, MoveY, uint, 0, int, 0)
 }
 
 PeacekeeperFastReload() 
