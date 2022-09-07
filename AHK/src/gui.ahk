@@ -42,15 +42,10 @@ if (debug == "1") {
 } else {
     Gui, Add, CheckBox, x320 y129 w110 h30 vdebug, debug
 }
-if (fast_pk == "1") {
-    Gui, Add, CheckBox, x140 y169 w110 h30 vfast_pk Checked, fast_pk
-} else {
-    Gui, Add, CheckBox, x140 y169 w110 h30 vfast_pk, fast_pk
-}
 if (gold_optics == "1") {
-    Gui, Add, CheckBox, x250 y169 w150 h30 vgold_optics Checked, gold_optics
+    Gui, Add, CheckBox, x190 y169 w150 h30 vgold_optics Checked, gold_optics
 } else {
-    Gui, Add, CheckBox, x250 y169 w150 h30 vgold_optics, gold_optics
+    Gui, Add, CheckBox, x190 y169 w150 h30 vgold_optics, gold_optics
 }
 Gui, Add, Text, x112 y209 w120 h30 , resolution:
 Gui, Font, S10, 
@@ -110,8 +105,7 @@ IniRead:
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
-        IniWrite, "0", settings.ini, other settings, gold_optics
-        IniWrite, "0"`n, settings.ini, other settings, fast_pk
+        IniWrite, "0"`n, settings.ini, other settings, gold_optics
         if (A_ScriptName == "gui.ahk") {
             Run "gui.ahk"
         } else if (A_ScriptName == "gui.exe") {
@@ -126,10 +120,7 @@ IniRead:
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
-        IniRead, fast_pk, settings.ini, other settings, fast_pk
-        IniRead, debug, settings.ini, other settings, debug
         IniRead, gold_optics, settings.ini, other settings, gold_optics
-        IniRead, fast_pk, settings.ini, other settings, fast_pk
     }
 return
 
@@ -140,7 +131,6 @@ btSave:
     IniWrite, "%auto_fire%", settings.ini, mouse settings, auto_fire
     IniWrite, "%ads_only%", settings.ini, mouse settings, ads_only
     IniWrite, "%debug%", settings.ini, other settings, debug    
-    IniWrite, "%fast_pk%", settings.ini, other settings, fast_pk
     IniWrite, "%gold_optics%", settings.ini, other settings, gold_optics
     if (A_ScriptName == "gui.ahk") {
         CloseScript("apexmaster.ahk")

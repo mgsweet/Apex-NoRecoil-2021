@@ -95,7 +95,7 @@ global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
 global ZeroX := (A_ScreenWidth // 2)
 global ZeroY := (A_ScreenHeight // 2)
 global CFovX := (A_ScreenWidth // 24)
-global CFovY := (A_ScreenHeight // 24)
+global CFovY := (A_ScreenHeight // 10)
 global ScanL := ZeroX - CFovX
 global ScanT := ZeroY - CFovY
 global ScanR := ZeroX + CFovX
@@ -105,52 +105,29 @@ MoveMouse2Red()
 { 
     ; reds := [0x3841AD,0x5764BC,0x6866C3]
     ; reds := [0x3841AD,0x333DB1,0x5764BC]
-    reds := [0x3841AD]
-    ; reds := [0x3841AD,0x333DB1,0x5764BC,0x6866C3]
+    reds := [0x5054C8]
     For key, value in reds {
         aimPixelX := ZeroX
         aimPixelY := ZeroY  
-        wantColor := reds[key]
-        PixelSearch, aimPixelX, aimPixelY, ScanL, ScanT, ScanR, ScanB, %value%, 8, Fast
+        DirX := -1
+        DirY := -1
+        PixelSearch, aimPixelX, aimPixelY, ScanL, ScanT, ScanR, ScanB, %value%, 4, Fast
         if (ErrorLevel) {
             continue
         }
 
         AimX := aimPixelX - ZeroX
         AimY := aimPixelY - ZeroY
-        MoveALittleMore := 2
-        DirX := -1
-        DirY := -1
         If ( AimX > 0 ) {
             DirX := 1
         }
         If (AimY > 0 ) {
             DirY := 1
         }
-        MoveX := Ceil((AimX + DirX * MoveALittleMore) / 2)
-        MoveY := Ceil((AimY + DirY * MoveALittleMore) / 2)
+        MoveALittleMore := 5
+        MoveX := Round(AimX + MoveALittleMore * DirX)
+        MoveY := Round(AimY + MoveALittleMore * DirY)
         DllCall("mouse_event", uint, 1, int, MoveX, int, MoveY, uint, 0, int, 0)
-    }
-}
-
-PeacekeeperFastReload() 
-{
-    if (current_weapon_num != 1 && current_weapon_num != 2) {
-        return
-    }
-
-    if (peackkeeper_lock == 0) {
-        peackkeeper_lock := 1
-        ; SendInput, {LButton}
-        Sleep, 150
-        SendInput, {R}
-        Sleep, 150
-        SendInput, {3}
-        Sleep, 50
-        SendInput, {%current_weapon_num%}
-        KeyWait, LButton
-        Sleep, 350
-        peackkeeper_lock := 0
     }
 }
 
@@ -369,11 +346,7 @@ DetectAndSetWeapon()
         } 
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         is_gold_optics_weapon := true
-        if (CheckWeapon(PEACEKEEPER_PIXELS)) {
-            current_weapon_type := PEACEKEEPER_WEAPON_TYPE
-        } else {
-            current_weapon_type := SHOTGUN_WEAPON_TYPE 
-        }
+        current_weapon_type := SHOTGUN_WEAPON_TYPE
     } else if (check_point_color == SNIPER_WEAPON_COLOR) {
         if (CheckWeapon(WINGMAN_PIXELS)) {
             current_weapon_type := WINGMAN_WEAPON_TYPE
@@ -433,13 +406,6 @@ $*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
         return
 
-    if (current_weapon_type == PEACEKEEPER_WEAPON_TYPE) {
-        if (fast_pk) {
-            PeacekeeperFastReload()
-        }
-        return
-    }
-
     if (ads_only && !GetKeyState("RButton"))
         return
 
@@ -489,8 +455,7 @@ IniRead:
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7", settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
-        IniWrite, "0", settings.ini, other settings, gold_optics
-        IniWrite, "0"`n, settings.ini, other settings, fast_pk
+        IniWrite, "0"`n, settings.ini, other settings, gold_optics
         if (A_ScriptName == "apexmaster.ahk") {
             Run "apexmaster.ahk"
         } else if (A_ScriptName == "apexmaster.exe") {
@@ -507,7 +472,6 @@ IniRead:
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
         IniRead, gold_optics, settings.ini, other settings, gold_optics
-        IniRead, fast_pk, settings.ini, other settings, fast_pk
     }
 return
 
