@@ -48,6 +48,10 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2022/09/07 version 1.3.3
+- remove peacekeeper fast reload since the bug has been fixed
+- improve gold optics aimbot 
+
 ### 2022/08/25 version 1.3.2
 - fix lbutton click bug
 
