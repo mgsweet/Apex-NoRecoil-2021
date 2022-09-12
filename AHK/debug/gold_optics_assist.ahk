@@ -19,8 +19,8 @@ Process, Priority, %PID%, High
 
 EMCol := 0x3841AD,0x333DB1
 ColVn := 8
-AntiShakeX := (A_ScreenHeight // 80)
-AntiShakeY := (A_ScreenHeight // 64)
+AntiShakeX := 1
+AntiShakeY := 1
 ZeroX := (A_ScreenWidth // 2)
 ZeroY := (A_ScreenHeight // 2)
 CFovX := (A_ScreenWidth // 32)

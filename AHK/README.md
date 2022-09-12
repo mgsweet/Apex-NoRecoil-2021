@@ -48,6 +48,11 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2022/09/12 version 1.3.4
+- support Sella
+- update Spitfire's pattern
+- add my recoil generator to /debug
+
 ### 2022/09/07 version 1.3.3
 - remove peacekeeper fast reload since the bug has been fixed
 - improve gold optics aimbot 

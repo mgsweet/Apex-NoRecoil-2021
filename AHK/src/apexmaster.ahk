@@ -94,14 +94,22 @@ global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
 
 ; for gold optics
+global ColVn := 4
+global MoveALittleMore := 5
 global ZeroX := (A_ScreenWidth // 2)
 global ZeroY := (A_ScreenHeight // 2)
-global CFovX := (A_ScreenWidth // 24)
-global CFovY := (A_ScreenHeight // 10)
+CFovX := (A_ScreenWidth // 24)
+CFovY := (A_ScreenHeight // 10)
+AntiShakeX := (A_ScreenHeight // 80)
+AntiShakeY := (A_ScreenHeight // 64)
 global ScanL := ZeroX - CFovX
 global ScanT := ZeroY - CFovY
 global ScanR := ZeroX + CFovX
 global ScanB := ZeroY + CFovY
+global NearAimScanL := ZeroX - AntiShakeX
+global NearAimScanT := ZeroY - AntiShakeY
+global NearAimScanR := ZeroX + AntiShakeX
+global NearAimScanB := ZeroY + AntiShakeY
 
 MoveMouse2Red() 
 { 
@@ -113,22 +121,26 @@ MoveMouse2Red()
         aimPixelY := ZeroY  
         DirX := -1
         DirY := -1
-        PixelSearch, aimPixelX, aimPixelY, ScanL, ScanT, ScanR, ScanB, %value%, 4, Fast
+        PixelSearch, aimPixelX, aimPixelY, NearAimScanL, NearAimScanT, NearAimScanR, NearAimScanB, %value%, ColVn, Fast
+        if (!ErrorLevel) {
+            break
+        }
+
+        PixelSearch, aimPixelX, aimPixelY, ScanL, ScanT, ScanR, ScanB, %value%, ColVn, Fast
         if (ErrorLevel) {
             continue
         }
 
-        AimX := aimPixelX - ZeroX
-        AimY := aimPixelY - ZeroY
+        AimX := (aimPixelX - ZeroX) / 2
+        AimY := (aimPixelY - ZeroY) / 2
         If ( AimX > 0 ) {
             DirX := 1
         }
         If (AimY > 0 ) {
             DirY := 1
         }
-        MoveALittleMore := 5
-        MoveX := Round(AimX + MoveALittleMore * DirX)
-        MoveY := Round(AimY + MoveALittleMore * DirY)
+        MoveX := Round((AimX + MoveALittleMore * DirX) * modifier)
+        MoveY := Round((AimY + MoveALittleMore * DirY) * modifier)
         DllCall("mouse_event", uint, 1, int, MoveX, int, MoveY, uint, 0, int, 0)
     }
 }
