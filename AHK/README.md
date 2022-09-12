@@ -52,6 +52,7 @@ Config description:
 - support Sella
 - update Spitfire's pattern
 - add my recoil generator to /debug
+- fix gold optics bugs
 
 ### 2022/09/07 version 1.3.3
 - remove peacekeeper fast reload since the bug has been fixed
