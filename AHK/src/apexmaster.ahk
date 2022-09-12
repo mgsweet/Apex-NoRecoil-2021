@@ -290,7 +290,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(G7_PIXELS)) {
             current_weapon_type := G7_WEAPON_TYPE
             current_pattern := G7_Pattern
-            is_single_fire_weapon := true
         } else if (CheckWeapon(SPITFIRE_PIXELS)) {
             current_weapon_type := SPITFIRE_WEAPON_TYPE
             current_pattern := SPITFIRE_PATTERN 
