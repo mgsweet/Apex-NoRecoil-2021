@@ -49,6 +49,7 @@ global CAR_WEAPON_TYPE := "CAR"
 global P3030_WEAPON_TYPE := "3030"
 global SHOTGUN_WEAPON_TYPE := "shotgun"
 global PEACEKEEPER_WEAPON_TYPE := "peacekeeper"
+global SELLA_WEAPON_TYPE := "sella"
 
 ; x, y pos for weapon1 and weapon 2
 global WEAPON_1_PIXELS := LoadPixel("weapon1")
@@ -60,6 +61,7 @@ global ENERGY_WEAPON_COLOR := 0x286E5A
 global SUPPY_DROP_COLOR := 0x3701B2
 global SHOTGUN_WEAPON_COLOR := 0x07206B
 global SNIPER_WEAPON_COLOR := 0x8F404B
+global SELLA_WEAPON_COLOR := 0xA13CA1
 
 ; three x, y check point, true means 0xFFFFFFFF
 ; light weapon
@@ -186,6 +188,9 @@ global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
 global G7_Pattern := LoadPattern("G7.txt")
 global VOLT_PATTERN := LoadPattern("Volt.txt")
+; sella
+global SELLA_PATTERN := LoadPattern("Sella.txt")
+
 ; tips setting
 global hint_method := "Say"
 
@@ -243,10 +248,33 @@ Reset()
     current_weapon_num := 0
 }
 
+IsSella()
+{
+    PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
+    return check_weapon2_color == SELLA_WEAPON_COLOR
+}
+
+SetSella()
+{
+    current_weapon_type := SELLA_WEAPON_TYPE
+    current_pattern := SELLA_PATTERN
+    global debug
+    if (debug) {
+        %hint_method%(current_weapon_type)
+    }
+}
+
 DetectAndSetWeapon()
 {
-    sleep 100
     Reset()
+
+    Sleep, 100
+    
+    if IsSella() {
+        SetSella()
+        return
+    }
+
     ; first check which weapon is activate
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
     PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
@@ -381,11 +409,17 @@ return
     }
 return
 
-; For user using ads_only, they don't have to reset the current_weapon_type. 
-; This is meaningful to me since I sometimes will shot after throwing a grenade.
 ~$*G Up::
-~$*Z::
     Reset()
+return
+
+~$*Z::
+    Sleep, 300  
+    if IsSella() {
+        SetSella()
+    } else {
+        Reset()
+    }
 return
 
 ~End::
