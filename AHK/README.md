@@ -48,6 +48,10 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2022/09/16 version 1.3.5
+- update Havoc's pattern
+- fix gold optics bugs
+
 ### 2022/09/12 version 1.3.4
 - support Sella
 - update Spitfire's pattern
