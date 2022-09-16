@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "8a72479d29e541acb1f3bfe200f1a03f"
+global UUID := "99dd4d78e5b54012bc2be07d45d14d91"
 
 HideProcess()
 
@@ -185,7 +185,6 @@ global LSTAR_PATTERN := LoadPattern("Lstar.txt")
 global DEVOTION_PATTERN := LoadPattern("Devotion.txt")
 global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
-global TURBOHAVOC_PATTERN := LoadPattern("HavocTurbo.txt")
 global P3030_PATTERN := LoadPattern("3030.txt")
 ; special
 global CAR_PATTERN := LoadPattern("CAR.txt")
@@ -353,7 +352,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(P3030_PIXELS)) {
             current_weapon_type := P3030_WEAPON_TYPE 
             current_pattern := P3030_PATTERN
-            is_single_fire_weapon := false
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
         if (CheckWeapon(LSTAR_PIXELS)) {
@@ -374,7 +372,6 @@ DetectAndSetWeapon()
             current_weapon_type := HAVOC_WEAPON_TYPE
             current_pattern := HAVOC_PATTERN
             if (CheckTurbocharger(HAVOC_TURBOCHARGER_PIXELS)) {
-                current_pattern := TURBOHAVOC_PATTERN
                 current_weapon_type := HAVOC_TURBO_WEAPON_TYPE
             }
         }
@@ -456,6 +453,10 @@ $*LButton::
 
     if (is_single_fire_weapon && !auto_fire)
         return
+
+    if (current_weapon_type == HAVOC_WEAPON_TYPE) {
+        Sleep, 350
+    }
 
     Loop {
         x := 0

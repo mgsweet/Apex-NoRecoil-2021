@@ -17,7 +17,7 @@ SetControlDelay, -1
 SendMode Input
 
 Pattern := Object()
-Loop, Read, AEPattern/Spitfire.txt
+Loop, Read, AEPattern/Havoc.txt
     Pattern[A_Index] := StrSplit(A_LoopReadLine, [A_Space, A_Tab])	
 
 ; mouse setting
@@ -25,9 +25,9 @@ global sens := 2
 global modifier := 4/sens
 
 ; gun setting
-global wpmaxt := 4.54																	
-global cmodx := 0.65																	
-global cmody := 0.25
+global wpmaxt := 3.12																	
+global cmodx := 0.37																
+global cmody := 0.43
 global lmax := Pattern.maxindex()																		
 global interval := (wpmaxt/lmax)*1000	
 
@@ -37,14 +37,14 @@ global outputfile := "pattern.txt"
 
 ; advance
 global rampx := 0	
-global rampxstart := 150
-global rampxend := lmax
-global rampxcmod := 10
+global rampxstart := 80
+global rampxend := 130
+global rampxcmod := -20
 global rampxcmodsub := rampxcmod - cmodx
 global rampxstep := rampxcmodsub /(rampxend - rampxstart)
 
-global rampy := 1
-global rampystart := 200
+global rampy := 0
+global rampystart := 100
 global rampyend := lmax
 global rampycmod := -5
 global rampycmodsub := rampycmod - cmody
