@@ -94,14 +94,14 @@ global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
 global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
 
 ; for gold optics
-global ColVn := 4
-global MoveALittleMore := 5
+global ColVn := 6
+global MoveALittleMore := 2
 global ZeroX := (A_ScreenWidth // 2)
 global ZeroY := (A_ScreenHeight // 2)
-CFovX := (A_ScreenWidth // 24)
-CFovY := (A_ScreenHeight // 10)
-AntiShakeX := (A_ScreenHeight // 80)
-AntiShakeY := (A_ScreenHeight // 64)
+CFovX := (A_ScreenWidth // 32)
+CFovY := (A_ScreenHeight // 24)
+AntiShakeX := 8
+AntiShakeY := 8
 global ScanL := ZeroX - CFovX
 global ScanT := ZeroY - CFovY
 global ScanR := ZeroX + CFovX
@@ -114,8 +114,9 @@ global NearAimScanB := ZeroY + AntiShakeY
 MoveMouse2Red() 
 { 
     ; reds := [0x3841AD,0x5764BC,0x6866C3]
-    ; reds := [0x3841AD,0x333DB1,0x5764BC]
-    reds := [0x5054C8]
+    ; reds := [0x5054C8,0x3841AD,0x333DB1,0x5764BC]
+    reds := [0x5054C8,0x3841AD,0x5764BC]
+    ; reds := [0x5054C8]
     For key, value in reds {
         aimPixelX := ZeroX
         aimPixelY := ZeroY  
@@ -340,7 +341,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
-            is_single_fire_weapon := true
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
