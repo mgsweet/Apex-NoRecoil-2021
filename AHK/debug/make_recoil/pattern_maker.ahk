@@ -43,8 +43,8 @@ global rampxcmod := 10
 global rampxcmodsub := rampxcmod - cmodx
 global rampxstep := rampxcmodsub /(rampxend - rampxstart)
 
-global rampy := 0
-global rampystart := 100
+global rampy := 1
+global rampystart := 200
 global rampyend := lmax
 global rampycmod := 0
 global rampycmodsub := rampycmod - cmody
