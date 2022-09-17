@@ -26,7 +26,7 @@ global modifier := 4/sens
 
 ; gun setting
 global wpmaxt := 3.12																	
-global cmodx := 0.37																
+global cmodx := 0.33																
 global cmody := 0.43
 global lmax := Pattern.maxindex()																		
 global interval := (wpmaxt/lmax)*1000	
@@ -36,10 +36,10 @@ global out2txt := 1
 global outputfile := "pattern.txt"	
 
 ; advance
-global rampx := 0	
-global rampxstart := 80
-global rampxend := 130
-global rampxcmod := -20
+global rampx := 1	
+global rampxstart := 170
+global rampxend := lmax
+global rampxcmod := 0
 global rampxcmodsub := rampxcmod - cmodx
 global rampxstep := rampxcmodsub /(rampxend - rampxstart)
 
