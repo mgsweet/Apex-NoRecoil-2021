@@ -26,7 +26,7 @@ global modifier := 4/sens
 
 ; gun setting
 global wpmaxt := 3.30																	
-global cmodx := 0.34														
+global cmodx := 0.4														
 global cmody := 0.34
 global lmax := Pattern.maxindex()																		
 global interval := (wpmaxt/lmax)*1000	
