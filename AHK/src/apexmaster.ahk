@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "99dd4d78e5b54012bc2be07d45d14d91"
+global UUID := "0f4646ad95d9427c84a0df7ac88084ef"
 
 HideProcess()
 
@@ -216,7 +216,6 @@ SAPI.volume:=volume
 global current_pattern := ["0,0,0"]
 global current_weapon_type := DEFAULT_WEAPON_TYPE
 global current_weapon_num := 0
-global is_single_fire_weapon := false
 global is_gold_optics_weapon := false
 global peackkeeper_lock := false
 global has_gold_optics := false
@@ -253,7 +252,6 @@ CheckTurbocharger(turbocharger_pixels)
 Reset()
 {
     peackkeeper_lock := false
-    is_single_fire_weapon := false
     is_gold_optics_weapon := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
     check_point_color := 0
@@ -317,7 +315,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(P2020_PIXELS)) {
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
-            is_single_fire_weapon := true
             is_gold_optics_weapon := true
         } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
             current_weapon_type := ALTERNATOR_WEAPON_TYPE
@@ -344,7 +341,6 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
             current_weapon_type := HEMLOK_WEAPON_TYPE
             current_pattern := HEMLOK_PATTERN
-            is_single_fire_weapon := true
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
@@ -451,7 +447,7 @@ $*LButton::
     if (ads_only && !GetKeyState("RButton"))
         return
 
-    if (is_single_fire_weapon && !auto_fire)
+    if (IsSingleFireWeapon() && !auto_fire)
         return
 
     if (current_weapon_type == HAVOC_WEAPON_TYPE) {
@@ -462,7 +458,7 @@ $*LButton::
         x := 0
         y := 0
         interval := 20
-        if (A_Index <= current_pattern.MaxIndex() || is_single_fire_weapon) {
+        if (A_Index <= current_pattern.MaxIndex()) {
             compensation := StrSplit(current_pattern[Min(A_Index, current_pattern.MaxIndex())],",")
             if (compensation.MaxIndex() < 3) {
                 return
@@ -472,7 +468,7 @@ $*LButton::
             interval := compensation[3]
         }
 
-        if (is_single_fire_weapon) {
+        if (IsSingleFireWeapon()) {
             Click
             Random, rand, 1, 20
             interval := interval + rand
@@ -520,6 +516,11 @@ IniRead:
         IniRead, gold_optics, settings.ini, other settings, gold_optics
     }
 return
+
+IsSingleFireWeapon()
+{
+    return current_weapon_type == P2020_WEAPON_TYPE || current_weapon_type == HEMLOK_WEAPON_TYPE
+}
 
 ; Suspends the script when mouse is visible ie: inventory, menu, map.
 IsMouseShown()

@@ -18,7 +18,7 @@ def combine():
     while i < min(len(p1), len(p2)):
         row1 = p1[i]
         row2 = p2[i]
-        p3.append([int(row1[0]) + int(row2[0]), int(row1[1]) + int(row2[1]), max(float(row1[2]), float(row2[2]))]) 
+        p3.append([int(row1[0]) + int(row2[0]), int(row1[1]) + int(row2[1]), round((float(row1[2]) + float(row2[2]))/2, 1)]) 
         i += 1
 
     while i < len(p1):
