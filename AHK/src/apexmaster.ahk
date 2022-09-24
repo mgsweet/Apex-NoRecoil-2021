@@ -475,6 +475,7 @@ $*LButton::
         }
 
         DllCall("mouse_event", uint, 0x01, uint, Round(x * modifier), uint, Round(y * modifier))
+        ; ToolTip % x " " y " " a_index
         Sleep, interval
 
         if (!GetKeyState("LButton","P")) {
