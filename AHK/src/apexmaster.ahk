@@ -451,7 +451,7 @@ $*LButton::
         return
 
     if (current_weapon_type == HAVOC_WEAPON_TYPE) {
-        Sleep, 350
+        Sleep, 400
     }
 
     Loop {
