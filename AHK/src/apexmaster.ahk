@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "b7ccf42250e64a07a057576a688cadea"
+global UUID := "84aa90fd4cf849709b0fcaa260f845e8"
 
 HideProcess()
 
@@ -98,8 +98,8 @@ global ColVn := 6
 global MoveALittleMore := 2
 global ZeroX := (A_ScreenWidth // 2)
 global ZeroY := (A_ScreenHeight // 2)
-CFovX := (A_ScreenWidth // 32)
-CFovY := (A_ScreenHeight // 24)
+CFovX := (A_ScreenWidth // 64)
+CFovY := (A_ScreenHeight // 32)
 AntiShakeX := 8
 AntiShakeY := 8
 global ScanL := ZeroX - CFovX
