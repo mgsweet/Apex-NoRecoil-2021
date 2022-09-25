@@ -11,3 +11,10 @@ RunWait "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe"
  /icon "../images/favicon.ico"
  /base "C:\Program Files\AutoHotkey\Compiler\AutoHotkeySC.bin"
  /compress 0
+
+RunWait "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe"
+ /in "../green.ahk"
+ /out "../bin/green.exe"
+ /icon "../images/favicon.ico"
+ /base "C:\Program Files\AutoHotkey\Compiler\AutoHotkeySC.bin"
+ /compress 0
