@@ -51,9 +51,8 @@ Config description:
 ### 2022/09/25 version 1.3.6
 - update Havoc's pattern
 - update Devotion's pattern
-- fix gold optics bugs
-- add green.ahk which removes the gold optics feature
-- fix single-fire weapon bugs
+- add green.ahk which comes without the gold optics feature
+- fix auto-fire feature's bugs
 
 ### 2022/09/16 version 1.3.5
 - update Havoc's pattern
