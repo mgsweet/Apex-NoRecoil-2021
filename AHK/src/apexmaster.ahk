@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "0f4646ad95d9427c84a0df7ac88084ef"
+global UUID := "b7ccf42250e64a07a057576a688cadea"
 
 HideProcess()
 
@@ -475,7 +475,10 @@ $*LButton::
         }
 
         DllCall("mouse_event", uint, 0x01, uint, Round(x * modifier), uint, Round(y * modifier))
-        ; ToolTip % x " " y " " a_index
+        if (debug) {
+            ToolTip % x " " y " " a_index
+        }
+        
         Sleep, interval
 
         if (!GetKeyState("LButton","P")) {
