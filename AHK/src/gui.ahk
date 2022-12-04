@@ -15,7 +15,7 @@ global script_version := "v1.3.6"
 
 ; Convert sens to sider format
 global sider_sen := sens * 10
-global UUID := "b7ccf42250e64a07a057576a688cadea"
+global UUID := "61c1ad19b518493eb45012e2531ca6ed"
 
 ; GUI
 SetFormat, float, 0.1

@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "84aa90fd4cf849709b0fcaa260f845e8"
+global UUID := "61c1ad19b518493eb45012e2531ca6ed"
 
 HideProcess()
 
@@ -308,10 +308,6 @@ DetectAndSetWeapon()
             current_weapon_type := R99_WEAPON_TYPE
             current_pattern := R99_PATTERN
             is_gold_optics_weapon := true
-        } else if (CheckWeapon(RE45_PIXELS)) {
-            current_weapon_type := RE45_WEAPON_TYPE
-            current_pattern := RE45_PATTERN
-            is_gold_optics_weapon := true
         } else if (CheckWeapon(P2020_PIXELS)) {
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
@@ -375,7 +371,11 @@ DetectAndSetWeapon()
         if (CheckWeapon(RAMPAGE_PIXELS)) {
             current_weapon_type := RAMPAGE_WEAPON_TYPE
             current_pattern := RAMPAGE_PATTERN
-        } 
+        } else if (CheckWeapon(RE45_PIXELS)) {
+            current_weapon_type := RE45_WEAPON_TYPE
+            current_pattern := RE45_PATTERN
+            is_gold_optics_weapon := true
+        }
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         is_gold_optics_weapon := true
         current_weapon_type := SHOTGUN_WEAPON_TYPE
