@@ -11,11 +11,11 @@ RunAsAdmin()
 Gosub, IniRead
 
 ; global variable
-global script_version := "v1.3.6"
+global script_version := "v1.3.7"
 
 ; Convert sens to sider format
 global sider_sen := sens * 10
-global UUID := "61c1ad19b518493eb45012e2531ca6ed"
+global UUID := "e71e1ae58a654960ad86fe6df79a7b0d"
 
 ; GUI
 SetFormat, float, 0.1
@@ -47,29 +47,41 @@ if (gold_optics == "1") {
 } else {
     Gui, Add, CheckBox, x190 y169 w150 h30 vgold_optics, gold_optics
 }
-Gui, Add, Text, x112 y209 w120 h30 , resolution:
+Gui, Add, Text, x20 y200 w120 h30 , resolution:
 Gui, Font, S10, 
 if (resolution == "3840x2160") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160||customized|
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160||customized|
 } else if (resolution == "2560x1440") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200|2560x1440||3840x2160|customized|
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200|2560x1440||3840x2160|customized|
 } else if (resolution == "1920x1200") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200||2560x1440|3840x2160|customized|
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080|1920x1200||2560x1440|3840x2160|customized|
 } else if (resolution == "1728x1080") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080||1920x1080|1920x1200|2560x1440|3840x2160|customized|
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080||1920x1080|1920x1200|2560x1440|3840x2160|customized|
 } else if (resolution == "1680x1050") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050||1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized|
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768|1600x900|1680x1050||1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized|
 } else if (resolution == "1600x900") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900||1680x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized|
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768|1600x900||1680x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized|
 } else if (resolution == "1366x768") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768||1600x900|1600x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized|
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768||1600x900|1600x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized|
 } else if (resolution == "1280x720") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720||1366x768|1600x900|1600x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized|
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720||1366x768|1600x900|1600x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized|
 } else if (resolution == "customized") {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1600x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized||
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768|1600x900|1600x1050|1728x1080|1920x1080|1920x1200|2560x1440|3840x2160|customized||
 } else {
-    Gui, Add, DropDownList, x232 y209 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080||1920x1200|2560x1440|3840x2160|customized|
-} 
+    Gui, Add, DropDownList, x130 y200 vresolution, 1280x720|1366x768|1600x900|1680x1050|1728x1080|1920x1080||1920x1200|2560x1440|3840x2160|customized|
+}
+Gui, Font, S13, 
+Gui, Add, Text, x20 y225 w120 h20 , colorblind:
+Gui, Font, S10, 
+if (colorblind == "Protanopia") {
+    Gui, Add, DropDownList, x130 y225 vcolorblind, Normal|Protanopia||Deuteranopia|Tritanopia|
+} else if (colorblind == "Deuteranopia") {
+    Gui, Add, DropDownList, x130 y225 vcolorblind, Normal|Protanopia|Deuteranopia||Tritanopia|
+} else if (colorblind == "Tritanopia") {
+    Gui, Add, DropDownList, x130 y225 vcolorblind, Normal|Protanopia|Deuteranopia|Tritanopia||
+} else {
+    Gui, Add, DropDownList, x130 y225 vcolorblind, Normal||Protanopia|Deuteranopia|Tritanopia|
+}
 Gui, Font, S18 Bold, 
 Gui, Add, Button, x142 y259 w190 h40 gbtSave, Save and Run!
 Gui, Font, , 
@@ -98,6 +110,7 @@ IniRead:
         MsgBox, Couldn't find settings.ini. I'll create one for you.
 
         IniWrite, "1080x1920"`n, settings.ini, screen settings, resolution
+        IniWrite, "Normal"`n, settings.ini, screen settings, colorblind
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
@@ -114,6 +127,7 @@ IniRead:
     }
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
+        IniRead, colorblind, settings.ini, screen settings, colorblind
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
@@ -127,6 +141,7 @@ return
 btSave:
     Gui, submit
     IniWrite, "%resolution%", settings.ini, screen settings, resolution
+    IniWrite, "%colorblind%", settings.ini, screen settings, colorblind
     IniWrite, "%sens%", settings.ini, mouse settings, sens
     IniWrite, "%auto_fire%", settings.ini, mouse settings, auto_fire
     IniWrite, "%ads_only%", settings.ini, mouse settings, ads_only

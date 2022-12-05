@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "61c1ad19b518493eb45012e2531ca6ed"
+global UUID := "e71e1ae58a654960ad86fe6df79a7b0d"
 
 HideProcess()
 
@@ -58,7 +58,19 @@ global WEAPON_2_PIXELS := LoadPixel("weapon2")
 global LIGHT_WEAPON_COLOR := 0x2D547D
 global HEAVY_WEAPON_COLOR := 0x596B38
 global ENERGY_WEAPON_COLOR := 0x286E5A
-global SUPPY_DROP_COLOR := 0x3701B2
+global SUPPY_DROP_COLOR_NORMAL := 0x3701B2
+global SUPPY_DROP_COLOR_PROTANOPIA := 0x714AB2
+global SUPPY_DROP_COLOR_DEUTERANOPIA := 0x1920B2
+global SUPPY_DROP_COLOR_TRITANOPIA := 0x312E90
+global SUPPY_DROP_COLOR := SUPPY_DROP_COLOR_NORMAL
+global colorblind
+if (colorblind == "Protanopia") {
+    SUPPY_DROP_COLOR := SUPPY_DROP_COLOR_PROTANOPIA
+} else if (colorblind == "Deuteranopia") {
+    SUPPY_DROP_COLOR := SUPPY_DROP_COLOR_DEUTERANOPIA
+} else if (colorblind == "Tritanopia") {
+    SUPPY_DROP_COLOR := SUPPY_DROP_COLOR_TRITANOPIA
+}
 global SHOTGUN_WEAPON_COLOR := 0x07206B
 global SNIPER_WEAPON_COLOR := 0x8F404B
 global SELLA_WEAPON_COLOR := 0xA13CA1
@@ -494,6 +506,7 @@ IniRead:
         MsgBox, Couldn't find settings.ini. I'll create one for you.
 
         IniWrite, "1080x1920"`n, settings.ini, screen settings, resolution
+        IniWrite, "Normal"`n, settings.ini, screen settings, colorblind
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
@@ -510,6 +523,7 @@ IniRead:
     }
     Else {
         IniRead, resolution, settings.ini, screen settings, resolution
+        IniRead, colorblind, settings.ini, screen settings, colorblind
         IniRead, zoom_sens, settings.ini, mouse settings, zoom_sens
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
