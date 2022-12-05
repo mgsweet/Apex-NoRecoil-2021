@@ -48,7 +48,7 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
-### 2022/12/04 version 1.3.7
+### 2022/12/04 version 1.3.7 (thanks to [Eternal-Walnut](https://github.com/Eternal-Walnut))
 - update RE45's pattern
 - update Alternator's pattern
 - add colorblind option
