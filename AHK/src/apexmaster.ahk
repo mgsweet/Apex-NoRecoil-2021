@@ -102,6 +102,7 @@ global VOLT_PIXELS := LoadPixel("volt")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
+global SINGLE_MODE_PIXELS := LoadPixel("single_mode")
 ; shotgun
 global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
 
@@ -255,6 +256,16 @@ CheckTurbocharger(turbocharger_pixels)
 {
     target_color := 0xFFFFFF
     PixelGetColor, check_point_color, turbocharger_pixels[1], turbocharger_pixels[2]
+    if (check_point_color == target_color) {
+        return true
+    }
+    return false
+}
+
+CheckSingleMode()
+{
+    target_color := 0xFFFFFF
+    PixelGetColor, check_point_color, SINGLE_MODE_PIXELS[1], SINGLE_MODE_PIXELS[2]
     if (check_point_color == target_color) {
         return true
     }
@@ -452,6 +463,9 @@ $*LButton::
     }
 
     Click, Down
+
+    if (CheckSingleMode())
+        return
 
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
         return
