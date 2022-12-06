@@ -102,6 +102,7 @@ global VOLT_PIXELS := LoadPixel("volt")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
+; Singlemode
 global SINGLE_MODE_PIXELS := LoadPixel("single_mode")
 ; shotgun
 global PEACEKEEPER_PIXELS := LoadPixel("peacekeeper")
