@@ -22,8 +22,8 @@ spitfire = "1693,972,1,1652,989,1,1645,962,1"
 alternator = "1615,979,1,1642,980,1,1646,978,0"
 car = "1605,970,1,1586,973,1,1605,971,1"
 p3030 = "1622,975,1,1702,981,0,1676,988,0"
-havoc_turbocharger = "1621,1006"
-devotion_turbocharger = "1650,1006"
+havoc_turbocharger = "1621,1007"
+devotion_turbocharger = "1650,1007"
 single_mode = "1710,1000"'''
     print('[pixels]')
     lines = origin_text.split("\n")
