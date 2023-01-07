@@ -48,6 +48,10 @@ Config description:
 - sens: 對應游戲裏設置的鼠標靈敏度
 
 ## Update
+### 2023/01/07 version 1.3.9
+- fix 1920*1080 turbo detection bug
+- fix version in gui.ahk
+
 ### 2022/12/14 version 1.3.8 (still, from [Eternal-Walnut](https://github.com/Eternal-Walnut))
 - Add single mode checker
 - Update Alternator pattern
