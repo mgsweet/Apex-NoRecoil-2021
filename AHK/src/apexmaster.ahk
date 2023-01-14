@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "88abb89c4ea6469bb3270141a8d2155e"
+global UUID := "c199b79a42da4e48888b4ad66df4533c"
 
 HideProcess()
 
@@ -39,6 +39,7 @@ global HAVOC_WEAPON_TYPE := "HAVOC"
 global HAVOC_TURBO_WEAPON_TYPE := "HAVOC TURBO"
 global PROWLER_WEAPON_TYPE := "PROWLER"
 global HEMLOK_WEAPON_TYPE := "HEMLOK"
+global HEMLOK_AUTO_WEAPON_TYPE := "HEMLOK AUTO"
 global RE45_WEAPON_TYPE := "RE45"
 global ALTERNATOR_WEAPON_TYPE := "ALTERNATOR"
 global P2020_WEAPON_TYPE := "P2020"
@@ -209,6 +210,7 @@ global RAMPAGE_PATTERN := LoadPattern("Rampage.txt")
 global RAMPAGEAMP_PATTERN := LoadPattern("RampageAmp.txt")
 global PROWLER_PATTERN := LoadPattern("Prowler.txt")
 global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
+global HEMLOK_AUTO_PATTERN := LoadPattern("HemlokAuto.txt")
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
@@ -233,6 +235,7 @@ global current_weapon_num := 0
 global is_gold_optics_weapon := false
 global peackkeeper_lock := false
 global has_gold_optics := false
+global is_single_mode := false
 
 ; mouse sensitivity setting
 zoom := 1.0/zoom_sens
@@ -275,6 +278,7 @@ CheckSingleMode()
 
 Reset()
 {
+    is_single_mode := false
     peackkeeper_lock := false
     is_gold_optics_weapon := false
     current_weapon_type := DEFAULT_WEAPON_TYPE
@@ -308,6 +312,8 @@ DetectAndSetWeapon()
         SetSella()
         return
     }
+
+    is_single_mode := CheckSingleMode()
 
     ; first check which weapon is activate
     PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
@@ -359,8 +365,12 @@ DetectAndSetWeapon()
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
         } else if (CheckWeapon(HEMLOK_PIXELS)) {
-            current_weapon_type := HEMLOK_WEAPON_TYPE
-            current_pattern := HEMLOK_PATTERN
+            current_weapon_type := HEMLOK_AUTO_WEAPON_TYPE
+            current_pattern := HEMLOK_AUTO_PATTERN
+            if (is_single_mode) {
+                current_weapon_type := HEMLOK_WEAPON_TYPE
+                current_pattern := HEMLOK_PATTERN
+            }
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
@@ -420,9 +430,13 @@ DetectAndSetWeapon()
     DetectAndSetWeapon()
 return
 
+~$*B::
+    Sleep, 100
+    DetectAndSetWeapon()
+return
+
 ~$*1::
 ~$*2::
-~$*B::
 ~$*R::
     DetectAndSetWeapon()
 return
@@ -465,7 +479,7 @@ $*LButton::
 
     Click, Down
 
-    if (CheckSingleMode())
+    if (is_single_mode && !IsSingleFireWeapon())
         return
 
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)

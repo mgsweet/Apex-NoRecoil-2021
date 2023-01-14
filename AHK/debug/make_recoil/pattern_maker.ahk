@@ -21,13 +21,13 @@ Loop, Read, ae_pattern.txt
     Pattern[A_Index] := StrSplit(A_LoopReadLine, [A_Space, A_Tab])	
 
 ; mouse setting
-global sens := 2
+global sens := 1.4
 global modifier := 4/sens
 
 ; gun setting
-global wpmaxt := 3.10																
-global cmodx := 0.45													
-global cmody := 0.43
+global wpmaxt := 4.32																
+global cmodx := 0.35											
+global cmody := 0.28
 global lmax := Pattern.maxindex()																		
 global interval := (wpmaxt/lmax)*1000	
 
@@ -36,7 +36,7 @@ global out2txt := 1
 global outputfile := "pattern.txt"	
 
 ; advance
-global rampx := 1
+global rampx := 0
 global rampxstart := 100
 global rampxend := 120
 global rampxcmod := 0.3
