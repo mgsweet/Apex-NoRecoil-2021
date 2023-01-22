@@ -109,7 +109,7 @@ IniRead:
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
 
-        IniWrite, "1080x1920"`n, settings.ini, screen settings, resolution
+        IniWrite, "1920x1080", settings.ini, screen settings, resolution
         IniWrite, "Normal"`n, settings.ini, screen settings, colorblind
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
@@ -118,7 +118,7 @@ IniRead:
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
-        IniWrite, "0"`n, settings.ini, other settings, gold_optics
+        IniWrite, "0", settings.ini, other settings, gold_optics
         if (A_ScriptName == "gui.ahk") {
             Run "gui.ahk"
         } else if (A_ScriptName == "gui.exe") {
