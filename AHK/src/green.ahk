@@ -49,6 +49,7 @@ global G7_WEAPON_TYPE := "G7"
 global CAR_WEAPON_TYPE := "CAR"
 global P3030_WEAPON_TYPE := "3030"
 global SHOTGUN_WEAPON_TYPE := "shotgun"
+global SNIPER_WEAPON_TYPE := "sniper"
 global PEACEKEEPER_WEAPON_TYPE := "peacekeeper"
 global SELLA_WEAPON_TYPE := "sella"
 
@@ -413,9 +414,11 @@ DetectAndSetWeapon()
         is_gold_optics_weapon := true
         current_weapon_type := SHOTGUN_WEAPON_TYPE
     } else if (check_point_color == SNIPER_WEAPON_COLOR) {
+        is_gold_optics_weapon := true
         if (CheckWeapon(WINGMAN_PIXELS)) {
             current_weapon_type := WINGMAN_WEAPON_TYPE
-            is_gold_optics_weapon := true
+        } else {
+            current_weapon_type := SNIPER_WEAPON_TYPE
         }
     }
     global debug
@@ -481,7 +484,7 @@ ExitApp
     if (is_single_mode && !IsSingleFireWeapon())
         return
 
-    if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE)
+    if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE || current_weapon_type == SNIPER_WEAPON_TYPE)
         return
 
     if (ads_only && !GetKeyState("RButton"))
