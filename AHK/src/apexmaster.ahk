@@ -565,8 +565,8 @@ IniRead:
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
-        IniRead, trigger_only, settings.ini, trigger settings, trigger_only [, false]
-        IniRead, trigger_button, settings.ini, trigger settings, trigger_button [,"Capslock"]
+        IniRead, trigger_only, settings.ini, trigger settings, trigger_only
+        IniRead, trigger_button, settings.ini, trigger settings, trigger_button
         IniRead, gold_optics, settings.ini, other settings, gold_optics
     }
 return
