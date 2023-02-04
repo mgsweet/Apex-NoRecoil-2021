@@ -488,6 +488,9 @@ $*LButton::
     if (ads_only && !GetKeyState("RButton"))
         return
 
+    if (trigger_only && !GetKeyState(trigger_button,"T"))
+        return
+
     if (IsSingleFireWeapon() && !auto_fire)
         return
 
@@ -541,6 +544,8 @@ IniRead:
         IniWrite, "1", settings.ini, mouse settings, auto_fire
         IniWrite, "0", settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
+        IniWrite, "Capslock"`n, settings.ini, trigger settings, trigger_button
+        IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7", settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
         IniWrite, "0"`n, settings.ini, other settings, gold_optics
@@ -560,6 +565,8 @@ IniRead:
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
+        IniRead, trigger_only, settings.ini, trigger settings, trigger_only [, false]
+        IniRead, trigger_button, settings.ini, trigger settings, trigger_button [,"Capslock"]
         IniRead, gold_optics, settings.ini, other settings, gold_optics
     }
 return
