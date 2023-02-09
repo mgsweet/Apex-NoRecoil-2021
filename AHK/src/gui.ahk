@@ -42,10 +42,24 @@ if (debug == "1") {
 } else {
     Gui, Add, CheckBox, x320 y129 w110 h30 vdebug, debug
 }
-if (gold_optics == "1") {
-    Gui, Add, CheckBox, x190 y169 w150 h30 vgold_optics Checked, gold_optics
+if (trigger_only == "1") {
+    Gui, Add, CheckBox, x20 y169 w150 h30 vtrigger_only Checked, trigger_only
 } else {
-    Gui, Add, CheckBox, x190 y169 w150 h30 vgold_optics, gold_optics
+    Gui, Add, CheckBox, x20 y169 w150 h30 vtrigger_only, trigger_only
+}
+if (trigger_button == "Capslock") {
+    Gui, Add, DropDownList, x170 y169 w100  vtrigger_button, Capslock||NumLock|ScrollLock|
+} else if (trigger_button == "NumLock") {
+    Gui, Add, DropDownList, x170 y169 w100  vtrigger_button, Capslock|NumLock||ScrollLock|
+} else if (trigger_button == "ScrollLock") {
+    Gui, Add, DropDownList, x170 y169 w100  vtrigger_button, Capslock|NumLock|ScrollLock||
+} else {
+    Gui, Add, DropDownList, x170 y169 w100  vtrigger_button, Capslock||NumLock|ScrollLock|
+}
+if (gold_optics == "1") {
+    Gui, Add, CheckBox, x300 y169 w150 h30 vgold_optics Checked, gold_optics
+} else {
+    Gui, Add, CheckBox, x300 y169 w150 h30 vgold_optics, gold_optics
 }
 Gui, Add, Text, x20 y200 w120 h30 , resolution:
 Gui, Font, S10, 
@@ -115,6 +129,8 @@ IniRead:
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
         IniWrite, "1"`n, settings.ini, mouse settings, ads_only
+        IniWrite, "0"`n, settings.ini, trigger settings, trigger_only
+        IniWrite, "Capslock"`n, settings.ini, trigger settings, trigger_button
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
@@ -131,6 +147,8 @@ IniRead:
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
+        IniRead, trigger_only, settings.ini, trigger settings, trigger_only
+        IniRead, trigger_button, settings.ini, trigger settings, trigger_button
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
@@ -145,6 +163,8 @@ btSave:
     IniWrite, "%sens%", settings.ini, mouse settings, sens
     IniWrite, "%auto_fire%", settings.ini, mouse settings, auto_fire
     IniWrite, "%ads_only%", settings.ini, mouse settings, ads_only
+    IniWrite, "%trigger_only%", settings.ini, trigger settings, trigger_only
+    IniWrite, "%trigger_button%", settings.ini, trigger settings, trigger_button
     IniWrite, "%debug%", settings.ini, other settings, debug    
     IniWrite, "%gold_optics%", settings.ini, other settings, gold_optics
     if (A_ScriptName == "gui.ahk") {
