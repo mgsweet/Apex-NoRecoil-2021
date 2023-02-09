@@ -543,8 +543,8 @@ IniRead:
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
         IniWrite, "1"`n, settings.ini, mouse settings, ads_only
-        IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "Capslock"`n, settings.ini, trigger settings, trigger_button
+        IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7", settings.ini, voice settings, rat
         IniWrite, "0", settings.ini, other settings, debug
         IniWrite, "0", settings.ini, other settings, gold_optics
