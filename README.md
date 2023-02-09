@@ -1,6 +1,6 @@
 # Apex-NoRecoil-2021
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 An AutoHotKey script (works on multiple resolutions) and Python CLI (works on 1080p) to minimize recoil with auto weapon detection for Apex Legends. 
 
@@ -55,18 +55,19 @@ Pull Request is always welcome!
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="http://mgsweet.com"><img src="https://avatars.githubusercontent.com/u/15327389?v=4?s=100" width="100px;" alt="Aaron Yau"/><br /><sub><b>Aaron Yau</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=mgsweet" title="Code">💻</a></td>
-      <td align="center"><a href="https://www.wemakeart.co.za"><img src="https://avatars.githubusercontent.com/u/21266436?v=4?s=100" width="100px;" alt="Brandon Williams"/><br /><sub><b>Brandon Williams</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=krampus-nuggets" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/filen1"><img src="https://avatars.githubusercontent.com/u/88589472?v=4?s=100" width="100px;" alt="filen1"/><br /><sub><b>filen1</b></sub></a><br /><a href="#data-filen1" title="Data">🔣</a></td>
-      <td align="center"><a href="https://github.com/sayoui001"><img src="https://avatars.githubusercontent.com/u/89756686?v=4?s=100" width="100px;" alt="sayoui001"/><br /><sub><b>sayoui001</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=sayoui001" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/SiLeNT-Sooul"><img src="https://avatars.githubusercontent.com/u/72454428?v=4?s=100" width="100px;" alt="SiLeNT-Sooul"/><br /><sub><b>SiLeNT-Sooul</b></sub></a><br /><a href="#data-SiLeNT-Sooul" title="Data">🔣</a></td>
-      <td align="center"><a href="https://github.com/ThirdPetros"><img src="https://avatars.githubusercontent.com/u/60510041?v=4?s=100" width="100px;" alt="Petros"/><br /><sub><b>Petros</b></sub></a><br /><a href="#data-thirdpetros" title="Data">🔣</a></td>
-      <td align="center"><a href="https://github.com/VStorm001"><img src="https://avatars.githubusercontent.com/u/79291809?v=4?s=100" width="100px;" alt="VStorm001"/><br /><sub><b>VStorm001</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=VStorm001" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://mgsweet.com"><img src="https://avatars.githubusercontent.com/u/15327389?v=4?s=100" width="100px;" alt="Aaron Yau"/><br /><sub><b>Aaron Yau</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=mgsweet" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.wemakeart.co.za"><img src="https://avatars.githubusercontent.com/u/21266436?v=4?s=100" width="100px;" alt="Brandon Williams"/><br /><sub><b>Brandon Williams</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=krampus-nuggets" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/filen1"><img src="https://avatars.githubusercontent.com/u/88589472?v=4?s=100" width="100px;" alt="filen1"/><br /><sub><b>filen1</b></sub></a><br /><a href="#data-filen1" title="Data">🔣</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/sayoui001"><img src="https://avatars.githubusercontent.com/u/89756686?v=4?s=100" width="100px;" alt="sayoui001"/><br /><sub><b>sayoui001</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=sayoui001" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/SiLeNT-Sooul"><img src="https://avatars.githubusercontent.com/u/72454428?v=4?s=100" width="100px;" alt="SiLeNT-Sooul"/><br /><sub><b>SiLeNT-Sooul</b></sub></a><br /><a href="#data-SiLeNT-Sooul" title="Data">🔣</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ThirdPetros"><img src="https://avatars.githubusercontent.com/u/60510041?v=4?s=100" width="100px;" alt="Petros"/><br /><sub><b>Petros</b></sub></a><br /><a href="#data-thirdpetros" title="Data">🔣</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/VStorm001"><img src="https://avatars.githubusercontent.com/u/79291809?v=4?s=100" width="100px;" alt="VStorm001"/><br /><sub><b>VStorm001</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=VStorm001" title="Code">💻</a></td>
     </tr>
     <tr>
-      <td align="center"><a href="https://github.com/VerTox"><img src="https://avatars.githubusercontent.com/u/5575681?v=4?s=100" width="100px;" alt="VerTox"/><br /><sub><b>VerTox</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=VerTox" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/jayking999"><img src="https://avatars.githubusercontent.com/u/67616183?v=4?s=100" width="100px;" alt="jayking999"/><br /><sub><b>jayking999</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=jayking999" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/Eternal-Walnut"><img src="https://avatars.githubusercontent.com/u/100213430?v=4?s=100" width="100px;" alt="Eternal"/><br /><sub><b>Eternal</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=Eternal-Walnut" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/VerTox"><img src="https://avatars.githubusercontent.com/u/5575681?v=4?s=100" width="100px;" alt="VerTox"/><br /><sub><b>VerTox</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=VerTox" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jayking999"><img src="https://avatars.githubusercontent.com/u/67616183?v=4?s=100" width="100px;" alt="jayking999"/><br /><sub><b>jayking999</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=jayking999" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Eternal-Walnut"><img src="https://avatars.githubusercontent.com/u/100213430?v=4?s=100" width="100px;" alt="Eternal"/><br /><sub><b>Eternal</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=Eternal-Walnut" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Milesians"><img src="https://avatars.githubusercontent.com/u/37968554?v=4?s=100" width="100px;" alt="Milesians"/><br /><sub><b>Milesians</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=Milesians" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
