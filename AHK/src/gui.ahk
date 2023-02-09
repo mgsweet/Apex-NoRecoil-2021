@@ -123,18 +123,18 @@ IniRead:
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
 
-        IniWrite, "1080x1920"`n, settings.ini, screen settings, resolution
+        IniWrite, "1920x1080", settings.ini, screen settings, resolution
         IniWrite, "Normal"`n, settings.ini, screen settings, colorblind
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
-        IniWrite, "1"`n, settings.ini, mouse settings, ads_only
-        IniWrite, "0"`n, settings.ini, trigger settings, trigger_only
-        IniWrite, "Capslock"`n, settings.ini, trigger settings, trigger_button
+        IniWrite, "0"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
         IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
         IniWrite, "0"`n, settings.ini, other settings, gold_optics
+        IniWrite, "0", settings.ini, trigger settings, trigger_only
+        IniWrite, "Capslock"`n, settings.ini, trigger settings, trigger_button
         if (A_ScriptName == "gui.ahk") {
             Run "gui.ahk"
         } else if (A_ScriptName == "gui.exe") {
@@ -147,12 +147,12 @@ IniRead:
         IniRead, sens, settings.ini, mouse settings, sens
         IniRead, auto_fire, settings.ini, mouse settings, auto_fire
         IniRead, ads_only, settings.ini, mouse settings, ads_only
-        IniRead, trigger_only, settings.ini, trigger settings, trigger_only
-        IniRead, trigger_button, settings.ini, trigger settings, trigger_button
         IniRead, volume, settings.ini, voice settings, volume
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
         IniRead, gold_optics, settings.ini, other settings, gold_optics
+        IniRead, trigger_only, settings.ini, trigger settings, trigger_only
+        IniRead, trigger_button, settings.ini, trigger settings, trigger_button
     }
 return
 
@@ -163,10 +163,10 @@ btSave:
     IniWrite, "%sens%", settings.ini, mouse settings, sens
     IniWrite, "%auto_fire%", settings.ini, mouse settings, auto_fire
     IniWrite, "%ads_only%", settings.ini, mouse settings, ads_only
-    IniWrite, "%trigger_only%", settings.ini, trigger settings, trigger_only
-    IniWrite, "%trigger_button%", settings.ini, trigger settings, trigger_button
     IniWrite, "%debug%", settings.ini, other settings, debug    
     IniWrite, "%gold_optics%", settings.ini, other settings, gold_optics
+    IniWrite, "%trigger_only%", settings.ini, trigger settings, trigger_only
+    IniWrite, "%trigger_button%", settings.ini, trigger settings, trigger_button
     if (A_ScriptName == "gui.ahk") {
         CloseScript("apexmaster.ahk")
         Run "apexmaster.ahk"
