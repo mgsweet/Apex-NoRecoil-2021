@@ -1,10 +1,11 @@
 import math
 
-
 def gen_rough_resolution(width, height):
-    origin_text = '''weapon1 = "1521,1038"
+    origin_text = '''; each player can hold 2 weapons
+weapon1 = "1521,1038"
 weapon2 = "1824,1036"
-r99 = "1606,986,1,1671,974,0,1641,1004,1"
+; weapon types
+r99 = "1606,986,1,1671,974,0,1636,987,1"
 r301 = "1655,976,0,1683,968,1,1692,974,1"
 re45 = "1605,975,1,1638,980,0,1662,1004,1"
 p2020 = "1609,970,1,1633,981,0,1650,1004,1"
@@ -22,8 +23,11 @@ spitfire = "1693,972,1,1652,989,1,1645,962,1"
 alternator = "1615,979,1,1642,980,1,1646,978,0"
 car = "1605,970,1,1586,973,1,1605,971,1"
 p3030 = "1622,975,1,1702,981,0,1676,988,0"
+nemesis = "1645,993,1,1670,995,0,1563,980,1"
+; Turbocharger
 havoc_turbocharger = "1621,1007"
 devotion_turbocharger = "1650,1007"
+; Single mode
 single_mode = "1710,1000"'''
     print('[pixels]')
     lines = origin_text.split("\n")
