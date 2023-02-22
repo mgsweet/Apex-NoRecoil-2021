@@ -38,6 +38,7 @@ global VOLT_WEAPON_TYPE := "VOLT"
 global HAVOC_WEAPON_TYPE := "HAVOC"
 global HAVOC_TURBO_WEAPON_TYPE := "HAVOC TURBO"
 global NEMESIS_WEAPON_TYPE := "NEMESIS"
+global NEMESIS_FULL_WEAPON_TYPE := "NEMESIS FULL"
 global PROWLER_WEAPON_TYPE := "PROWLER"
 global HEMLOK_WEAPON_TYPE := "HEMLOK"
 global HEMLOK_AUTO_WEAPON_TYPE := "HEMLOK AUTO"
@@ -209,6 +210,7 @@ global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
 global VOLT_PATTERN := LoadPattern("Volt.txt")
 global NEMESIS_PATTERN = LoadPattern("Nemesis.txt")
+global FULLCHARGE_PATTERN = LoadPattern("NemesisPower.txt")
 ; special
 global CAR_PATTERN := LoadPattern("CAR.txt")
 ; heavy weapon pattern
@@ -273,7 +275,7 @@ CheckTurbocharger(turbocharger_pixels)
     return false
 }
 
-IsNemesisFullCharge()
+IsNemesisFullCharge(Nemesis_Full_Charge_pixels)
 {
     target_color := 0xD6BD62
     PixelGetColor, check_point_color, NEMESIS_FULL_CHARGE_PIXELS[1], NEMESIS_FULL_CHARGE_PIXELS[2]
@@ -420,6 +422,10 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(NEMESIS_PIXELS)) {
             current_weapon_type := NEMESIS_WEAPON_TYPE
             current_pattern := NEMESIS_PATTERN
+			if (IsNemesisFullCharge(NEMESIS_FULL_CHARGE_PIXELS)) {
+                current_weapon_type := NEMESIS_FULL_WEAPON_TYPE
+				current_pattern := FULLCHARGE_PATTERN
+            }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
         if (CheckWeapon(RAMPAGE_PIXELS)) {
