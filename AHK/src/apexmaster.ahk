@@ -106,6 +106,8 @@ global RE45_PIXELS := LoadPixel("re45")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
+; NemesisFullCharge
+global NEMESIS_FULL_CHARGE_PIXELS := LoadPixel("nemesis_full_charge")
 ; Singlemode
 global SINGLE_MODE_PIXELS := LoadPixel("single_mode")
 ; shotgun
@@ -265,6 +267,16 @@ CheckTurbocharger(turbocharger_pixels)
 {
     target_color := 0xFFFFFF
     PixelGetColor, check_point_color, turbocharger_pixels[1], turbocharger_pixels[2]
+    if (check_point_color == target_color) {
+        return true
+    }
+    return false
+}
+
+IsNemesisFullCharge()
+{
+    target_color := 0xD6BD62
+    PixelGetColor, check_point_color, NEMESIS_FULL_CHARGE_PIXELS[1], NEMESIS_FULL_CHARGE_PIXELS[2]
     if (check_point_color == target_color) {
         return true
     }
