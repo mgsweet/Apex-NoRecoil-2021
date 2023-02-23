@@ -275,7 +275,7 @@ CheckTurbocharger(turbocharger_pixels)
     return false
 }
 
-IsNemesisFullCharge(Nemesis_Full_Charge_pixels)
+IsNemesisFullCharge()
 {
     target_color := 0xD6BD62
     PixelGetColor, check_point_color, NEMESIS_FULL_CHARGE_PIXELS[1], NEMESIS_FULL_CHARGE_PIXELS[2]
@@ -422,8 +422,7 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(NEMESIS_PIXELS)) {
             current_weapon_type := NEMESIS_WEAPON_TYPE
             current_pattern := NEMESIS_PATTERN
-			if (IsNemesisFullCharge(NEMESIS_FULL_CHARGE_PIXELS)) {
-                current_weapon_type := NEMESIS_FULL_WEAPON_TYPE
+			if (IsNemesisFullCharge()) {
 				current_pattern := FULLCHARGE_PATTERN
             }
         }
