@@ -517,6 +517,15 @@ ExitApp
     if (current_weapon_type == HAVOC_WEAPON_TYPE) {
         Sleep, 400
     }
+    
+    if (current_weapon_type == NEMESIS_WEAPON_TYPE)
+    {
+        if (IsNemesisFullCharge()) {
+            current_pattern := NEMESISCHARGED_PATTERN
+        } else {
+            current_pattern := NEMESIS_PATTERN
+        }
+    }
 
     Loop {
         x := 0
