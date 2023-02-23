@@ -209,8 +209,8 @@ global DEVOTION_PATTERN := LoadPattern("Devotion.txt")
 global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
 global VOLT_PATTERN := LoadPattern("Volt.txt")
-global NEMESIS_PATTERN = LoadPattern("Nemesis.txt")
-global FULLCHARGE_PATTERN = LoadPattern("NemesisPower.txt")
+global NEMESIS_PATTERN := LoadPattern("Nemesis.txt")
+global NEMESISCHARGED_PATTERN := LoadPattern("NemesisCharged.txt")
 ; special
 global CAR_PATTERN := LoadPattern("CAR.txt")
 ; heavy weapon pattern
@@ -423,7 +423,7 @@ DetectAndSetWeapon()
             current_weapon_type := NEMESIS_WEAPON_TYPE
             current_pattern := NEMESIS_PATTERN
 			if (IsNemesisFullCharge()) {
-				current_pattern := FULLCHARGE_PATTERN
+				current_pattern := NEMESISCHARGED_PATTERN
             }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
