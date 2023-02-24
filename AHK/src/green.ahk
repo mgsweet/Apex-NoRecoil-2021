@@ -533,16 +533,18 @@ IniRead:
     {
         MsgBox, Couldn't find settings.ini. I'll create one for you.
 
-        IniWrite, "1080x1920"`n, settings.ini, screen settings, resolution
+        IniWrite, "1920x1080", settings.ini, screen settings, resolution
         IniWrite, "Normal"`n, settings.ini, screen settings, colorblind
         IniWrite, "5.0", settings.ini, mouse settings, sens
         IniWrite, "1.0", settings.ini, mouse settings, zoom_sens
         IniWrite, "1", settings.ini, mouse settings, auto_fire
-        IniWrite, "0", settings.ini, mouse settings, ads_only
+        IniWrite, "0"`n, settings.ini, mouse settings, ads_only
         IniWrite, "80", settings.ini, voice settings, volume
-        IniWrite, "7", settings.ini, voice settings, rate
+        IniWrite, "7"`n, settings.ini, voice settings, rate
         IniWrite, "0", settings.ini, other settings, debug
         IniWrite, "0"`n, settings.ini, other settings, gold_optics
+        IniWrite, "0", settings.ini, trigger settings, trigger_only
+        IniWrite, "Capslock"`n, settings.ini, trigger settings, trigger_button
         if (A_ScriptName == "apexmaster.ahk") {
             Run "apexmaster.ahk"
         } else if (A_ScriptName == "apexmaster.exe") {
@@ -560,6 +562,8 @@ IniRead:
         IniRead, rate, settings.ini, voice settings, rate
         IniRead, debug, settings.ini, other settings, debug
         IniRead, gold_optics, settings.ini, other settings, gold_optics
+        IniRead, trigger_only, settings.ini, trigger settings, trigger_only
+        IniRead, trigger_button, settings.ini, trigger settings, trigger_button
     }
 return
 
