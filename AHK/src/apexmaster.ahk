@@ -37,6 +37,7 @@ global DEVOTION_TURBO_WEAPON_TYPE := "DEVOTION TURBO"
 global VOLT_WEAPON_TYPE := "VOLT"
 global HAVOC_WEAPON_TYPE := "HAVOC"
 global HAVOC_TURBO_WEAPON_TYPE := "HAVOC TURBO"
+global NEMESIS_WEAPON_TYPE := "NEMESIS"
 global PROWLER_WEAPON_TYPE := "PROWLER"
 global HEMLOK_WEAPON_TYPE := "HEMLOK"
 global HEMLOK_AUTO_WEAPON_TYPE := "HEMLOK AUTO"
@@ -81,15 +82,14 @@ global SELLA_WEAPON_COLOR := 0xA13CA1
 ; light weapon
 global R99_PIXELS := LoadPixel("r99")
 global R301_PIXELS := LoadPixel("r301")
-global RE45_PIXELS := LoadPixel("re45")
 global P2020_PIXELS := LoadPixel("p2020")
+global G7_PIXELS := LoadPixel("g7")
+global SPITFIRE_PIXELS := LoadPixel("spitfire")
 global ALTERNATOR_PIXELS := LoadPixel("alternator")
 ; heavy weapon
 global FLATLINE_PIXELS := LoadPixel("flatline")
 global PROWLER_PIXELS := LoadPixel("prowler")
-global HEMLOK_PIXELS := LoadPixel("hemlok")
 global RAMPAGE_PIXELS := LoadPixel("rampage")
-global WINGMAN_PIXELS := LoadPixel("wingman")
 global P3030_PIXELS := LoadPixel("p3030")
 ; special
 global CAR_PIXELS := LoadPixel("car")
@@ -97,13 +97,18 @@ global CAR_PIXELS := LoadPixel("car")
 global LSTAR_PIXELS := LoadPixel("lstar")
 global DEVOTION_PIXELS := LoadPixel("devotion")
 global HAVOC_PIXELS := LoadPixel("havoc")
-; supply drop weapon
-global G7_PIXELS := LoadPixel("g7")
-global SPITFIRE_PIXELS := LoadPixel("spitfire")
 global VOLT_PIXELS := LoadPixel("volt")
+global NEMESIS_PIXELS := LoadPixel("nemesis")
+; sniper weapon
+global WINGMAN_PIXELS := LoadPixel("wingman")
+; supply drop weapon
+global HEMLOK_PIXELS := LoadPixel("hemlok")
+global RE45_PIXELS := LoadPixel("re45")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
+; NemesisFullCharge
+global NEMESIS_FULL_CHARGE_PIXELS := LoadPixel("nemesis_full_charge")
 ; Singlemode
 global SINGLE_MODE_PIXELS := LoadPixel("single_mode")
 ; shotgun
@@ -194,15 +199,18 @@ LoadPattern(filename) {
 ; light weapon pattern
 global R301_PATTERN := LoadPattern("R301.txt")
 global R99_PATTERN := LoadPattern("R99.txt")
-global RE45_PATTERN := LoadPattern("RE45.txt")
 global P2020_PATTERN := LoadPattern("P2020.txt")
+global G7_Pattern := LoadPattern("G7.txt")
+global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
 global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
 ; energy weapon pattern
 global LSTAR_PATTERN := LoadPattern("Lstar.txt")
 global DEVOTION_PATTERN := LoadPattern("Devotion.txt")
 global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
-global P3030_PATTERN := LoadPattern("3030.txt")
+global VOLT_PATTERN := LoadPattern("Volt.txt")
+global NEMESIS_PATTERN = LoadPattern("Nemesis.txt")
+global NEMESISCHARGED_PATTERN = LoadPattern("NemesisCharged.txt")
 ; special
 global CAR_PATTERN := LoadPattern("CAR.txt")
 ; heavy weapon pattern
@@ -210,13 +218,13 @@ global FLATLINE_PATTERN := LoadPattern("Flatline.txt")
 global RAMPAGE_PATTERN := LoadPattern("Rampage.txt")
 global RAMPAGEAMP_PATTERN := LoadPattern("RampageAmp.txt")
 global PROWLER_PATTERN := LoadPattern("Prowler.txt")
-global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
-global HEMLOK_AUTO_PATTERN := LoadPattern("HemlokAuto.txt")
+global P3030_PATTERN := LoadPattern("3030.txt")
+; sinper weapon pattern
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
-global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
-global G7_Pattern := LoadPattern("G7.txt")
-global VOLT_PATTERN := LoadPattern("Volt.txt")
+global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
+global HEMLOK_AUTO_PATTERN := LoadPattern("HemlokAuto.txt")
+global RE45_PATTERN := LoadPattern("RE45.txt")
 ; sella
 global SELLA_PATTERN := LoadPattern("Sella.txt")
 
@@ -261,6 +269,16 @@ CheckTurbocharger(turbocharger_pixels)
 {
     target_color := 0xFFFFFF
     PixelGetColor, check_point_color, turbocharger_pixels[1], turbocharger_pixels[2]
+    if (check_point_color == target_color) {
+        return true
+    }
+    return false
+}
+
+IsNemesisFullCharge()
+{
+    target_color := 0xD6BD62
+    PixelGetColor, check_point_color, NEMESIS_FULL_CHARGE_PIXELS[1], NEMESIS_FULL_CHARGE_PIXELS[2]
     if (check_point_color == target_color) {
         return true
     }
@@ -397,6 +415,12 @@ DetectAndSetWeapon()
             if (CheckTurbocharger(HAVOC_TURBOCHARGER_PIXELS)) {
                 current_weapon_type := HAVOC_TURBO_WEAPON_TYPE
             }
+        } else if (CheckWeapon(NEMESIS_PIXELS)) {
+            current_weapon_type := NEMESIS_WEAPON_TYPE
+            current_pattern := NEMESIS_PATTERN
+            if (IsNemesisFullCharge()) {
+                current_pattern := NEMESISCHARGED_PATTERN
+            }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
         if (CheckWeapon(HEMLOK_PIXELS)) {
@@ -499,6 +523,15 @@ $*LButton::
 
     if (current_weapon_type == HAVOC_WEAPON_TYPE) {
         Sleep, 400
+    }
+    
+    if (current_weapon_type == NEMESIS_WEAPON_TYPE)
+    {
+        if (IsNemesisFullCharge()) {
+            current_pattern := NEMESISCHARGED_PATTERN
+        } else {
+            current_pattern := NEMESIS_PATTERN
+        }
     }
 
     Loop {
