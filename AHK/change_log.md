@@ -1,6 +1,6 @@
 # Change Logs
 
-### 2023/02/24 version 1.3.1
+### 2023/02/24 version 1.3.11
 - added hotkey to switch active state
 - update gold optics to support all sniper
 - fix configs create
