@@ -363,13 +363,9 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(PROWLER_PIXELS)) {
             current_weapon_type := PROWLER_WEAPON_TYPE
             current_pattern := PROWLER_PATTERN
-        } else if (CheckWeapon(HEMLOK_PIXELS)) {
-            current_weapon_type := HEMLOK_AUTO_WEAPON_TYPE
-            current_pattern := HEMLOK_AUTO_PATTERN
-            if (is_single_mode) {
-                current_weapon_type := HEMLOK_WEAPON_TYPE
-                current_pattern := HEMLOK_PATTERN
-            }
+        } else if (CheckWeapon(RAMPAGE_PIXELS)) {
+            current_weapon_type := RAMPAGE_WEAPON_TYPE
+            current_pattern := RAMPAGE_PATTERN
         } else if (CheckWeapon(CAR_PIXELS)) { 
             current_weapon_type := CAR_WEAPON_TYPE 
             current_pattern := CAR_PATTERN 
@@ -401,9 +397,13 @@ DetectAndSetWeapon()
             }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
-        if (CheckWeapon(RAMPAGE_PIXELS)) {
-            current_weapon_type := RAMPAGE_WEAPON_TYPE
-            current_pattern := RAMPAGE_PATTERN
+        if (CheckWeapon(HEMLOK_PIXELS)) {
+            current_weapon_type := HEMLOK_AUTO_WEAPON_TYPE
+            current_pattern := HEMLOK_AUTO_PATTERN
+            if (is_single_mode) {
+                current_weapon_type := HEMLOK_WEAPON_TYPE
+                current_pattern := HEMLOK_PATTERN
+            }
         } else if (CheckWeapon(RE45_PIXELS)) {
             current_weapon_type := RE45_WEAPON_TYPE
             current_pattern := RE45_PATTERN
