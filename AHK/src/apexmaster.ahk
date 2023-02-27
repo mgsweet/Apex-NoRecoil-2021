@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "c199b79a42da4e48888b4ad66df4533c"
+global UUID := "2ff4f336fa8848048ef6fb896cfd8183"
 
 HideProcess()
 
@@ -38,6 +38,7 @@ global VOLT_WEAPON_TYPE := "VOLT"
 global HAVOC_WEAPON_TYPE := "HAVOC"
 global HAVOC_TURBO_WEAPON_TYPE := "HAVOC TURBO"
 global NEMESIS_WEAPON_TYPE := "NEMESIS"
+global NEMESIS_CHARGED_WEAPON_TYPE := "NEMESIS CHARGED"
 global PROWLER_WEAPON_TYPE := "PROWLER"
 global HEMLOK_WEAPON_TYPE := "HEMLOK"
 global HEMLOK_AUTO_WEAPON_TYPE := "HEMLOK AUTO"
@@ -210,7 +211,7 @@ global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
 global VOLT_PATTERN := LoadPattern("Volt.txt")
 global NEMESIS_PATTERN = LoadPattern("Nemesis.txt")
-global NEMESISCHARGED_PATTERN = LoadPattern("NemesisCharged.txt")
+global NEMESIS_CHARGED_PATTERN = LoadPattern("NemesisCharged.txt")
 ; special
 global CAR_PATTERN := LoadPattern("CAR.txt")
 ; heavy weapon pattern
@@ -419,7 +420,8 @@ DetectAndSetWeapon()
             current_weapon_type := NEMESIS_WEAPON_TYPE
             current_pattern := NEMESIS_PATTERN
             if (IsNemesisFullCharge()) {
-                current_pattern := NEMESISCHARGED_PATTERN
+                current_weapon_type := NEMESIS_CHARGED_WEAPON_TYPE
+                current_pattern := NEMESIS_CHARGED_PATTERN
             }
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
@@ -525,11 +527,13 @@ $*LButton::
         Sleep, 400
     }
     
-    if (current_weapon_type == NEMESIS_WEAPON_TYPE)
+    if (current_weapon_type == NEMESIS_WEAPON_TYPE || current_weapon_type == NEMESIS_CHARGED_WEAPON_TYPE)
     {
         if (IsNemesisFullCharge()) {
-            current_pattern := NEMESISCHARGED_PATTERN
+            current_weapon_type := NEMESIS_CHARGED_WEAPON_TYPE
+            current_pattern := NEMESIS_CHARGED_PATTERN
         } else {
+            current_weapon_type := NEMESIS_WEAPON_TYPE
             current_pattern := NEMESIS_PATTERN
         }
     }

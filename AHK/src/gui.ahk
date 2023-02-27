@@ -11,11 +11,11 @@ RunAsAdmin()
 Gosub, IniRead
 
 ; global variable
-global script_version := "v1.3.10"
+global script_version := "v1.3.11"
 
 ; Convert sens to sider format
 global sider_sen := sens * 10
-global UUID := "c199b79a42da4e48888b4ad66df4533c"
+global UUID := "2ff4f336fa8848048ef6fb896cfd8183"
 
 ; GUI
 SetFormat, float, 0.1

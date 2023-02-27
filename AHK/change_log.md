@@ -1,5 +1,12 @@
 # Change Logs
 
+### 2023/02/27 version 1.3.11 (thanks to [Eternal-Walnut](https://github.com/Eternal-Walnut), [richardzzp](https://github.com/richardzzp))
+- add hotkey to switch active state.
+- update gold optics to support all sniper.
+- fix configs create.
+- fix hemlok color problem.
+- support new weapon: nemesis (2560x1440, 1280x720, 1920x1080 and 1680x1050).
+
 ### 2023/01/14 version 1.3.10
 - fix hemlok autofire mode bug
 - update patterns: hemlok, prowler
