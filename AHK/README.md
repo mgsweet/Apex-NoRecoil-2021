@@ -61,4 +61,4 @@ For people who want support for more resolutions, check this video: [Apex-NoReco
 
 I learn a lot from [thyaguster/NoRecoilApex](https://github.com/thyaguster/NoRecoilApex). But his code is pretty bad. There are thousands of lines of duplicated code in that repo. And some of the logic is wrong. (e.g. sleep twice to get the accuracy. Why not double the sleep value). So I make my own. Their code is about three thousand lines, but mine is only about 350, which comes with auto-weapon-detection.
 
-The approach I used to generate recoil patterns is from (vengefulcrop)[https://github.com/vengefulcrop/AE-Recoil-Pattern-Generation/].
+The approach I used to generate recoil patterns is from [vengefulcrop](https://github.com/vengefulcrop/AE-Recoil-Pattern-Generation/).
