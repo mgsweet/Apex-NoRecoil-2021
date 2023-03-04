@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "2ff4f336fa8848048ef6fb896cfd8183"
+global UUID := "a3c194a97b4644bc95337cbb47d03a3f"
 
 HideProcess()
 
@@ -41,7 +41,7 @@ global NEMESIS_WEAPON_TYPE := "NEMESIS"
 global NEMESIS_CHARGED_WEAPON_TYPE := "NEMESIS CHARGED"
 global PROWLER_WEAPON_TYPE := "PROWLER"
 global HEMLOK_WEAPON_TYPE := "HEMLOK"
-global HEMLOK_AUTO_WEAPON_TYPE := "HEMLOK AUTO"
+global HEMLOK_SINGLE_WEAPON_TYPE := "HEMLOK SINGLE"
 global RE45_WEAPON_TYPE := "RE45"
 global ALTERNATOR_WEAPON_TYPE := "ALTERNATOR"
 global P2020_WEAPON_TYPE := "P2020"
@@ -224,7 +224,8 @@ global P3030_PATTERN := LoadPattern("3030.txt")
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
 global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
-global HEMLOK_AUTO_PATTERN := LoadPattern("HemlokAuto.txt")
+global HEMLOK_SINGLE_PATTERN := LoadPattern("HemlokSingle.txt")
+global HEMLOK_SINGLE_PATTERN := LoadPattern("HemlokSingle.txt")
 global RE45_PATTERN := LoadPattern("RE45.txt")
 ; sella
 global SELLA_PATTERN := LoadPattern("Sella.txt")
@@ -322,11 +323,15 @@ SetSella()
     }
 }
 
+IsValidWeaponColor(weapon_color)
+{
+    return weapon_color == LIGHT_WEAPON_COLOR || weapon_color == HEAVY_WEAPON_COLOR || weapon_color == SNIPER_WEAPON_COLOR 
+    || weapon_color == ENERGY_WEAPON_COLOR || weapon_color == SUPPY_DROP_COLOR || weapon_color == SHOTGUN_WEAPON_COLOR
+}
+
 DetectAndSetWeapon()
 {
     Reset()
-
-    Sleep, 100
     
     if IsSella() {
         SetSella()
@@ -336,19 +341,18 @@ DetectAndSetWeapon()
     is_single_mode := CheckSingleMode()
 
     ; first check which weapon is activate
-    PixelGetColor, check_weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
-    PixelGetColor, check_weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
-    if (check_weapon1_color == LIGHT_WEAPON_COLOR || check_weapon1_color == HEAVY_WEAPON_COLOR || check_weapon1_color == SNIPER_WEAPON_COLOR 
-    || check_weapon1_color == ENERGY_WEAPON_COLOR || check_weapon1_color == SUPPY_DROP_COLOR || check_weapon1_color == SHOTGUN_WEAPON_COLOR) {
+    PixelGetColor, weapon1_color, WEAPON_1_PIXELS[1], WEAPON_1_PIXELS[2]
+    PixelGetColor, weapon2_color, WEAPON_2_PIXELS[1], WEAPON_2_PIXELS[2]
+    if (IsValidWeaponColor(weapon1_color)) {
+        check_point_color := weapon1_color
         current_weapon_num := 1
-        check_point_color := check_weapon1_color
-    } else if (check_weapon2_color == LIGHT_WEAPON_COLOR || check_weapon2_color == HEAVY_WEAPON_COLOR || check_weapon2_color == SNIPER_WEAPON_COLOR
-    || check_weapon2_color == ENERGY_WEAPON_COLOR || check_weapon2_color == SUPPY_DROP_COLOR || check_weapon2_color == SHOTGUN_WEAPON_COLOR) {
-        check_point_color := check_weapon2_color
+    } else if (IsValidWeaponColor(weapon2_color)) {
+        check_point_color := weapon2_color
         current_weapon_num := 2
     } else {
         return
     }
+
     ; then check the weapon type
     if (check_point_color == LIGHT_WEAPON_COLOR) {
         if (CheckWeapon(R301_PIXELS)) {
@@ -426,11 +430,11 @@ DetectAndSetWeapon()
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
         if (CheckWeapon(HEMLOK_PIXELS)) {
-            current_weapon_type := HEMLOK_AUTO_WEAPON_TYPE
-            current_pattern := HEMLOK_AUTO_PATTERN
+            current_weapon_type := HEMLOK_WEAPON_TYPE
+            current_pattern := HEMLOK_PATTERN
             if (is_single_mode) {
-                current_weapon_type := HEMLOK_WEAPON_TYPE
-                current_pattern := HEMLOK_PATTERN
+                current_weapon_type := HEMLOK_SINGLE_WEAPON_TYPE
+                current_pattern := HEMLOK_SINGLE_PATTERN
             }
         } else if (CheckWeapon(RE45_PIXELS)) {
             current_weapon_type := RE45_WEAPON_TYPE
@@ -454,19 +458,25 @@ DetectAndSetWeapon()
     }
 }
 
+IsAutoClickNeeded() 
+{
+    return IsSingleFireAutoWeapon() && auto_fire
+}
+
 ~$*E Up::
-    Sleep, 200
+    Sleep, 300
     DetectAndSetWeapon()
 return
 
 ~$*B::
-    Sleep, 100
+    Sleep, 250
     DetectAndSetWeapon()
 return
 
 ~$*1::
 ~$*2::
 ~$*R::
+    Sleep, 100
     DetectAndSetWeapon()
 return
 
@@ -508,19 +518,16 @@ $*LButton::
 
     Click, Down
 
-    if (is_single_mode && !IsSingleFireWeapon())
+    if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE || current_weapon_type == SNIPER_WEAPON_TYPE)
         return
 
-    if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE || current_weapon_type == SNIPER_WEAPON_TYPE)
+    if (is_single_mode && !(IsSingleFireAutoWeapon() && auto_fire))
         return
 
     if (ads_only && !GetKeyState("RButton"))
         return
 
     if (trigger_only && !GetKeyState(trigger_button,"T"))
-        return
-
-    if (IsSingleFireWeapon() && !auto_fire)
         return
 
     if (current_weapon_type == HAVOC_WEAPON_TYPE) {
@@ -552,7 +559,7 @@ $*LButton::
             interval := compensation[3]
         }
 
-        if (IsSingleFireWeapon()) {
+        if (IsSingleFireAutoWeapon()) {
             Click
             Random, rand, 1, 20
             interval := interval + rand
@@ -611,9 +618,9 @@ IniRead:
     }
 return
 
-IsSingleFireWeapon()
+IsSingleFireAutoWeapon()
 {
-    return current_weapon_type == P2020_WEAPON_TYPE || current_weapon_type == HEMLOK_WEAPON_TYPE
+    return current_weapon_type == P2020_WEAPON_TYPE || current_weapon_type == HEMLOK_SINGLE_WEAPON_TYPE
 }
 
 ; Suspends the script when mouse is visible ie: inventory, menu, map.
