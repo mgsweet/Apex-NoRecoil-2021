@@ -9,12 +9,12 @@ Process, Priority, , A
 SetBatchLines, -1
 ListLines Off
 SetWorkingDir %A_ScriptDir%
-SetKeyDelay, -1, -1
-SetMouseDelay, -1
-SetDefaultMouseSpeed, 0
-SetWinDelay, -1
-SetControlDelay, -1
-SendMode Input
+; SetKeyDelay, -1, -1
+; SetMouseDelay, -1
+; SetDefaultMouseSpeed, 0
+; SetWinDelay, -1
+; SetControlDelay, -1
+; SendMode Input
 
 RunAsAdmin()
 
@@ -460,7 +460,8 @@ DetectAndSetWeapon()
 
 IsAutoClickNeeded() 
 {
-    return IsSingleFireAutoWeapon() && auto_fire
+    global auto_fire
+    return auto_fire && (current_weapon_type == P2020_WEAPON_TYPE || current_weapon_type == HEMLOK_SINGLE_WEAPON_TYPE)
 }
 
 ~$*E Up::
@@ -521,7 +522,7 @@ $*LButton::
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE || current_weapon_type == SNIPER_WEAPON_TYPE)
         return
 
-    if (is_single_mode && !(IsSingleFireAutoWeapon() && auto_fire))
+    if (is_single_mode && !(IsAutoClickNeeded()))
         return
 
     if (ads_only && !GetKeyState("RButton"))
@@ -559,9 +560,8 @@ $*LButton::
             interval := compensation[3]
         }
 
-        if (IsSingleFireAutoWeapon()) {
+        if (IsAutoClickNeeded()) {
             Click
-            Random, rand, 1, 20
             interval := interval + rand
         }
 
@@ -573,7 +573,6 @@ $*LButton::
         Sleep, interval
 
         if (!GetKeyState("LButton","P")) {
-            DllCall("mouse_event", uint, 4, int, 0, int, 0, uint, 0, int, 0)
             break
         }
     }
@@ -617,11 +616,6 @@ IniRead:
         IniRead, trigger_button, settings.ini, trigger settings, trigger_button
     }
 return
-
-IsSingleFireAutoWeapon()
-{
-    return current_weapon_type == P2020_WEAPON_TYPE || current_weapon_type == HEMLOK_SINGLE_WEAPON_TYPE
-}
 
 ; Suspends the script when mouse is visible ie: inventory, menu, map.
 IsMouseShown()
