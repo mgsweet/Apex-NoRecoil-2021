@@ -9,12 +9,12 @@ Process, Priority, , A
 SetBatchLines, -1
 ListLines Off
 SetWorkingDir %A_ScriptDir%
-; SetKeyDelay, -1, -1
-; SetMouseDelay, -1
-; SetDefaultMouseSpeed, 0
-; SetWinDelay, -1
-; SetControlDelay, -1
-; SendMode Input
+SetKeyDelay, -1, -1
+SetMouseDelay, -1
+SetDefaultMouseSpeed, 0
+SetWinDelay, -1
+SetControlDelay, -1
+SendMode Input
 
 RunAsAdmin()
 
@@ -508,16 +508,16 @@ return
 ~End::
 ExitApp
 
-$*LButton up::
-    Click, Up
-return
+; $*LButton up::
+;     Click, Up
+; return
 
-$*LButton::
+~$*LButton::
     if (has_gold_optics && gold_optics && is_gold_optics_weapon && GetKeyState("RButton")) {
         MoveMouse2Red()
     }
 
-    Click, Down
+    ; Click, Down
 
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE || current_weapon_type == SNIPER_WEAPON_TYPE)
         return
