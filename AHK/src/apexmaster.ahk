@@ -84,6 +84,7 @@ global SELLA_WEAPON_COLOR := 0xA13CA1
 global R99_PIXELS := LoadPixel("r99")
 global R301_PIXELS := LoadPixel("r301")
 global P2020_PIXELS := LoadPixel("p2020")
+global RE45_PIXELS := LoadPixel("re45")
 global G7_PIXELS := LoadPixel("g7")
 global SPITFIRE_PIXELS := LoadPixel("spitfire")
 global ALTERNATOR_PIXELS := LoadPixel("alternator")
@@ -95,7 +96,6 @@ global P3030_PIXELS := LoadPixel("p3030")
 ; special
 global CAR_PIXELS := LoadPixel("car")
 ; energy weapon
-global LSTAR_PIXELS := LoadPixel("lstar")
 global DEVOTION_PIXELS := LoadPixel("devotion")
 global HAVOC_PIXELS := LoadPixel("havoc")
 global VOLT_PIXELS := LoadPixel("volt")
@@ -104,7 +104,7 @@ global NEMESIS_PIXELS := LoadPixel("nemesis")
 global WINGMAN_PIXELS := LoadPixel("wingman")
 ; supply drop weapon
 global HEMLOK_PIXELS := LoadPixel("hemlok")
-global RE45_PIXELS := LoadPixel("re45")
+global LSTAR_PIXELS := LoadPixel("lstar")
 ; Turbocharger
 global HAVOC_TURBOCHARGER_PIXELS := LoadPixel("havoc_turbocharger")
 global DEVOTION_TURBOCHARGER_PIXELS := LoadPixel("devotion_turbocharger")
@@ -201,11 +201,11 @@ LoadPattern(filename) {
 global R301_PATTERN := LoadPattern("R301.txt")
 global R99_PATTERN := LoadPattern("R99.txt")
 global P2020_PATTERN := LoadPattern("P2020.txt")
+global RE45_PATTERN := LoadPattern("RE45.txt")
 global G7_Pattern := LoadPattern("G7.txt")
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
 global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
 ; energy weapon pattern
-global LSTAR_PATTERN := LoadPattern("Lstar.txt")
 global DEVOTION_PATTERN := LoadPattern("Devotion.txt")
 global TURBODEVOTION_PATTERN := LoadPattern("DevotionTurbo.txt")
 global HAVOC_PATTERN := LoadPattern("Havoc.txt")
@@ -225,7 +225,7 @@ global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
 global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
 global HEMLOK_AUTO_PATTERN := LoadPattern("HemlokAuto.txt")
-global RE45_PATTERN := LoadPattern("RE45.txt")
+global LSTAR_PATTERN := LoadPattern("Lstar.txt")
 ; sella
 global SELLA_PATTERN := LoadPattern("Sella.txt")
 
@@ -362,6 +362,10 @@ DetectAndSetWeapon()
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
             is_gold_optics_weapon := true
+        } else if (CheckWeapon(RE45_PIXELS)) {
+            current_weapon_type := RE45_WEAPON_TYPE
+            current_pattern := RE45_PATTERN
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
             current_weapon_type := ALTERNATOR_WEAPON_TYPE
             current_pattern := ALTERNATOR_PATTERN
@@ -396,10 +400,7 @@ DetectAndSetWeapon()
             current_pattern := P3030_PATTERN
         }
     } else if (check_point_color == ENERGY_WEAPON_COLOR) {
-        if (CheckWeapon(LSTAR_PIXELS)) {
-            current_weapon_type := LSTAR_WEAPON_TYPE
-            current_pattern := LSTAR_PATTERN
-        } else if (CheckWeapon(VOLT_PIXELS)) {
+        if (CheckWeapon(VOLT_PIXELS)) {
             current_weapon_type := VOLT_WEAPON_TYPE
             current_pattern := VOLT_PATTERN
             is_gold_optics_weapon := true
@@ -432,10 +433,9 @@ DetectAndSetWeapon()
                 current_weapon_type := HEMLOK_WEAPON_TYPE
                 current_pattern := HEMLOK_PATTERN
             }
-        } else if (CheckWeapon(RE45_PIXELS)) {
-            current_weapon_type := RE45_WEAPON_TYPE
-            current_pattern := RE45_PATTERN
-            is_gold_optics_weapon := true
+        } else if (CheckWeapon(LSTAR_PIXELS)) {
+            current_weapon_type := LSTAR_WEAPON_TYPE
+            current_pattern := LSTAR_PATTERN
         }
     } else if (check_point_color == SHOTGUN_WEAPON_COLOR) {
         is_gold_optics_weapon := true
