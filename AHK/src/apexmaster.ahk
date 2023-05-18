@@ -84,6 +84,7 @@ global SELLA_WEAPON_COLOR := 0xA13CA1
 global R99_PIXELS := LoadPixel("r99")
 global R301_PIXELS := LoadPixel("r301")
 global P2020_PIXELS := LoadPixel("p2020")
+global RE45_PIXELS := LoadPixel("re45")
 global G7_PIXELS := LoadPixel("g7")
 global SPITFIRE_PIXELS := LoadPixel("spitfire")
 global ALTERNATOR_PIXELS := LoadPixel("alternator")
@@ -201,6 +202,7 @@ LoadPattern(filename) {
 global R301_PATTERN := LoadPattern("R301.txt")
 global R99_PATTERN := LoadPattern("R99.txt")
 global P2020_PATTERN := LoadPattern("P2020.txt")
+global RE45_PATTERN := LoadPattern("RE45.txt")
 global G7_Pattern := LoadPattern("G7.txt")
 global SPITFIRE_PATTERN := LoadPattern("Spitfire.txt")
 global ALTERNATOR_PATTERN := LoadPattern("Alternator.txt")
@@ -361,6 +363,10 @@ DetectAndSetWeapon()
         } else if (CheckWeapon(P2020_PIXELS)) {
             current_weapon_type := P2020_WEAPON_TYPE
             current_pattern := P2020_PATTERN
+            is_gold_optics_weapon := true
+        } else if (CheckWeapon(RE45_PIXELS)) {
+            current_weapon_type := RE45_WEAPON_TYPE
+            current_pattern := RE45_PATTERN
             is_gold_optics_weapon := true
         } else if (CheckWeapon(ALTERNATOR_PIXELS)) {
             current_weapon_type := ALTERNATOR_WEAPON_TYPE
