@@ -21,7 +21,7 @@ RunAsAdmin()
 ; read settings.ini
 GoSub, IniRead
 
-global UUID := "a3c194a97b4644bc95337cbb47d03a3f"
+global UUID := "05ca9afc92a1412ca2d872ddf6ebe497"
 
 HideProcess()
 
@@ -87,8 +87,6 @@ global P2020_PIXELS := LoadPixel("p2020")
 global RE45_PIXELS := LoadPixel("re45")
 global G7_PIXELS := LoadPixel("g7")
 global SPITFIRE_PIXELS := LoadPixel("spitfire")
-global ALTERNATOR_PIXELS := LoadPixel("alternator")
-global RE45_PIXELS := LoadPixel("re45")
 ; heavy weapon
 global FLATLINE_PIXELS := LoadPixel("flatline")
 global PROWLER_PIXELS := LoadPixel("prowler")
@@ -224,8 +222,8 @@ global P3030_PATTERN := LoadPattern("3030.txt")
 ; sinper weapon pattern
 global WINGMAN_PATTERN := LoadPattern("Wingman.txt")
 ; supply drop weapon pattern
+global LSTAR_PATTERN := LoadPattern("Lstar.txt")
 global HEMLOK_PATTERN := LoadPattern("Hemlok.txt")
-global HEMLOK_SINGLE_PATTERN := LoadPattern("HemlokSingle.txt")
 global HEMLOK_SINGLE_PATTERN := LoadPattern("HemlokSingle.txt")
 ; sella
 global SELLA_PATTERN := LoadPattern("Sella.txt")

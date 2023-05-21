@@ -1,4 +1,8 @@
 # Change Logs
+### 2023/05/21 version 1.3.12
+- remove green.ahk
+- change the gold optic feature's logic (still fucking buggy, may remove it totally in the future)  
+- support Season 17 (thanks to [Eternal-Walnut](https://github.com/Eternal-Walnut)
 
 ### 2023/02/27 version 1.3.11 (thanks to [Eternal-Walnut](https://github.com/Eternal-Walnut), [richardzzp](https://github.com/richardzzp))
 - add hotkey to switch active state.
