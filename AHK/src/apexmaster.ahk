@@ -564,7 +564,6 @@ ExitApp
 
         if (IsAutoClickNeeded()) {
             Click
-            interval := interval + rand
         }
 
         DllCall("mouse_event", uint, 0x01, uint, Round(x * modifier), uint, Round(y * modifier))
