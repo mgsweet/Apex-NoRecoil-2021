@@ -563,11 +563,9 @@ ExitApp
         }
 
         if (IsAutoClickNeeded()) {
-            if (GetKeyState("LButton", "P")) {
-                Click
-                Random, rand, 1, 20
-                interval := interval + rand
-            }
+            Click
+            Random, rand, 1, 20
+            interval := interval + rand
         }
         
         DllCall("mouse_event", uint, 0x01, uint, Round(x * modifier), uint, Round(y * modifier))
