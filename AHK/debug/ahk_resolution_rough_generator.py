@@ -1,7 +1,7 @@
 import math
 
 def gen_rough_resolution(width, height):
-    origin_text = '''; each player can hold 2 weapons
+	origin_text = '''; each player can hold 2 weapons
 weapon1 = "1521,1038"
 weapon2 = "1824,1036"
 ; weapon types
@@ -31,29 +31,31 @@ devotion_turbocharger = "1650,1007"
 nemesis_full_charge = "1845,900"
 ; Single mode
 single_mode = "1710,1000"'''
-    print('[pixels]')
-    lines = origin_text.split("\n")
-    for line in lines:
-        t1 = line.split(" = ")
-        res = t1[0] + ' = "'
-        t2 = t1[1][1: -1].split(",")
-        for i in range(len(t2)):
-            if i % 3 == 0:
-                res += str(math.floor(int(t2[i]) * width / 1920))
-            elif i % 3 == 1:
-                res += str(math.floor(int(t2[i]) * height / 1080))
-            else:
-                res += t2[i]
-            if i != len(t2) - 1:
-                res += ','
-        res += '"'
-        print(res)
-
+	print('[pixels]')
+	lines = origin_text.split("\n")
+	for line in lines:
+		t1 = line.split(" = ")
+		if (len(t1) == 1):
+			print(t1[0])
+			continue
+		else:
+			res = t1[0] + ' = "'
+			t2 = [x.replace('"', "") for x in t1[1][1: -1].split(",")] # Replaces '"' to None / Empty to avoid Double '"' on result 
+			for i in range(len(t2)):
+				if i % 3 == 0:
+					res += str(math.floor(int(t2[i]) * width / 1920))
+				elif i % 3 == 1:
+					res += str(math.floor(int(t2[i]) * height / 1080))
+				else:
+					res += t2[i]
+				if i != len(t2) - 1:
+					res += ','
+			res += '"'
+			print(str(res))
 
 if __name__ == '__main__':
-    print("Width: ", end='')
-    width = input()
-    print("Height: ", end='')
-    height = input()
-    gen_rough_resolution(int(width), int(height))
-
+	print("Width: ", end='')
+	width = input()
+	print("Height: ", end='')
+	height = input()
+	gen_rough_resolution(int(width), int(height))
