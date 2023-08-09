@@ -10,7 +10,7 @@ SetBatchLines, -1
 ListLines Off
 SetWorkingDir %A_ScriptDir%
 SetKeyDelay, -1, -1
-SetMouseDelay, -1
+SetMouseDelay, 40
 SetDefaultMouseSpeed, 0
 SetWinDelay, -1
 SetControlDelay, -1
