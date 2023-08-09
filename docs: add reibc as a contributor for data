@@ -1,6 +1,6 @@
 # Apex-NoRecoil-2021
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 An AutoHotKey script (works on multiple resolutions) and Python CLI (works on 1080p) to minimize recoil with auto weapon detection for Apex Legends. 
 
@@ -70,6 +70,7 @@ Pull Request is always welcome!
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Milesians"><img src="https://avatars.githubusercontent.com/u/37968554?v=4?s=100" width="100px;" alt="Milesians"/><br /><sub><b>Milesians</b></sub></a><br /><a href="https://github.com/mgsweet/Apex-NoRecoil-2021/commits?author=Milesians" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/richardzzp"><img src="https://avatars.githubusercontent.com/u/39645545?v=4?s=100" width="100px;" alt="Pengcheng Zeng"/><br /><sub><b>Pengcheng Zeng</b></sub></a><br /><a href="#data-richardzzp" title="Data">🔣</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MoralFst"><img src="https://avatars.githubusercontent.com/u/126231132?v=4?s=100" width="100px;" alt="MoralFst"/><br /><sub><b>MoralFst</b></sub></a><br /><a href="#data-MoralFst" title="Data">🔣</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/reibc"><img src="https://avatars.githubusercontent.com/u/20739062?v=4?s=100" width="100px;" alt="rei"/><br /><sub><b>rei</b></sub></a><br /><a href="#data-reibc" title="Data">🔣</a></td>
     </tr>
   </tbody>
 </table>
