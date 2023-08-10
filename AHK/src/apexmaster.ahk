@@ -290,9 +290,6 @@ IsNemesisFullCharge()
 CheckSingleMode()
 {
     target_color := 0xFFFFFF
-    if (current_weapon_type == PROWLER_FULLAUTO_WEAPON_TYPE) {
-    	return false
-    }
     PixelGetColor, check_point_color, SINGLE_MODE_PIXELS[1], SINGLE_MODE_PIXELS[2]
     if (check_point_color == target_color) {
         return true
@@ -442,13 +439,14 @@ DetectAndSetWeapon()
         }
     } else if (check_point_color == SUPPY_DROP_COLOR) {
         if (CheckWeapon(PROWLER_PIXELS)) {
-            current_weapon_type := PROWLER_WEAPON_TYPE
-            current_pattern := PROWLER_PATTERN
-	        is_gold_optics_weapon := true
-            if (is_single_mode) {
-            	current_weapon_type := PROWLER_FULLAUTO_WEAPON_TYPE
-            	current_pattern := PROWLER_FULLAUTO_PATTERN
+	    if (!is_single_mode) {
+            	current_weapon_type := PROWLER_WEAPON_TYPE
+            	current_pattern := PROWLER_PATTERN
+            } else {
+                current_weapon_type := PROWLER_FULLAUTO_WEAPON_TYPE
+                current_pattern := PROWLER_FULLAUTO_PATTERN
             }
+            is_gold_optics_weapon := true
         } else if (CheckWeapon(LSTAR_PIXELS)) {
             current_weapon_type := LSTAR_WEAPON_TYPE
             current_pattern := LSTAR_PATTERN
@@ -534,7 +532,7 @@ ExitApp
     if (IsMouseShown() || current_weapon_type == DEFAULT_WEAPON_TYPE || current_weapon_type == SHOTGUN_WEAPON_TYPE || current_weapon_type == SNIPER_WEAPON_TYPE)
         return
 
-    if (is_single_mode && !IsAutoClickNeeded())
+    if (is_single_mode && current_weapon_type != PROWLER_FULLAUTO_WEAPON_TYPE && !IsAutoClickNeeded())
         return
 
     if (ads_only && !GetKeyState("RButton"))
